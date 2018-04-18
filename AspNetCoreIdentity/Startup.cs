@@ -2,8 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AspNetCoreIdentity.Infrastructure;
+using AspNetCoreIdentity.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,7 +27,8 @@ namespace AspNetCoreIdentity
         {
             services.AddMvc();
 
-            services.AddIdentityCore<string>(options => { });
+            services.AddIdentityCore<AppUser>(options => { });
+            services.AddScoped<IUserStore<AppUser>, AppUserStore>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
