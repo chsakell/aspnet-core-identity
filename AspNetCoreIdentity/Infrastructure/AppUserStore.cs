@@ -17,6 +17,7 @@ namespace AspNetCoreIdentity.Infrastructure
             {
                 Id = user.Id,
                 UserName = user.UserName,
+                EmailAddress = user.EmailAddress,
                 NormalizeUserName = user.NormalizeUserName,
                 PasswordHash = user.PasswordHash
             });
@@ -86,6 +87,7 @@ namespace AspNetCoreIdentity.Infrastructure
             {
                 appUser.NormalizeUserName = user.NormalizeUserName;
                 appUser.UserName = user.UserName;
+                appUser.EmailAddress = user.EmailAddress;
                 appUser.PasswordHash = user.PasswordHash;
             }
 

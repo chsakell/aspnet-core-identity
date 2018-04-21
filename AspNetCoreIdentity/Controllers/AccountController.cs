@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace AspNetCoreIdentity.Controllers
 {
+    [Route("api/[controller]/[action]")]
     public class AccountController : Controller
     {
         private readonly UserManager<AppUser> _userManager;
@@ -21,41 +22,65 @@ namespace AspNetCoreIdentity.Controllers
         }
 
         [HttpPost]
-        public async Task<ResultVM> Register(RegisterVM model)
+        public async Task<ResultVM> Register([FromBody]RegisterVM model)
         {
             if (ModelState.IsValid)
             {
+                IdentityResult result = null;
                 var user = await _userManager.FindByNameAsync(model.UserName);
 
-                if (user == null)
+                if (user != null)
                 {
-                    user = new AppUser
+                    return new ResultVM
                     {
-                        Id = Guid.NewGuid().ToString(),
-                        UserName = model.UserName
+                        Status = Status.Error,
+                        Message = "Invalid data",
+                        Data = "<li>User already exists</li>"
                     };
-
-                    var result = await _userManager.CreateAsync(user, model.Password);
                 }
-
-                return new ResultVM
+                
+                user = new AppUser
                 {
-                    Status = Status.Success,
-                    Message = "User Created",
-                    Data = user
+                    Id = Guid.NewGuid().ToString(),
+                    UserName = model.UserName,
+                    EmailAddress = model.EmailAddress
                 };
+
+                result = await _userManager.CreateAsync(user, model.Password);
+
+                if (result.Succeeded)
+                {
+                    return new ResultVM
+                    {
+                        Status = Status.Success,
+                        Message = "User Created",
+                        Data = user
+                    };
+                }
+                else
+                {
+                    var resultErrors = result.Errors.Select(e => "<li>" + e.Description + "</li>");
+                    return new ResultVM
+                    {
+                        Status = Status.Error,
+                        Message = "Invalid data",
+                        Data = string.Join("", resultErrors)
+                    };
+                }
             }
 
+            var errors = ModelState.Keys.Select(e => "<li>" + e + "</li>");
             return new ResultVM
             {
                 Status = Status.Error,
-                Message = "Invalid data"
+                Message = "Invalid data",
+                Data = string.Join("", errors)
             };
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ResultVM> Login(LoginVM model)
+        public async Task<ResultVM> Login([FromBody]LoginVM model)
         {
             if (ModelState.IsValid)
             {
