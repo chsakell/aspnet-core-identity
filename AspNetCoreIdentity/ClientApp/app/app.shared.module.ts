@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpModule, Http } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './components/app/app.component';
@@ -10,6 +10,8 @@ import { HomeComponent } from './components/home/home.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { ClaimsComponent } from './components/claims/claims.component';
+import { HttpInterceptor } from './core/http.interceptor';
+import { StateService } from './core/state.service';
 
 @NgModule({
     declarations: [
@@ -32,6 +34,10 @@ import { ClaimsComponent } from './components/claims/claims.component';
             { path: 'claims', component: ClaimsComponent },
             { path: '**', redirectTo: 'home' }
         ])
+    ],
+    providers: [
+        { provide: Http, useClass: HttpInterceptor },
+        StateService
     ]
 })
 export class AppModuleShared {

@@ -17,12 +17,12 @@
                         <span class='glyphicon glyphicon-home'></span> Home
                     </a>
                 </li>
-                <li [routerLinkActive]="['link-active']">
+                <li [routerLinkActive]="['link-active']" *ngIf="!stateService.isAuthenticated()">
                     <a [routerLink]="['/login']">
                         <span class='glyphicon glyphicon-education'></span> Login
                     </a>
                 </li>
-                <li [routerLinkActive]="['link-active']">
+                <li [routerLinkActive]="['link-active']" *ngIf="!stateService.isAuthenticated()">
                     <a [routerLink]="['/register']">
                         <span class='glyphicon glyphicon-th-list'></span> Register
                     </a>
@@ -30,6 +30,11 @@
                 <li [routerLinkActive]="['link-active']">
                     <a [routerLink]="['/claims']">
                         <span class='glyphicon glyphicon-th-list'></span> Claims
+                    </a>
+                </li>
+                <li [routerLinkActive]="['link-active']" *ngIf="stateService.isAuthenticated()">
+                    <a (click)="logout()" class="logout">
+                        <span class='glyphicon glyphicon-th-list'></span> Logout
                     </a>
                 </li>
             </ul>

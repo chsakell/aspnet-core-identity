@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import { StateService } from '../../core/state.service';
+import { Router } from '@angular/router';
+import { Http } from '@angular/http';
 
 @Component({
     selector: 'nav-menu',
@@ -6,4 +9,17 @@ import { Component } from '@angular/core';
     styleUrls: ['./navmenu.component.css']
 })
 export class NavMenuComponent {
+    constructor(public stateService: StateService, public router: Router,
+        public http: Http,
+        @Inject('BASE_URL') public baseUrl: string, ) {
+
+    }
+
+    logout() {
+        this.http.post(this.baseUrl + 'api/account/signout', {}).subscribe(result => {
+            this.stateService.setAuthentication({ userName: '', isAuthenticated: false });
+            this.router.navigate(['/home']);
+        }, error => console.error(error));
+
+    }
 }

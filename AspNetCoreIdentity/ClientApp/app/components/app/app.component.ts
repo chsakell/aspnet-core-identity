@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import { Http } from '@angular/http';
+import { StateService, UserState } from '../../core/state.service';
 
 @Component({
     selector: 'app',
@@ -6,4 +8,11 @@ import { Component } from '@angular/core';
     styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+    constructor(public http: Http, stateService: StateService, @Inject('BASE_URL') public baseUrl: string) {
+        this.http.get(this.baseUrl + 'api/account/authenticated').subscribe(result => {
+            var state = result.json() as UserState;
+            console.log(state);
+            stateService.setAuthentication(state);
+        }, error => console.error(error));
+    }
 }

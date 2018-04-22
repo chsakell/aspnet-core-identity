@@ -1,6 +1,7 @@
 ﻿using AspNetCoreIdentity.Models;
 using AspNetCoreIdentity.ViewModels;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -88,11 +89,11 @@ namespace AspNetCoreIdentity.Controllers
 
                 if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
                 {
-                    var identity = new ClaimsIdentity("cookies");
+                    var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
                     identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id));
                     identity.AddClaim(new Claim(ClaimTypes.Name, user.UserName));
 
-                    await HttpContext.SignInAsync("cookies", new ClaimsPrincipal(identity));
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
 
                     return new ResultVM
                     {
@@ -134,6 +135,22 @@ namespace AspNetCoreIdentity.Controllers
                 UserName = User.Identity.Name,
                 Claims = claims
             };
+        }
+
+        [HttpGet]
+        public async Task<UserStateVM> Authenticated()
+        {
+            return new UserStateVM
+            {
+                IsAuthenticated = User.Identity.IsAuthenticated,
+                Username = User.Identity.IsAuthenticated ? User.Identity.Name : string.Empty
+            };
+        }
+
+        [HttpPost]
+        public async Task SignOut()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         }
     }
 }

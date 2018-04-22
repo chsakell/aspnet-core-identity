@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { Http } from '@angular/http';
 import { Router } from '@angular/router';
+import { StateService } from '../../core/state.service';
 
 @Component({
     selector: 'login',
@@ -13,7 +14,7 @@ export class LoginComponent {
 
     constructor(public http: Http, 
                 @Inject('BASE_URL') public baseUrl: string,
-                public router: Router) {
+                public router: Router, public stateService: StateService) {
     }
 
     login() {
@@ -22,6 +23,7 @@ export class LoginComponent {
         this.http.post(this.baseUrl + 'api/account/login', this.user).subscribe(result => {
             let registerResult = result.json() as ResultVM;
             if (registerResult.status === StatusEnum.Success) {
+                this.stateService.setAuthentication({ isAuthenticated: true, userName: this.user.userName })
                 this.router.navigate(['/home']);
             } else if (registerResult.status === StatusEnum.Error) {
                 this.errors = registerResult.data.toString();

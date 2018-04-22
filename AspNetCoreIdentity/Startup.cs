@@ -33,8 +33,8 @@ namespace AspNetCoreIdentity
             services.AddIdentityCore<AppUser>(options => { });
             services.AddScoped<IUserStore<AppUser>, AppUserStore>();
 
-            services.AddAuthentication("cookies")
-                .AddCookie("cookies", options =>
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
                 {
                     options.Events.OnRedirectToAccessDenied = ReplaceRedirector(HttpStatusCode.Forbidden, options.Events.OnRedirectToAccessDenied);
                     options.Events.OnRedirectToLogin = ReplaceRedirector(HttpStatusCode.Unauthorized, options.Events.OnRedirectToLogin);
