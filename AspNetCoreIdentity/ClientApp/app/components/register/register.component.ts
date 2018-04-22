@@ -8,18 +8,16 @@ import { Router } from '@angular/router';
     styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-    public user: UserVM = { userName: '', emailAddress: '', password: '', confirmPassword: '' };
+    public user: RegisterVM = { userName: '', emailAddress: '', password: '', confirmPassword: '' };
     public errors: string = '';
 
     constructor(public http: Http, 
                 @Inject('BASE_URL') public baseUrl: string,
                 public router: Router) {
-        //this.baseUrl = baseUrl;
     }
 
     register() {
         this.errors = '';
-        console.log(this.user);
         this.http.post(this.baseUrl + 'api/account/register', this.user).subscribe(result => {
             let registerResult = result.json() as ResultVM;
             if (registerResult.status === StatusEnum.Success) {
@@ -32,7 +30,7 @@ export class RegisterComponent {
     }
 }
 
-interface UserVM {
+interface RegisterVM {
     userName: string;
     emailAddress: string;
     password: string;

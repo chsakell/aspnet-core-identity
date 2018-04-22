@@ -79,7 +79,6 @@ namespace AspNetCoreIdentity.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<ResultVM> Login([FromBody]LoginVM model)
         {
             if (ModelState.IsValid)
@@ -102,15 +101,23 @@ namespace AspNetCoreIdentity.Controllers
                     };
                 }
 
-
-                ModelState.AddModelError("", "Invalid UserName or Password");
+                return new ResultVM
+                {
+                    Status = Status.Error,
+                    Message = "Invalid data",
+                    Data = "<li>Invalid Username or Password</li>"
+                };
             }
 
+            var errors = ModelState.Keys.Select(e => "<li>" + e + "</li>");
             return new ResultVM
             {
                 Status = Status.Error,
-                Message = "Invalid UserName or Password"
+                Message = "Invalid data",
+                Data = string.Join("", errors)
             };
         }
+
+        
     }
 }

@@ -29,6 +29,9 @@ namespace AspNetCoreIdentity
 
             services.AddIdentityCore<AppUser>(options => { });
             services.AddScoped<IUserStore<AppUser>, AppUserStore>();
+
+            services.AddAuthentication("cookies")
+                .AddCookie("cookies", options => options.LoginPath = "/Login");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +49,8 @@ namespace AspNetCoreIdentity
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            app.UseAuthentication();
 
             app.UseStaticFiles();
 
