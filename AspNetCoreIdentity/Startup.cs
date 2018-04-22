@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using AspNetCoreIdentity.Infrastructure;
 using AspNetCoreIdentity.Models;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -31,7 +34,11 @@ namespace AspNetCoreIdentity
             services.AddScoped<IUserStore<AppUser>, AppUserStore>();
 
             services.AddAuthentication("cookies")
-                .AddCookie("cookies", options => options.LoginPath = "/Login");
+                .AddCookie("cookies", options =>
+                {
+                    options.Events.OnRedirectToAccessDenied = ReplaceRedirector(HttpStatusCode.Forbidden, options.Events.OnRedirectToAccessDenied);
+                    options.Events.OnRedirectToLogin = ReplaceRedirector(HttpStatusCode.Unauthorized, options.Events.OnRedirectToLogin);
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,5 +72,17 @@ namespace AspNetCoreIdentity
                     defaults: new { controller = "Home", action = "Index" });
             });
         }
+
+        static Func<RedirectContext<CookieAuthenticationOptions>, Task> ReplaceRedirector(HttpStatusCode statusCode, 
+            Func<RedirectContext<CookieAuthenticationOptions>, Task> existingRedirector) =>
+            context =>
+            {
+                if (context.Request.Path.StartsWithSegments("/api"))
+                {
+                    context.Response.StatusCode = (int)statusCode;
+                    return Task.CompletedTask;
+                }
+                return existingRedirector(context);
+            };
     }
 }

@@ -1,0 +1,12 @@
+<div class="claims">
+    <div>
+        Username: <strong>{{userName}}</strong> claims:
+    </div> <br/>
+    <div *ngFor="let claim of claims">
+        Type:
+        <strong>{{claim.type}}</strong>
+        <br/> Value:
+        <span>{{claim.value}}</span>
+        <hr/>
+    </div>
+</div>

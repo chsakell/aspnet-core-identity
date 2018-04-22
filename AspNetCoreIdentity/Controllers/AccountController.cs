@@ -1,6 +1,7 @@
 ﻿using AspNetCoreIdentity.Models;
 using AspNetCoreIdentity.ViewModels;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -38,7 +39,7 @@ namespace AspNetCoreIdentity.Controllers
                         Data = "<li>User already exists</li>"
                     };
                 }
-                
+
                 user = new AppUser
                 {
                     Id = Guid.NewGuid().ToString(),
@@ -118,6 +119,21 @@ namespace AspNetCoreIdentity.Controllers
             };
         }
 
-        
+        [HttpGet]
+        [Authorize]
+        public async Task<UserClaims> Claims()
+        {
+            var claims = User.Claims.Select(c => new ClaimVM
+            {
+                Type = c.Type,
+                Value = c.Value
+            });
+
+            return new UserClaims
+            {
+                UserName = User.Identity.Name,
+                Claims = claims
+            };
+        }
     }
 }
