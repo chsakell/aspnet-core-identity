@@ -1,12 +1,29 @@
 <div class="claims">
-    <div>
-        Username: <strong>{{userName}}</strong> claims:
-    </div> <br/>
-    <div *ngFor="let claim of claims">
-        Type:
-        <strong>{{claim.type}}</strong>
-        <br/> Value:
-        <span>{{claim.value}}</span>
-        <hr/>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-claims">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="">
+                            <a href="#" class="active" id="login-form-link"><strong>{{userName}}</strong> claims:</a>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div *ngFor="let claim of claims">
+                                Type:
+                                <strong>{{claim.type}}</strong>
+                                <br/> Value:
+                                <span>{{claim.value}}</span>
+                                <hr/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
