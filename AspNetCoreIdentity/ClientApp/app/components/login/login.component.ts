@@ -21,12 +21,12 @@ export class LoginComponent {
         this.errors = '';
         console.log(this.user);
         this.http.post(this.baseUrl + 'api/account/login', this.user).subscribe(result => {
-            let registerResult = result.json() as ResultVM;
-            if (registerResult.status === StatusEnum.Success) {
+            let loginResult = result.json() as ResultVM;
+            if (loginResult.status === StatusEnum.Success) {
                 this.stateService.setAuthentication({ isAuthenticated: true, userName: this.user.userName })
                 this.router.navigate(['/home']);
-            } else if (registerResult.status === StatusEnum.Error) {
-                this.errors = registerResult.data.toString();
+            } else if (loginResult.status === StatusEnum.Error) {
+                this.errors = loginResult.data.toString();
             }
 
         }, error => console.error(error));
