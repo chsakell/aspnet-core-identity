@@ -1,6 +1,8 @@
 # ASP.NET Core Identity Series
 
-## Part 1 - [Getting Started]()
+![ASP.NET Core Identity Series](https://chsakell.files.wordpress.com/2018/04/aspnet-core-identity-13.png)
+
+## Part 1 - [Getting Started](http://chsakell.com/2018/04/28/asp-net-core-identity-series-getting-started)
 
 * Introduction to ASP.NET Core Identity library
 * Describe ASP.NET Core Identity basic archirecture
