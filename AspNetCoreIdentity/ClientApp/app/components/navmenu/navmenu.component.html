@@ -19,12 +19,12 @@
                 </li>
                 <li [routerLinkActive]="['link-active']" *ngIf="!stateService.isAuthenticated()">
                     <a [routerLink]="['/login']">
-                        <span class='glyphicon glyphicon-education'></span> Login
+                        <span class='glyphicon glyphicon-user'></span> Login
                     </a>
                 </li>
                 <li [routerLinkActive]="['link-active']" *ngIf="!stateService.isAuthenticated()">
                     <a [routerLink]="['/register']">
-                        <span class='glyphicon glyphicon-th-list'></span> Register
+                        <span class='glyphicon glyphicon-pencil'></span> Register
                     </a>
                 </li>
                 <li [routerLinkActive]="['link-active']">
