@@ -13,7 +13,7 @@
 
 ## Installation instructions
 
-The project is built with ASP.NET Core with Angular of the client side. 
+The project is built with ASP.NET Core with Angular on the client side. 
 1. **Visual Studio 2017**: Just open the solution and wait to install the npm packages before running
 2. **Without Visual Studio**:
     * `cd ./AspNetCoreIdentity` where the package.json file exist
