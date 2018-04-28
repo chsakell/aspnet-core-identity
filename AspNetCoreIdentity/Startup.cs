@@ -73,6 +73,7 @@ namespace AspNetCoreIdentity
             });
         }
 
+        // https://stackoverflow.com/questions/42030137/suppress-redirect-on-api-urls-in-asp-net-core/42030138#42030138
         static Func<RedirectContext<CookieAuthenticationOptions>, Task> ReplaceRedirector(HttpStatusCode statusCode, 
             Func<RedirectContext<CookieAuthenticationOptions>, Task> existingRedirector) =>
             context =>
