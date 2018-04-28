@@ -15,9 +15,10 @@ The project is built with ASP.NET Core with Angular of the client side.
 1. **Visual Studio 2017**: Just open the solution and wait to install the npm packages before running
 2. **Without Visual Studio**:
     * `cd ./AspNetCoreIdentity` where the package.json file exist
-    * run `npm install`
-    * dotnet restore
-    * dotnet run 
+    * `npm install`
+    * `dotnet restore`
+    * `dotnet build`
+    * `dotnet run` 
 
 <h3 style="font-weight:normal;">Follow chsakell's Blog</h3>
 <table id="gradient-style" style="box-shadow:3px -2px 10px #1F394C;font-size:12px;margin:15px;width:290px;text-align:left;border-collapse:collapse;" summary="">
