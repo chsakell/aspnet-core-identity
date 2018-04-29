@@ -12,14 +12,9 @@ namespace AspNetCoreIdentity.Controllers
     public class HomeController : Controller
     {
 
-        public HomeController(UserManager<AppUser> userManager)
+        public HomeController()
         {
-            //userManager.CreateAsync(new AppUser
-            //{
-            //    Id = Guid.NewGuid().ToString(),
-            //    EmailAddress = "chsakell@gmail.com",
-            //    UserName = "chsakell"
-            //}, "%Kupimarko10");
+
         }
         public IActionResult Index()
         {
