@@ -10,7 +10,9 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.SpaServices.Webpack;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -30,8 +32,12 @@ namespace AspNetCoreIdentity
         {
             services.AddMvc();
 
+            var connString = @"Data Source=(LocalDb)\MSSQLLocalDb;Database=AspNetCoreIdentityDb;trusted_connection=yes";
+            services.AddDbContext<IdentityDbContext>(opt => opt.UseSqlServer(connString,
+                sql => sql.MigrationsAssembly(typeof(Startup).Assembly.GetName().Name)));
+
             services.AddIdentityCore<IdentityUser>(options => { });
-            services.AddScoped<IUserStore<IdentityUser>, AppUserStore>();
+            services.AddScoped<IUserStore<IdentityUser>, UserOnlyStore<IdentityUser, IdentityDbContext>>();
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
@@ -74,7 +80,7 @@ namespace AspNetCoreIdentity
         }
 
         // https://stackoverflow.com/questions/42030137/suppress-redirect-on-api-urls-in-asp-net-core/42030138#42030138
-        static Func<RedirectContext<CookieAuthenticationOptions>, Task> ReplaceRedirector(HttpStatusCode statusCode, 
+        static Func<RedirectContext<CookieAuthenticationOptions>, Task> ReplaceRedirector(HttpStatusCode statusCode,
             Func<RedirectContext<CookieAuthenticationOptions>, Task> existingRedirector) =>
             context =>
             {

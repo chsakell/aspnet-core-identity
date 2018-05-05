@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
     styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-    public user: RegisterVM = { userName: '', emailAddress: '', password: '', confirmPassword: '' };
+    public user: RegisterVM = { userName: '', email: '', password: '', confirmPassword: '' };
     public errors: string = '';
 
     constructor(public http: Http, 
@@ -32,7 +32,7 @@ export class RegisterComponent {
 
 interface RegisterVM {
     userName: string;
-    emailAddress: string;
+    email: string;
     password: string;
     confirmPassword: string;
 }
