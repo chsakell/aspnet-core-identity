@@ -30,8 +30,8 @@ namespace AspNetCoreIdentity
         {
             services.AddMvc();
 
-            services.AddIdentityCore<AppUser>(options => { });
-            services.AddScoped<IUserStore<AppUser>, AppUserStore>();
+            services.AddIdentityCore<IdentityUser>(options => { });
+            services.AddScoped<IUserStore<IdentityUser>, AppUserStore>();
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>

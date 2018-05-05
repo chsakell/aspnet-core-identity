@@ -16,9 +16,9 @@ namespace AspNetCoreIdentity.Controllers
     [Route("api/[controller]/[action]")]
     public class AccountController : Controller
     {
-        private readonly UserManager<AppUser> _userManager;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public AccountController(UserManager<AppUser> userManager)
+        public AccountController(UserManager<IdentityUser> userManager)
         {
             this._userManager = userManager;
         }
@@ -41,11 +41,11 @@ namespace AspNetCoreIdentity.Controllers
                     };
                 }
 
-                user = new AppUser
+                user = new IdentityUser
                 {
                     Id = Guid.NewGuid().ToString(),
                     UserName = model.UserName,
-                    EmailAddress = model.EmailAddress
+                    Email = model.EmailAddress
                 };
 
                 result = await _userManager.CreateAsync(user, model.Password);
