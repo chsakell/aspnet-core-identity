@@ -45,7 +45,7 @@ namespace AspNetCoreIdentity.Controllers
                 {
                     Id = Guid.NewGuid().ToString(),
                     UserName = model.UserName,
-                    EmailAddress = model.EmailAddress
+                    Email = model.Email
                 };
 
                 result = await _userManager.CreateAsync(user, model.Password);
