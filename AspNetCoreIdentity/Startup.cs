@@ -32,9 +32,10 @@ namespace AspNetCoreIdentity
         {
             services.AddMvc();
 
-            var connString = @"Data Source=(LocalDb)\MSSQLLocalDb;Database=AspNetCoreIdentityDb;trusted_connection=yes";
-            services.AddDbContext<IdentityDbContext>(opt => opt.UseSqlServer(connString,
-                sql => sql.MigrationsAssembly(typeof(Startup).Assembly.GetName().Name)));
+            services.AddDbContext<IdentityDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("AspNetCoreIdentityDb"),
+                    optionsBuilder => 
+                    optionsBuilder.MigrationsAssembly(typeof(Startup).Assembly.GetName().Name)));
 
             services.AddIdentityCore<IdentityUser>(options => { });
             services.AddScoped<IUserStore<IdentityUser>, UserOnlyStore<IdentityUser, IdentityDbContext>>();
