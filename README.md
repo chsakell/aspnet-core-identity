@@ -31,7 +31,7 @@ The project is built with ASP.NET Core with Angular on the client side.
     * `dotnet build`
     * `dotnet run`
 3. **Create the database** *(required for second part and later)*
-    * `cd ./AspNetCoreIdentity`
+    * `cd ./AspNetCoreIdentity` where the AspNetCoreIdentity.csproj exist
     * `dotnet ef migrations add initial_migration`
     * `dotnet ef database update`
 
