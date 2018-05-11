@@ -11,6 +11,15 @@
 * Step by step guide on how to install and start using the core packages
 * Associated repository branch: [getting-started](https://github.com/chsakell/aspnet-core-identity/tree/getting-started)
 
+## Part 2 - [Integrate Entity Framework](https://wp.me/p3mRWu-1i4)
+
+* Introduce `Microsoft.Extensions.Identity.Stores` and `UserStoreBase` store implementations
+* Plug and configure Entity Framework Core with ASP.NET Core Identity and minimum configuration
+* Explain Entity Framework different store implementations such as `UserOnlyStore` or `UserStore`
+* Step by step guide for applying migrations and creating Identity's SQL Schema
+* Discuss whether you should use ASP.NET Core Identity with Entity Framework
+* Associated repository branch: [entity-framework-integration](https://github.com/chsakell/aspnet-core-identity/tree/entity-framework-integration)
+
 ## Installation instructions
 
 The project is built with ASP.NET Core with Angular on the client side. 
@@ -20,7 +29,11 @@ The project is built with ASP.NET Core with Angular on the client side.
     * `npm install`
     * `dotnet restore`
     * `dotnet build`
-    * `dotnet run` 
+    * `dotnet run`
+3. **Create the database** *(required for second part and later)*
+    * `cd ./AspNetCoreIdentity`
+    * `dotnet ef migrations add initial_migration`
+    * `dotnet ef database update`
 
 <h3 style="font-weight:normal;">Follow chsakell's Blog</h3>
 <table id="gradient-style" style="box-shadow:3px -2px 10px #1F394C;font-size:12px;margin:15px;width:290px;text-align:left;border-collapse:collapse;" summary="">
