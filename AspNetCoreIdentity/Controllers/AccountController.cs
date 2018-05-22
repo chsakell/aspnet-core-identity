@@ -44,6 +44,11 @@ namespace AspNetCoreIdentity.Controllers {
 
                 result = await _userManager.CreateAsync (user, model.Password);
 
+                if(true) {
+                    Claim trialClaim = new Claim("Trial", DateTime.Now.AddDays(1).ToString());
+                    await _userManager.AddClaimAsync(user, trialClaim);
+                }
+
                 if (result.Succeeded) {
                     return new ResultVM {
                         Status = Status.Success,
@@ -100,7 +105,7 @@ namespace AspNetCoreIdentity.Controllers {
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Policy = "TrialOnly")]
         public async Task<UserClaims> Claims () {
             var claims = User.Claims.Select (c => new ClaimVM {
                 Type = c.Type,

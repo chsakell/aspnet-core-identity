@@ -32,6 +32,12 @@ namespace AspNetCoreIdentity
         {
             services.AddMvc();
 
+            services.AddAuthorization(options => {
+                options.AddPolicy("TrialOnly", policy => {
+                    policy.RequireClaim("Trial");
+                });
+            });
+
             services.AddDbContext<IdentityDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("AspNetCoreIdentityDb"),
                     optionsBuilder => 
