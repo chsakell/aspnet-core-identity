@@ -19,5 +19,7 @@ namespace AspNetCoreIdentity.ViewModels
         [Compare("Password")]
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
+
+        public bool StartFreeTrial {get; set;}
     }
 }

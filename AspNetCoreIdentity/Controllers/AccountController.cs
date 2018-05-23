@@ -44,12 +44,12 @@ namespace AspNetCoreIdentity.Controllers {
 
                 result = await _userManager.CreateAsync (user, model.Password);
 
-                if(true) {
-                    Claim trialClaim = new Claim("Trial", DateTime.Now.AddDays(1).ToString());
+                if (result.Succeeded) {
+                    if(model.StartFreeTrial) {
+                    Claim trialClaim = new Claim("Trial", DateTime.Now.ToString());
                     await _userManager.AddClaimAsync(user, trialClaim);
                 }
 
-                if (result.Succeeded) {
                     return new ResultVM {
                         Status = Status.Success,
                             Message = "User Created",

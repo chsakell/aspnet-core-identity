@@ -31,6 +31,9 @@
                                     </ul>
                                 </div>
                                 <div class="form-group">
+                                    <label class="checkbox-inline" title="Streaming will be available for a few days.."><input type="checkbox" name="start-trial" [(ngModel)]="user.startFreeTrial" >Start a free trial</label>
+                                </div>
+                                <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-6 col-sm-offset-3">
                                             <input type="text" name="register-submit" id="register-submit" (click)="register()" class="form-control btn btn-register" value="Register Now">
