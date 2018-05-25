@@ -32,6 +32,11 @@
                         <span class='glyphicon glyphicon-th-list'></span> Claims
                     </a>
                 </li>
+                <li [routerLinkActive]="['link-active']">
+                    <a [routerLink]="['/videos']">
+                        <span class='glyphicon glyphicon-facetime-video'></span> Videos
+                    </a>
+                </li>
                 <li [routerLinkActive]="['link-active']" *ngIf="stateService.isAuthenticated()">
                     <a (click)="logout()" class="logout">
                         <span class='glyphicon glyphicon-th-list'></span> Logout

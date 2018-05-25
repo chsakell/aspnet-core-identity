@@ -45,10 +45,10 @@ namespace AspNetCoreIdentity.Controllers {
                 result = await _userManager.CreateAsync (user, model.Password);
 
                 if (result.Succeeded) {
-                    if(model.StartFreeTrial) {
-                    Claim trialClaim = new Claim("Trial", DateTime.Now.ToString());
-                    await _userManager.AddClaimAsync(user, trialClaim);
-                }
+                    if (model.StartFreeTrial) {
+                        Claim trialClaim = new Claim ("Trial", DateTime.Now.ToString ());
+                        await _userManager.AddClaimAsync (user, trialClaim);
+                    }
 
                     return new ResultVM {
                         Status = Status.Success,

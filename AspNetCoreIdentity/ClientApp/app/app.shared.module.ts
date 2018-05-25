@@ -10,6 +10,7 @@ import { HomeComponent } from './components/home/home.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { ClaimsComponent } from './components/claims/claims.component';
+import { StreamingComponent } from './components/streaming/streaming.component';
 import { HttpInterceptor } from './core/http.interceptor';
 import { StateService } from './core/state.service';
 
@@ -20,7 +21,8 @@ import { StateService } from './core/state.service';
         NavMenuComponent,
         LoginComponent,
         RegisterComponent,
-        HomeComponent
+        HomeComponent,
+        StreamingComponent
     ],
     imports: [
         CommonModule,
@@ -32,6 +34,7 @@ import { StateService } from './core/state.service';
             { path: 'login', component: LoginComponent },
             { path: 'register', component: RegisterComponent },
             { path: 'claims', component: ClaimsComponent },
+            { path: 'videos', component: StreamingComponent },
             { path: '**', redirectTo: 'home' }
         ])
     ],
