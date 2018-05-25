@@ -105,7 +105,7 @@ namespace AspNetCoreIdentity.Controllers {
         }
 
         [HttpGet]
-        [Authorize(Policy = "TrialOnly")]
+        [Authorize]
         public async Task<UserClaims> Claims () {
             var claims = User.Claims.Select (c => new ClaimVM {
                 Type = c.Type,
