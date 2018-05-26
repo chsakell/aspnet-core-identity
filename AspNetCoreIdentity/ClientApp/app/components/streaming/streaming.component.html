@@ -1,23 +1,14 @@
-<h1>Bootstrap 3 Responsive Video Embeds that Maintain Aspect Ratio
-    <i class="fa fa-heart"></i>
-</h1>
+<h2>Try our Streaming Service for a few days</h2>
 
-<h4>Check out
-    <a href="https://scotch.io">scotch.io</a> for more awesome web dev things</h4>
+<hr/>
 
 <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-6" *ngFor="let video of videos">
 
-        <h2>16:9 Responsive Aspect Ratio</h2>
+        <h3>{{video.title}}</h3>
+        <h4>{{video.description}}</h4>
         <div class="embed-responsive embed-responsive-16by9">
-            <iframe class="embed-responsive-item" src="//www.youtube.com/embed/ePbKGoIGAXY"></iframe>
-        </div>
-    </div>
-    <div class="col-sm-6">
-
-        <h2>16:9 Responsive Aspect Ratio</h2>
-        <div class="embed-responsive embed-responsive-16by9">
-            <iframe class="embed-responsive-item" src="//www.youtube.com/embed/ePbKGoIGAXY"></iframe>
+            <iframe class="embed-responsive-item" [src]="sanitizeUrl(video.url)"></iframe>
         </div>
     </div>
 </div>

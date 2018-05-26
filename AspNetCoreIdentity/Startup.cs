@@ -53,6 +53,11 @@ namespace AspNetCoreIdentity
                     context.Response.StatusCode = 401;
                     return Task.CompletedTask;
                 };
+                options.Events.OnRedirectToAccessDenied = context => {
+                    context.Response.Headers["Location"] = context.RedirectUri;
+                    context.Response.StatusCode = 403;
+                    return Task.CompletedTask;
+                };
             });
         }
 
@@ -87,18 +92,5 @@ namespace AspNetCoreIdentity
                     defaults: new { controller = "Home", action = "Index" });
             });
         }
-
-        // https://stackoverflow.com/questions/42030137/suppress-redirect-on-api-urls-in-asp-net-core/42030138#42030138
-        static Func<RedirectContext<CookieAuthenticationOptions>, Task> ReplaceRedirector(HttpStatusCode statusCode,
-            Func<RedirectContext<CookieAuthenticationOptions>, Task> existingRedirector) =>
-            context =>
-            {
-                if (context.Request.Path.StartsWithSegments("/api"))
-                {
-                    context.Response.StatusCode = (int)statusCode;
-                    return Task.CompletedTask;
-                }
-                return existingRedirector(context);
-            };
     }
 }
