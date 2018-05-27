@@ -17,9 +17,12 @@ export class HttpInterceptor extends Http {
 
   request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
     return super.request(url, options).catch((error: Response) => {
-            if ((error.status === 401 || error.status === 403) && (window.location.href.match(/\?/g) || []).length < 2) {
+            if ((error.status === 401) && (window.location.href.match(/\?/g) || []).length < 2) {
                 this.stateService.setAuthentication({ userName: '', isAuthenticated: false });
                 this.router.navigate(['/login']);
+            }
+            else if ((error.status === 403) && (window.location.href.match(/\?/g) || []).length < 2) {
+              this.router.navigate(['/access-forbidden']);
             }
             return Observable.throw(error);
         });

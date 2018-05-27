@@ -3,10 +3,9 @@
 <hr/>
 
 <div class="row">
-    <div class="col-sm-6" *ngFor="let video of videos">
-
-        <h3>{{video.title}}</h3>
-        <h4>{{video.description}}</h4>
+    <div class="col-sm-6 video" *ngFor="let video of videos">
+        <h3 class="video-title">{{video.title}}</h3>
+        <h4 class="video-description">{{video.description}}</h4>
         <div class="embed-responsive embed-responsive-16by9">
             <iframe class="embed-responsive-item" [src]="sanitizeUrl(video.url)"></iframe>
         </div>
