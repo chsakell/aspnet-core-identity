@@ -14,6 +14,7 @@ import { StreamingComponent } from './components/streaming/streaming.component';
 import { HttpInterceptor } from './core/http.interceptor';
 import { StateService } from './core/state.service';
 import { AccessForbiddenComponent } from './components/claims/access-forbidden/access-forbidden.component';
+import { ManageComponent } from './components/manage/manage.component';
 
 @NgModule({
     declarations: [
@@ -24,7 +25,8 @@ import { AccessForbiddenComponent } from './components/claims/access-forbidden/a
         RegisterComponent,
         HomeComponent,
         StreamingComponent,
-        AccessForbiddenComponent
+        AccessForbiddenComponent,
+        ManageComponent
     ],
     imports: [
         CommonModule,
@@ -38,6 +40,7 @@ import { AccessForbiddenComponent } from './components/claims/access-forbidden/a
             { path: 'claims', component: ClaimsComponent },
             { path: 'videos', component: StreamingComponent },
             { path: 'access-forbidden', component: AccessForbiddenComponent },
+            { path: 'manage/users', component: ManageComponent },
             { path: '**', redirectTo: 'home' }
         ])
     ],
