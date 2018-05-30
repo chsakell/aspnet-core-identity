@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AspNetCoreIdentity.Controllers {
     [Route ("api/[controller]/[action]")]
+    [Authorize(Policy = "AdminOnly")]
     public class ManageController : Controller {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;

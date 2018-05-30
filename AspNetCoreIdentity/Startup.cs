@@ -29,8 +29,14 @@ namespace AspNetCoreIdentity {
             services.AddMvc ();
 
             services.AddAuthorization (options => {
+                // Claims based authorization
                 options.AddPolicy ("TrialOnly", policy => {
                     policy.RequireClaim ("Trial");
+                });
+
+                // Role based authorization
+                options.AddPolicy ("AdminOnly", policy => {
+                    policy.RequireRole ("Admin");
                 });
             });
 

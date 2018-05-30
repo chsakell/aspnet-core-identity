@@ -8,12 +8,19 @@ import { Router } from '@angular/router';
     styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-    public user: RegisterVM = { userName: '', email: '', password: '', confirmPassword: '', startFreeTrial: false };
+    public user: RegisterVM = { 
+        userName: '', 
+        email: '', 
+        password: '', 
+        confirmPassword: '', 
+        startFreeTrial: true,
+        isAdmin : false
+     };
     public errors: string = '';
 
-    constructor(public http: Http, 
-                @Inject('BASE_URL') public baseUrl: string,
-                public router: Router) {
+    constructor(public http: Http,
+        @Inject('BASE_URL') public baseUrl: string,
+        public router: Router) {
     }
 
     register() {
@@ -28,6 +35,18 @@ export class RegisterComponent {
 
         }, error => console.error(error));
     }
+
+    makeAdmin(event: any) {
+        if(event) {
+            this.user.startFreeTrial = false;
+        }
+    }
+
+    makeTrial(event: any) {
+        if(event) {
+            this.user.isAdmin = false;
+        }
+    }
 }
 
 interface RegisterVM {
@@ -36,6 +55,7 @@ interface RegisterVM {
     password: string;
     confirmPassword: string;
     startFreeTrial: boolean;
+    isAdmin: boolean;
 }
 
 interface ResultVM {

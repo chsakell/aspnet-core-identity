@@ -42,6 +42,11 @@
                         <span class='glyphicon glyphicon-th-list'></span> Logout
                     </a>
                 </li>
+                <li [routerLinkActive]="['link-active']" *ngIf="stateService.isAuthenticated()">
+                    <a [routerLink]="['/manage/users']">
+                        <span class='glyphicon glyphicon-th-list'></span> Manage
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

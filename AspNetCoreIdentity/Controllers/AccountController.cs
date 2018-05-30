@@ -48,6 +48,8 @@ namespace AspNetCoreIdentity.Controllers {
                     if (model.StartFreeTrial) {
                         Claim trialClaim = new Claim ("Trial", DateTime.Now.ToString ());
                         await _userManager.AddClaimAsync (user, trialClaim);
+                    } else if (model.IsAdmin) {
+                        await _userManager.AddToRoleAsync (user, "Admin");
                     }
 
                     return new ResultVM {

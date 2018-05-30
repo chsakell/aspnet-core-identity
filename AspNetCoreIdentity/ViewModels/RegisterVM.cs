@@ -21,5 +21,7 @@ namespace AspNetCoreIdentity.ViewModels
         public string ConfirmPassword { get; set; }
 
         public bool StartFreeTrial {get; set;}
+        
+        public bool IsAdmin {get; set;}
     }
 }
