@@ -7,6 +7,7 @@ using AspNetCoreIdentity.Infrastructure;
 using AspNetCoreIdentity.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -28,6 +29,9 @@ namespace AspNetCoreIdentity {
         public void ConfigureServices (IServiceCollection services) {
             services.AddMvc ();
 
+            services.AddTransient<IAuthorizationPolicyProvider, StreamingCategoryPolicyProvider>();
+
+            /*
             services.AddAuthorization (options => {
                 // Claims based authorization
                 options.AddPolicy ("TrialOnly", policy => {
@@ -39,6 +43,7 @@ namespace AspNetCoreIdentity {
                     policy.RequireRole ("Admin");
                 });
             });
+             */
 
             services.AddDbContext<IdentityDbContext> (options =>
                 options.UseSqlServer (Configuration.GetConnectionString ("AspNetCoreIdentityDb"),

@@ -2,10 +2,10 @@ using System;
 using Microsoft.AspNetCore.Authorization;
 
 namespace AspNetCoreIdentity.Infrastructure {
-    public class StreaminCategoryAuthorizeAttribute : AuthorizeAttribute {
+    public class StreamingCategoryAuthorizeAttribute : AuthorizeAttribute {
         const string POLICY_PREFIX = "StreamingCategory_";
 
-        public StreaminCategoryAuthorizeAttribute (StreamingCategory category) => Category = category;
+        public StreamingCategoryAuthorizeAttribute (StreamingCategory category) => Category = category;
 
         // Get or set the Age property by manipulating the underlying Policy property
         public StreamingCategory Category {
@@ -22,18 +22,15 @@ namespace AspNetCoreIdentity.Infrastructure {
     }
 
     public enum StreamingCategory {
-        ACTION_AND_ADVENTURE,
-        ACTION_COMEDIES,
-        ACTION_THRILLERS,
-        ADVENTURES,
-        SCI_FI,
-        ANIME,
-        ANIME_ACTION,
-        BASKETBALL_MOVIES,
-        BOXIES_MOVIES,
-        FAMILY_MOVIES,
-        CLASSIC_COMEDIES,
-        CLASSIC_DRAMAS,
-        MUSICALS
+        ACTION_AND_ADVENTURE = 1,
+        ACTION_COMEDIES = 2,
+        ACTION_THRILLERS = 3,
+        ADVENTURES = 4,
+        SCI_FI = 5,
+        ANIME = 6,
+        ANIME_ACTION =  7,
+        BASKETBALL_MOVIES = 8,
+        BOXIES_MOVIES = 9,
+        FAMILY_MOVIES = 10
     }
 }
