@@ -29,22 +29,27 @@
                 </li>
                 <li [routerLinkActive]="['link-active']">
                     <a [routerLink]="['/claims']">
-                        <span class='glyphicon glyphicon-th-list'></span> Claims
+                        <span class='glyphicon glyphicon-lock'></span> Claims
                     </a>
                 </li>
-                <li [routerLinkActive]="['link-active']">
+                <li [routerLinkActive]="['link-active']" [routerLinkActiveOptions]="{exact: true}">
                     <a [routerLink]="['/videos']">
-                        <span class='glyphicon glyphicon-facetime-video'></span> Videos
+                        <span class='glyphicon glyphicon-facetime-video'></span> Videos (Trial)
                     </a>
                 </li>
-                <li [routerLinkActive]="['link-active']" *ngIf="stateService.isAuthenticated()">
-                    <a (click)="logout()" class="logout">
-                        <span class='glyphicon glyphicon-th-list'></span> Logout
+                <li [routerLinkActive]="['link-active']" [routerLinkActiveOptions]="{exact: true}">
+                    <a [routerLink]="['/videos/register']">
+                        <span class='glyphicon glyphicon-forward'></span> My Streaming
                     </a>
                 </li>
                 <li [routerLinkActive]="['link-active']" *ngIf="stateService.isAuthenticated()">
                     <a [routerLink]="['/manage/users']">
-                        <span class='glyphicon glyphicon-th-list'></span> Manage
+                        <span class='glyphicon glyphicon-cog'></span> Admin panel
+                    </a>
+                </li>
+                <li [routerLinkActive]="['link-active']" *ngIf="stateService.isAuthenticated()">
+                    <a (click)="logout()" class="logout">
+                        <span class='glyphicon glyphicon-log-out'></span> Logout
                     </a>
                 </li>
             </ul>

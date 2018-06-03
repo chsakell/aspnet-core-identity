@@ -9,7 +9,7 @@
             <a (click)="$event.stopPropagation()" class="list-group-item active">Streaming Catetories
                 <input title="toggle all" type="checkbox" [(ngModel)]="checkedAll" class="all pull-right" (change)="toggleCategories($event)">
             </a>
-            <a (click)="toggleCategory(category)" [ngClass]="{'list-group-item': true, 'registered': category.registered }" *ngFor="let category of categories">
+            <a (click)="toggleCategory(category)" [ngClass]="{'list-group-item': true, 'registered': category.registered, 'streaming-category': true }" *ngFor="let category of categories">
                 {{category.category}}
             </a>
             <button (click)="update()" class="list-group-item active save">Update

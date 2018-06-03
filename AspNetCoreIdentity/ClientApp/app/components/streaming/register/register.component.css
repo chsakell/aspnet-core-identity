@@ -6,3 +6,7 @@ button.save {
     text-align: center;
     background: #3c763d !important;
 }
+
+.streaming-category {
+    cursor: pointer;
+}

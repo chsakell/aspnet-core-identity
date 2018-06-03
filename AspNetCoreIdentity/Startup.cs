@@ -27,23 +27,13 @@ namespace AspNetCoreIdentity {
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices (IServiceCollection services) {
-            services.AddMvc ();
 
             services.AddTransient<IAuthorizationPolicyProvider, StreamingCategoryPolicyProvider>();
 
-            /*
-            services.AddAuthorization (options => {
-                // Claims based authorization
-                options.AddPolicy ("TrialOnly", policy => {
-                    policy.RequireClaim ("Trial");
-                });
+            // As always, handlers must be provided for the requirements of the authorization policies
+            services.AddTransient<IAuthorizationHandler, StreamingCategoryAuthorizationHandler>();
 
-                // Role based authorization
-                options.AddPolicy ("AdminOnly", policy => {
-                    policy.RequireRole ("Admin");
-                });
-            });
-             */
+            services.AddMvc ();
 
             services.AddDbContext<IdentityDbContext> (options =>
                 options.UseSqlServer (Configuration.GetConnectionString ("AspNetCoreIdentityDb"),

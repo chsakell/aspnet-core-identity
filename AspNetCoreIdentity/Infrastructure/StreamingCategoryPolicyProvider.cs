@@ -39,7 +39,7 @@ namespace AspNetCoreIdentity.Infrastructure {
                     policyName.Substring (POLICY_PREFIX.Length));
 
                 var policy = new AuthorizationPolicyBuilder ();
-                policy.RequireClaim (category.ToString ());
+                policy.AddRequirements(new StreamingCategoryRequirement(category.ToString ()));
                 return Task.FromResult (policy.Build ());
             } else {
                 // If the policy name doesn't match the format expected by this policy provider,
