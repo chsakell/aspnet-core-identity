@@ -109,7 +109,10 @@ namespace AspNetCoreIdentity.Controllers {
         [HttpGet]
         [Authorize]
         public async Task<UserClaims> Claims () {
-            var claims = User.Claims.Select (c => new ClaimVM {
+            var loggedInUser = await _userManager.GetUserAsync (User);
+            var userClaims = await _userManager.GetClaimsAsync(loggedInUser);
+
+            var claims = userClaims.Union(User.Claims).Select (c => new ClaimVM {
                 Type = c.Type,
                     Value = c.Value
             });

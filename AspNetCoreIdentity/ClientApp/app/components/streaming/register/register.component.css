@@ -1,3 +1,8 @@
 .registered, .list-group-item .registered {
     background: #dff0d8 !important;
 }
+
+button.save {
+    text-align: center;
+    background: #3c763d !important;
+}

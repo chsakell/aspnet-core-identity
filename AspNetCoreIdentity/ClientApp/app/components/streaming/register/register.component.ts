@@ -1,6 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { Http } from '@angular/http';
-import {DomSanitizer, SafeUrl, SafeResourceUrl} from '@angular/platform-browser';
+import { Http, RequestOptions, Headers } from '@angular/http';
 
 @Component({
     selector: 'streaming-register',
@@ -31,6 +30,23 @@ export class StreamingRegisterComponent {
         if(!category.registered) {
             this.checkedAll = false;
         }
+    }
+
+    update() {
+        var categories = this.categories.filter(c => c.registered === true).map(c => c.category);
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        let options = new RequestOptions({ headers: headers });
+        this.http.post(this.baseUrl + 'api/streaming/videos/register', 
+            JSON.stringify(categories), options).subscribe(result => {
+            /*let registerResult = result.json() as ResultVM;
+            if (registerResult.status === StatusEnum.Success) {
+                this.router.navigate(['/login']);
+            } else if (registerResult.status === StatusEnum.Error) {
+                this.errors = registerResult.data.toString();
+            }
+            */
+        }, error => console.error(error));
     }
 
 }
