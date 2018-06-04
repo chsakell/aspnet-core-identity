@@ -7,7 +7,7 @@ namespace AspNetCoreIdentity.Infrastructure {
 
         public StreamingCategoryAuthorizeAttribute (StreamingCategory category) => Category = category;
 
-        // Get or set the Age property by manipulating the underlying Policy property
+        // Get or set the Category property by manipulating the underlying Policy property
         public StreamingCategory Category {
             get {
                 var category = (StreamingCategory) Enum.Parse (typeof (StreamingCategory),
