@@ -11,6 +11,7 @@
             </a>
             <a (click)="toggleCategory(category)" [ngClass]="{'list-group-item': true, 'registered': category.registered, 'streaming-category': true }" *ngFor="let category of categories">
                 {{category.category}}
+                <button class="category-button btn btn-default btn-sm pull-right" (click)="viewCategory($event, category.category)">View</button>
             </a>
             <button (click)="update()" class="list-group-item active save">Update
             </button>

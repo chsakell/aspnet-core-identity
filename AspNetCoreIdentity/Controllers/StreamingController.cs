@@ -23,38 +23,18 @@ namespace AspNetCoreIdentity.Controllers {
         [Route ("videos")]
         [Authorize (Policy = "TrialOnly")]
         public IActionResult Videos () {
-            var videos = new List<VideoVM> ();
-            videos.Add (new VideoVM {
-                Url = "https://www.youtube.com/embed/1S3rNPtrDYc",
-                    Title = "3 Doors Down - Father's Son",
-                    Description = "Live from Houston"
-            });
-
-            videos.Add (new VideoVM {
-                Url = "https://www.youtube.com/embed/Bsl4bOj8vMU",
-                    Title = "3 Doors Down - Kryptonite",
-                    Description = "Live from Houston"
-            });
+            var videos = VideoRepository.Videos.Take(2);
 
             return Ok (videos);
         }
 
         [HttpGet]
-        [Route ("videos/action/comedies")]
+        [Route ("action_comedies")]
         [StreamingCategoryAuthorize (StreamingCategory.ACTION_COMEDIES)]
         public IActionResult ActionComedies () {
-            var videos = new List<VideoVM> ();
-            videos.Add (new VideoVM {
-                Url = "https://www.youtube.com/embed/1S3rNPtrDYc",
-                    Title = "3 Doors Down - Father's Son",
-                    Description = "Live from Houston"
-            });
 
-            videos.Add (new VideoVM {
-                Url = "https://www.youtube.com/embed/Bsl4bOj8vMU",
-                    Title = "3 Doors Down - Kryptonite",
-                    Description = "Live from Houston"
-            });
+            var videos = VideoRepository.Videos
+                .Where(v => v.Category == StreamingCategory.ACTION_COMEDIES);
 
             return Ok (videos);
         }
@@ -77,8 +57,8 @@ namespace AspNetCoreIdentity.Controllers {
             foreach (StreamingCategory category in Enum.GetValues (typeof (StreamingCategory))) {
                 categories.Add (new {
                     Category = category.ToString (),
-                        Value = (int) category,
-                        Registered = registeredStreamingCategories.Any (c => c == category.ToString ())
+                    Value = (int) category,
+                    Registered = registeredStreamingCategories.Any (c => c == category.ToString ())
                 });
             }
 

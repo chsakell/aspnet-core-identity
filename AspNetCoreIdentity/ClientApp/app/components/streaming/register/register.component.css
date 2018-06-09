@@ -10,3 +10,7 @@ button.save {
 .streaming-category {
     cursor: pointer;
 }
+
+.category-button {
+    margin-top:-5px;
+}

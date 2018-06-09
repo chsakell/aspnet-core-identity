@@ -29,7 +29,7 @@ namespace AspNetCoreIdentity.Infrastructure {
         SCI_FI = 5,
         ANIME = 6,
         ANIME_ACTION =  7,
-        BASKETBALL_MOVIES = 8,
+        MUSIC_VIDEOS = 8,
         BOXIES_MOVIES = 9,
         FAMILY_MOVIES = 10
     }

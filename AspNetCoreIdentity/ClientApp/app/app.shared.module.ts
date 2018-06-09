@@ -40,8 +40,9 @@ import { StreamingRegisterComponent } from './components/streaming/register/regi
             { path: 'login', component: LoginComponent },
             { path: 'register', component: RegisterComponent },
             { path: 'claims', component: ClaimsComponent },
+            { path: 'videos/:id', component: StreamingComponent },
             { path: 'videos', component: StreamingComponent },
-            { path: 'videos/register', component: StreamingRegisterComponent },
+            { path: 'streaming/register', component: StreamingRegisterComponent },
             { path: 'access-forbidden', component: AccessForbiddenComponent },
             { path: 'manage/users', component: ManageComponent },
             { path: '**', redirectTo: 'home' }
