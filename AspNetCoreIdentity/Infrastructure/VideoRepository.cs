@@ -101,6 +101,14 @@ namespace AspNetCoreIdentity.Infrastructure
                     Description = "Official Teaser Trailer ",
                     Category = StreamingCategory.ACTION_THRILLERS
             });
+
+            // SCI_FI Videos
+            Videos.Add (new VideoVM {
+                Url = "https://www.youtube.com/embed/1S3rNPtrDYc",
+                    Title = "Deadpool 2",
+                    Description = "Official Trailer",
+                    Category = StreamingCategory.SCI_FI
+            });
             
             // Music Videos
             Videos.Add (new VideoVM {

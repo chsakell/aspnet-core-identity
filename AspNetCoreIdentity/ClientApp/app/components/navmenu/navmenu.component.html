@@ -43,6 +43,11 @@
                     </a>
                 </li>
                 <li [routerLinkActive]="['link-active']" *ngIf="stateService.isAuthenticated()">
+                    <a [routerLink]="['/streaming/videos/add']">
+                        <span class='glyphicon glyphicon-plus'></span> Add Video
+                    </a>
+                </li>
+                <li [routerLinkActive]="['link-active']" *ngIf="stateService.isAuthenticated()">
                     <a [routerLink]="['/manage/users']">
                         <span class='glyphicon glyphicon-cog'></span> Admin panel
                     </a>

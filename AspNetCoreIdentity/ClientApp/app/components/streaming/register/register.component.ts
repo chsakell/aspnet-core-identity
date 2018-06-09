@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class StreamingRegisterComponent {
     public categories: StreamingCategoryVM[] = [];
     public checkedAll: boolean = false;
+    public displayVideoForm: boolean = false;
     
     constructor(public http: Http, @Inject('BASE_URL') public baseUrl: string,
     private router: Router,) {

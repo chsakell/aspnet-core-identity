@@ -21,6 +21,7 @@ namespace AspNetCoreIdentity.Infrastructure {
             // If a custom policy provider is able to handle all expected policy names then, of course, this
             // fallback pattern is unnecessary.
 
+            // Claims based authorization
             options.Value.AddPolicy ("TrialOnly", policy => {
                 policy.RequireClaim ("Trial");
             });
@@ -29,6 +30,9 @@ namespace AspNetCoreIdentity.Infrastructure {
             options.Value.AddPolicy ("AdminOnly", policy => {
                 policy.RequireRole ("Admin");
             });
+
+            options.Value.AddPolicy("AddVideoPolicy", policy =>
+                policy.Requirements.Add(new UserCategoryRequirement()));
 
             FallbackPolicyProvider = new DefaultAuthorizationPolicyProvider (options);
         }

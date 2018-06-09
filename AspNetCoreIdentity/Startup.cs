@@ -32,6 +32,7 @@ namespace AspNetCoreIdentity {
 
             // As always, handlers must be provided for the requirements of the authorization policies
             services.AddTransient<IAuthorizationHandler, StreamingCategoryAuthorizationHandler>();
+            services.AddTransient<IAuthorizationHandler, UserCategoryAuthorizationHandler>();
 
             services.AddMvc ();
 

@@ -16,7 +16,7 @@ namespace AspNetCoreIdentity.Infrastructure {
             var loggedInUserTask = _userManager.GetUserAsync (context.User);
 
             loggedInUserTask.Wait ();
-            // Remove any categories registered     
+              
             var userClaimsTask = _userManager.GetClaimsAsync (loggedInUserTask.Result);
 
             userClaimsTask.Wait ();

@@ -16,6 +16,7 @@ import { StateService } from './core/state.service';
 import { AccessForbiddenComponent } from './components/claims/access-forbidden/access-forbidden.component';
 import { ManageComponent } from './components/manage/manage.component';
 import { StreamingRegisterComponent } from './components/streaming/register/register.component';
+import { AddVideoComponent } from './components/streaming/add/add-video.component';
 
 @NgModule({
     declarations: [
@@ -27,6 +28,7 @@ import { StreamingRegisterComponent } from './components/streaming/register/regi
         HomeComponent,
         StreamingComponent,
         StreamingRegisterComponent,
+        AddVideoComponent,
         AccessForbiddenComponent,
         ManageComponent
     ],
@@ -43,6 +45,7 @@ import { StreamingRegisterComponent } from './components/streaming/register/regi
             { path: 'videos/:id', component: StreamingComponent },
             { path: 'videos', component: StreamingComponent },
             { path: 'streaming/register', component: StreamingRegisterComponent },
+            { path: 'streaming/videos/add', component: AddVideoComponent },
             { path: 'access-forbidden', component: AccessForbiddenComponent },
             { path: 'manage/users', component: ManageComponent },
             { path: '**', redirectTo: 'home' }
