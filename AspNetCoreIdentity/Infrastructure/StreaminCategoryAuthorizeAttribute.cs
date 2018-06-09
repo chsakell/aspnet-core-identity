@@ -25,12 +25,10 @@ namespace AspNetCoreIdentity.Infrastructure {
         ACTION_AND_ADVENTURE = 1,
         ACTION_COMEDIES = 2,
         ACTION_THRILLERS = 3,
-        ADVENTURES = 4,
-        SCI_FI = 5,
-        ANIME = 6,
-        ANIME_ACTION =  7,
-        MUSIC_VIDEOS = 8,
-        BOXIES_MOVIES = 9,
-        FAMILY_MOVIES = 10
+        SCI_FI = 4,
+        ANIMATION = 5,
+        MUSIC_VIDEOS = 6,
+        BOXING_MOVIES = 7,
+        FAMILY_MOVIES = 8
     }
 }

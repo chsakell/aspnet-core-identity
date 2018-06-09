@@ -29,12 +29,89 @@ namespace AspNetCoreIdentity.Controllers {
         }
 
         [HttpGet]
-        [Route ("action_comedies")]
+        [Route ("ACTION_COMEDIES")]
         [StreamingCategoryAuthorize (StreamingCategory.ACTION_COMEDIES)]
         public IActionResult ActionComedies () {
 
             var videos = VideoRepository.Videos
                 .Where(v => v.Category == StreamingCategory.ACTION_COMEDIES);
+
+            return Ok (videos);
+        }
+
+        [HttpGet]
+        [Route ("ACTION_AND_ADVENTURE")]
+        [StreamingCategoryAuthorize (StreamingCategory.ACTION_AND_ADVENTURE)]
+        public IActionResult ActionAdventure () {
+
+            var videos = VideoRepository.Videos
+                .Where(v => v.Category == StreamingCategory.ACTION_AND_ADVENTURE);
+
+            return Ok (videos);
+        }
+
+        [HttpGet]
+        [Route ("ACTION_THRILLERS")]
+        [StreamingCategoryAuthorize (StreamingCategory.ACTION_THRILLERS)]
+        public IActionResult ActionThrillers () {
+
+            var videos = VideoRepository.Videos
+                .Where(v => v.Category == StreamingCategory.ACTION_THRILLERS);
+
+            return Ok (videos);
+        }
+
+        [HttpGet]
+        [Route ("SCI_FI")]
+        [StreamingCategoryAuthorize (StreamingCategory.SCI_FI)]
+        public IActionResult SCI_FI () {
+
+            var videos = VideoRepository.Videos
+                .Where(v => v.Category == StreamingCategory.SCI_FI);
+
+            return Ok (videos);
+        }
+
+        [HttpGet]
+        [Route ("ANIMATION")]
+        [StreamingCategoryAuthorize (StreamingCategory.ANIMATION)]
+        public IActionResult ANIMATION () {
+
+            var videos = VideoRepository.Videos
+                .Where(v => v.Category == StreamingCategory.ANIMATION);
+
+            return Ok (videos);
+        }
+
+        [HttpGet]
+        [Route ("MUSIC_VIDEOS")]
+        [StreamingCategoryAuthorize (StreamingCategory.MUSIC_VIDEOS)]
+        public IActionResult MUSIC_VIDEOS () {
+
+            var videos = VideoRepository.Videos
+                .Where(v => v.Category == StreamingCategory.MUSIC_VIDEOS);
+
+            return Ok (videos);
+        }
+
+        [HttpGet]
+        [Route ("BOXING_MOVIES")]
+        [StreamingCategoryAuthorize (StreamingCategory.BOXING_MOVIES)]
+        public IActionResult BOXING_MOVIES () {
+
+            var videos = VideoRepository.Videos
+                .Where(v => v.Category == StreamingCategory.BOXING_MOVIES);
+
+            return Ok (videos);
+        }
+
+        [HttpGet]
+        [Route ("FAMILY_MOVIES")]
+        [StreamingCategoryAuthorize (StreamingCategory.FAMILY_MOVIES)]
+        public IActionResult FAMILY_MOVIES () {
+
+            var videos = VideoRepository.Videos
+                .Where(v => v.Category == StreamingCategory.FAMILY_MOVIES);
 
             return Ok (videos);
         }

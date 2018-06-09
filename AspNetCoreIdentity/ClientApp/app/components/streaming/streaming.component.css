@@ -11,3 +11,8 @@
 .video-description {
     color:red;
 }
+
+.video-category {
+    font-style: italic;
+    color: brown;
+}

@@ -10,6 +10,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 })
 export class StreamingComponent {
     public videos: VideoVM[] = [];
+    public category: string = '';
     private sub: any;
 
     constructor(public http: Http, public sanitizer: DomSanitizer,
@@ -19,8 +20,8 @@ export class StreamingComponent {
 
     ngOnInit() {
         this.sub = this.route.params.subscribe(params => {
-            let category = params['id'];
-            var route = category === undefined ? 'videos' : category
+            this.category = params['id'] || '';
+            var route = this.category.length === 0 ? 'videos' : this.category
             this.http.get(this.baseUrl + `api/streaming/${route}`).subscribe(result => {
                 this.videos = result.json() as VideoVM[];
                 console.log(this.videos);
