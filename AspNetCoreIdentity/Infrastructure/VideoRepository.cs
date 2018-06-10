@@ -104,7 +104,7 @@ namespace AspNetCoreIdentity.Infrastructure
 
             // SCI_FI Videos
             Videos.Add (new VideoVM {
-                Url = "https://www.youtube.com/embed/1S3rNPtrDYc",
+                Url = "https://www.youtube.com/embed/D86RtevtfrA",
                     Title = "Deadpool 2",
                     Description = "Official Trailer",
                     Category = StreamingCategory.SCI_FI
