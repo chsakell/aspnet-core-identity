@@ -28,7 +28,7 @@ namespace AspNetCoreIdentity.Controllers {
         [Route ("videos")]
         [Authorize (Policy = "TrialOnly")]
         public IActionResult Videos () {
-            var videos = VideoRepository.Videos.Take (2);
+            var videos = VideoRepository.Videos.Take (4);
 
             return Ok (videos);
         }

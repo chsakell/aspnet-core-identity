@@ -20,7 +20,7 @@ namespace AspNetCoreIdentity.Controllers {
         }
 
         [HttpGet]
-        //[Authorize(Policy = "AdminOnly")]
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Users () {
             return Ok(_context.Users);
         }
