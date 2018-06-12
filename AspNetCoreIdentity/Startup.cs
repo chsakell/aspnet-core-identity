@@ -28,18 +28,25 @@ namespace AspNetCoreIdentity {
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices (IServiceCollection services) {
 
-            services.AddTransient<IAuthorizationPolicyProvider, StreamingCategoryPolicyProvider>();
+            services.AddTransient<IAuthorizationPolicyProvider, StreamingCategoryPolicyProvider> ();
 
             // As always, handlers must be provided for the requirements of the authorization policies
-            services.AddTransient<IAuthorizationHandler, StreamingCategoryAuthorizationHandler>();
-            services.AddTransient<IAuthorizationHandler, UserCategoryAuthorizationHandler>();
+            services.AddTransient<IAuthorizationHandler, StreamingCategoryAuthorizationHandler> ();
+            services.AddTransient<IAuthorizationHandler, UserCategoryAuthorizationHandler> ();
 
             services.AddMvc ();
 
-            services.AddDbContext<IdentityDbContext> (options =>
-                options.UseSqlServer (Configuration.GetConnectionString ("AspNetCoreIdentityDb"),
-                    optionsBuilder =>
-                    optionsBuilder.MigrationsAssembly (typeof (Startup).Assembly.GetName ().Name)));
+            bool useInMemoryProvider = bool.Parse (Configuration["InMemoryProvider"]);
+            services.AddDbContext<IdentityDbContext> (options => {
+                if (!useInMemoryProvider) {
+                    options.UseSqlServer (Configuration.GetConnectionString ("AspNetCoreIdentityDb"),
+                        optionsBuilder =>
+                        optionsBuilder.MigrationsAssembly (typeof (Startup).Assembly.GetName ().Name));
+                } else {
+                    options.UseInMemoryDatabase ();
+                }
+
+            });
 
             services.AddIdentity<IdentityUser, IdentityRole> ()
                 .AddEntityFrameworkStores<IdentityDbContext> ()
