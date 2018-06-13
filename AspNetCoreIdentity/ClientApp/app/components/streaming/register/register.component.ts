@@ -1,6 +1,7 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ViewContainerRef } from '@angular/core';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { Router } from '@angular/router';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
     selector: 'streaming-register',
@@ -13,7 +14,8 @@ export class StreamingRegisterComponent {
     public displayVideoForm: boolean = false;
     
     constructor(public http: Http, @Inject('BASE_URL') public baseUrl: string,
-    private router: Router,) {
+    private router: Router,public toastr: ToastsManager, vcr: ViewContainerRef) {
+        this.toastr.setRootViewContainerRef(vcr);
         this.http.get(this.baseUrl + 'api/streaming/videos/register').subscribe(result => {
             this.categories = result.json() as StreamingCategoryVM[];
             console.log(this.categories);
@@ -42,6 +44,7 @@ export class StreamingRegisterComponent {
         let options = new RequestOptions({ headers: headers });
         this.http.post(this.baseUrl + 'api/streaming/videos/register', 
             JSON.stringify(categories), options).subscribe(result => {
+                this.toastr.success('Categories updated', 'Success!');
         }, error => console.error(error));
     }
 
