@@ -1,0 +1,21 @@
+<div *ngIf="category.length === 0">
+    <h3>Sample videos available in our Streaming Service</h3>
+
+    <hr/>
+    <h4>Want the full experience? Click
+        <a [routerLink]="['/streaming/register']">here</a> and register for specific Streaming Categories!</h4>
+</div>
+<div *ngIf="category.length > 0">
+<h3>You are subscribed to the <span class="video-category">{{category}}</span> of our Streaming Service</h3>
+
+<hr/>
+<h4><span class="video-category">{{videos.length}}</span> total videos</h4>
+</div>
+<div class="row">
+    <div class="col-sm-6 video" *ngFor="let video of videos">
+        <h4 class="video-description">{{video.title}}</h4>
+        <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item" [src]="sanitizeUrl(video.url)"></iframe>
+        </div>
+    </div>
+</div>

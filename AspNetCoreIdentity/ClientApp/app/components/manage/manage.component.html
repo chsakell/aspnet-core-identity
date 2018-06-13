@@ -1,0 +1,37 @@
+<h1>Manage View
+    <em>
+        <small>
+            <font face="Tahoma" color="red">{{users.length}}</font> total users
+        </small>
+    </em>
+</h1>
+<br />
+<h4>Only administrators can access this view</h4>
+<br/>
+<div class="row">
+    <div class="table-responsive">
+        <table class="table table-condensed">
+
+            <!--Table head-->
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Lockout Enabled</th>
+                </tr>
+            </thead>
+            <!--Table head-->
+
+            <!--Table body-->
+            <tbody>
+                <tr *ngFor="let user of users">
+                    <td>{{user.userName}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.lockoutEnabled}}</td>
+                </tr>
+            </tbody>
+            <!--Table body-->
+
+        </table>
+    </div>
+</div>

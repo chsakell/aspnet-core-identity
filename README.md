@@ -20,6 +20,15 @@
 * Discuss whether you should use ASP.NET Core Identity with Entity Framework
 * Associated repository branch: [entity-framework-integration](https://github.com/chsakell/aspnet-core-identity/tree/entity-framework-integration)
 
+## Part 3 - [Deep Dive in authorization](https://wp.me/p3mRWu-1ik)
+
+* Explain `Claims-based` authorization by example
+* Explain `Role-based` authorization by example
+* Step by step guide for creating custom `Authorization Policy Provider`
+* Explain how authorization works under the hood
+* Explain `Imperative authorization` by example
+* Associated repository branch: [authorization](https://github.com/chsakell/aspnet-core-identity/tree/authorization)
+
 ## Installation instructions
 
 The project is built with ASP.NET Core with Angular on the client side. 
@@ -34,6 +43,8 @@ The project is built with ASP.NET Core with Angular on the client side.
     * `cd ./AspNetCoreIdentity` where the AspNetCoreIdentity.csproj exist
     * `dotnet ef migrations add initial_migration`
     * `dotnet ef database update`
+
+> In case you don't want to use SQL Database simply set **InMemoryProvider: true** in the *appsettings.json*
 
 <h3 style="font-weight:normal;">Follow chsakell's Blog</h3>
 <table id="gradient-style" style="box-shadow:3px -2px 10px #1F394C;font-size:12px;margin:15px;width:290px;text-align:left;border-collapse:collapse;" summary="">

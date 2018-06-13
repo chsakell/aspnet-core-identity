@@ -99,3 +99,24 @@ body {
 	background-color: #1CA347;
 	border-color: #1CA347;
 }
+
+label.trial {
+	color: whitesmoke;
+}
+
+select.selectpicker {
+	width: 100%;
+    padding-right: 25px;
+	z-index: 1;
+	color: #333;
+    background-color: #fff;
+	border-color: #ccc;
+	height: 45px;
+    border: 1px solid #ddd;
+	font-size: 16px;
+	-webkit-transition: all 0.1s linear;
+    -moz-transition: all 0.1s linear;
+	transition: all 0.1s linear;
+	border-color: #ccc;
+	border-radius: 4px;
+}

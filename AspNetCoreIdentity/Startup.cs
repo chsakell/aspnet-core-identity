@@ -7,6 +7,7 @@ using AspNetCoreIdentity.Infrastructure;
 using AspNetCoreIdentity.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -16,81 +17,81 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace AspNetCoreIdentity
-{
-    public class Startup
-    {
-        public Startup(IConfiguration configuration)
-        {
+namespace AspNetCoreIdentity {
+    public class Startup {
+        public Startup (IConfiguration configuration) {
             Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddMvc();
+        public void ConfigureServices (IServiceCollection services) {
 
-            services.AddDbContext<IdentityDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("AspNetCoreIdentityDb"),
-                    optionsBuilder => 
-                    optionsBuilder.MigrationsAssembly(typeof(Startup).Assembly.GetName().Name)));
+            services.AddTransient<IAuthorizationPolicyProvider, StreamingCategoryPolicyProvider> ();
 
-            services.AddIdentityCore<IdentityUser>(options => { });
-            services.AddScoped<IUserStore<IdentityUser>, UserOnlyStore<IdentityUser, IdentityDbContext>>();
+            // As always, handlers must be provided for the requirements of the authorization policies
+            services.AddTransient<IAuthorizationHandler, StreamingCategoryAuthorizationHandler> ();
+            services.AddTransient<IAuthorizationHandler, UserCategoryAuthorizationHandler> ();
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
-                {
-                    options.Events.OnRedirectToAccessDenied = ReplaceRedirector(HttpStatusCode.Forbidden, options.Events.OnRedirectToAccessDenied);
-                    options.Events.OnRedirectToLogin = ReplaceRedirector(HttpStatusCode.Unauthorized, options.Events.OnRedirectToLogin);
-                });
+            services.AddMvc ();
+
+            bool useInMemoryProvider = bool.Parse (Configuration["InMemoryProvider"]);
+            services.AddDbContext<IdentityDbContext> (options => {
+                if (!useInMemoryProvider) {
+                    options.UseSqlServer (Configuration.GetConnectionString ("AspNetCoreIdentityDb"),
+                        optionsBuilder =>
+                        optionsBuilder.MigrationsAssembly (typeof (Startup).Assembly.GetName ().Name));
+                } else {
+                    options.UseInMemoryDatabase ();
+                }
+
+            });
+
+            services.AddIdentity<IdentityUser, IdentityRole> ()
+                .AddEntityFrameworkStores<IdentityDbContext> ()
+                .AddDefaultTokenProviders ();
+
+            services.ConfigureApplicationCookie (options => {
+                options.Events.OnRedirectToLogin = context => {
+                    context.Response.Headers["Location"] = context.RedirectUri;
+                    context.Response.StatusCode = 401;
+                    return Task.CompletedTask;
+                };
+                options.Events.OnRedirectToAccessDenied = context => {
+                    context.Response.Headers["Location"] = context.RedirectUri;
+                    context.Response.StatusCode = 403;
+                    return Task.CompletedTask;
+                };
+            });
+
+            services.AddScoped<IDbInitializer, DbInitializer> ();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
-                {
+        public void Configure (IApplicationBuilder app, IHostingEnvironment env) {
+            if (env.IsDevelopment ()) {
+                app.UseDeveloperExceptionPage ();
+                app.UseWebpackDevMiddleware (new WebpackDevMiddlewareOptions {
                     HotModuleReplacement = true
                 });
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
+            } else {
+                app.UseExceptionHandler ("/Home/Error");
             }
 
-            app.UseAuthentication();
+            app.UseAuthentication ();
 
-            app.UseStaticFiles();
+            app.UseStaticFiles ();
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
+            app.UseMvc (routes => {
+                routes.MapRoute (
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
 
-                routes.MapSpaFallbackRoute(
+                routes.MapSpaFallbackRoute (
                     name: "spa-fallback",
-                    defaults: new { controller = "Home", action = "Index" });
+                    defaults : new { controller = "Home", action = "Index" });
             });
         }
-
-        // https://stackoverflow.com/questions/42030137/suppress-redirect-on-api-urls-in-asp-net-core/42030138#42030138
-        static Func<RedirectContext<CookieAuthenticationOptions>, Task> ReplaceRedirector(HttpStatusCode statusCode,
-            Func<RedirectContext<CookieAuthenticationOptions>, Task> existingRedirector) =>
-            context =>
-            {
-                if (context.Request.Path.StartsWithSegments("/api"))
-                {
-                    context.Response.StatusCode = (int)statusCode;
-                    return Task.CompletedTask;
-                }
-                return existingRedirector(context);
-            };
     }
 }

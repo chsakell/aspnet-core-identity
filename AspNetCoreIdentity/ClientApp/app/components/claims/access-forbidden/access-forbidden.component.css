@@ -1,0 +1,7 @@
+.center {text-align: center; margin-left: auto; margin-right: auto; margin-bottom: auto; margin-top: auto;}
+
+.forbidden {
+    background: #232222;
+    color: whitesmoke;
+    padding-bottom: 70px;
+}

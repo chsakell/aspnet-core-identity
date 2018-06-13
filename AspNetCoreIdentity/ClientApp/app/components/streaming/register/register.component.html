@@ -1,0 +1,22 @@
+<div class="row text-center">
+    <div class="col-md-12 text-center">
+        <h3>Streaming Video Categories</h3>
+    </div>
+
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8 text-center">
+        <div class="list-group">
+            <a (click)="$event.stopPropagation()" class="list-group-item active">Streaming Catetories
+                <input title="toggle all" type="checkbox" [(ngModel)]="checkedAll" class="all pull-right" (change)="toggleCategories($event)">
+            </a>
+            <a (click)="toggleCategory(category)" [ngClass]="{'list-group-item': true, 'registered': category.registered, 'streaming-category': true }"
+                *ngFor="let category of categories">
+                {{category.category}}
+                <button class="category-button btn btn-default btn-sm pull-right" (click)="viewCategory($event, category.category)">View</button>
+            </a>
+            <button (click)="update()" class="list-group-item active save">Update
+            </button>
+        </div>
+    </div>
+    <div class="col-sm-2"></div>
+</div>

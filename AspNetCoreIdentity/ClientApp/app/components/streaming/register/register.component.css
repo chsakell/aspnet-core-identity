@@ -1,0 +1,22 @@
+.registered, .list-group-item .registered {
+    background: #dff0d8 !important;
+}
+
+button.save {
+    text-align: center;
+    background: #3c763d !important;
+}
+
+button.add {
+    text-align: center;
+    background: #eee !important;
+    color: #232222;
+}
+
+.streaming-category {
+    cursor: pointer;
+}
+
+.category-button {
+    margin-top:-5px;
+}
