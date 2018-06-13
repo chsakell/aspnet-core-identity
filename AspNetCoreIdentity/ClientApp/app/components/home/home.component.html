@@ -1,57 +1,53 @@
 <h1 id="aspnetcoreidentityseries">ASP.NET Core Identity Series</h1>
 
-<p>
-    <img src="https://chsakell.files.wordpress.com/2018/04/aspnet-core-identity-13.png" alt="ASP.NET Core Identity Series" />
-</p>
+<p><img src="https://chsakell.files.wordpress.com/2018/04/aspnet-core-identity-13.png" alt="ASP.NET Core Identity Series" /></p>
 
-<h2 id="part1gettingstartedhttpchsakellcom20180428aspnetcoreidentityseriesgettingstarted">Part 1 -
-    <a href="http://chsakell.com/2018/04/28/asp-net-core-identity-series-getting-started">Getting Started</a>
-</h2>
+<h2 id="part1gettingstartedhttpchsakellcom20180428aspnetcoreidentityseriesgettingstarted">Part 1 - <a href="http://chsakell.com/2018/04/28/asp-net-core-identity-series-getting-started">Getting Started</a></h2>
 
 <ul>
-    <li>Introduction to ASP.NET Core Identity library</li>
+<li>Introduction to ASP.NET Core Identity library</li>
 
-    <li>Describe ASP.NET Core Identity basic archirecture</li>
+<li>Describe ASP.NET Core Identity basic archirecture</li>
 
-    <li>Explain the role and relationship between
-        <code>Stores</code> and
-        <code>Managers</code> and how they function under the hood</li>
+<li>Explain the role and relationship between <code>Stores</code> and <code>Managers</code> and how they function under the hood</li>
 
-    <li>Explain what
-        <code>Claims</code>,
-        <code>ClaimsIdentity</code> and
-        <code>ClaimsPrincipal</code> entities are and how they are related</li>
+<li>Explain what <code>Claims</code>, <code>ClaimsIdentity</code> and <code>ClaimsPrincipal</code> entities are and how they are related</li>
 
-    <li>Step by step guide on how to install and start using the core packages</li>
+<li>Step by step guide on how to install and start using the core packages</li>
 
-    <li>Associated repository branch:
-        <a href="https://github.com/chsakell/aspnet-core-identity/tree/getting-started">getting-started</a>
-    </li>
+<li>Associated repository branch: <a href="https://github.com/chsakell/aspnet-core-identity/tree/getting-started">getting-started</a></li>
 </ul>
 
-<h2 id="part2integrateentityframeworkhttpswpmep3mrwu1i4">Part 2 -
-    <a href="https://wp.me/p3mRWu-1i4">Integrate Entity Framework</a>
-</h2>
+<h2 id="part2integrateentityframeworkhttpswpmep3mrwu1i4">Part 2 - <a href="https://wp.me/p3mRWu-1i4">Integrate Entity Framework</a></h2>
 
 <ul>
-    <li>Introduce
-        <code>Microsoft.Extensions.Identity.Stores</code> and
-        <code>UserStoreBase</code> store implementations</li>
+<li>Introduce <code>Microsoft.Extensions.Identity.Stores</code> and <code>UserStoreBase</code> store implementations</li>
 
-    <li>Plug and configure Entity Framework Core with ASP.NET Core Identity and minimum configuration</li>
+<li>Plug and configure Entity Framework Core with ASP.NET Core Identity and minimum configuration</li>
 
-    <li>Explain Entity Framework different store implementations such as
-        <code>UserOnlyStore</code> or
-        <code>UserStore</code>
-    </li>
+<li>Explain Entity Framework different store implementations such as <code>UserOnlyStore</code> or <code>UserStore</code></li>
 
-    <li>Step by step guide for applying migrations and creating Identity's SQL Schema</li>
+<li>Step by step guide for applying migrations and creating Identity's SQL Schema</li>
 
-    <li>Discuss whether you should use ASP.NET Core Identity with Entity Framework</li>
+<li>Discuss whether you should use ASP.NET Core Identity with Entity Framework</li>
 
-    <li>Associated repository branch:
-        <a href="https://github.com/chsakell/aspnet-core-identity/tree/entity-framework-integration">entity-framework-integration</a>
-    </li>
+<li>Associated repository branch: <a href="https://github.com/chsakell/aspnet-core-identity/tree/entity-framework-integration">entity-framework-integration</a></li>
+</ul>
+
+<h2 id="part3deepdiveinauthorizationhttpswpmep3mrwu1ik">Part 3 - <a href="https://wp.me/p3mRWu-1ik">Deep Dive in authorization</a></h2>
+
+<ul>
+<li>Explain <code>Claims-based</code> authorization by example</li>
+
+<li>Explain <code>Role-based</code> authorization by example</li>
+
+<li>Step by step guide for creating custom <code>Authorization Policy Provider</code></li>
+
+<li>Explain how authorization works under the hood</li>
+
+<li>Explain <code>Imperative authorization</code> by example</li>
+
+<li>Associated repository branch: <a href="https://github.com/chsakell/aspnet-core-identity/tree/authorization">authorization</a></li>
 </ul>
 
 <h2 id="installationinstructions">Installation instructions</h2>
@@ -59,91 +55,65 @@
 <p>The project is built with ASP.NET Core with Angular on the client side. </p>
 
 <ol>
-    <li>
-        <strong>Visual Studio 2017</strong>: Just open the solution and wait to install the npm packages before running</li>
+<li><strong>Visual Studio 2017</strong>: Just open the solution and wait to install the npm packages before running</li>
 
-    <li>
-        <strong>Without Visual Studio</strong>:
+<li><strong>Without Visual Studio</strong>:
 
 
-        <ul>
-            <li>
-                <code>cd ./AspNetCoreIdentity</code> where the package.json file exist</li>
+<ul>
+<li><code>cd ./AspNetCoreIdentity</code> where the package.json file exist</li>
 
-            <li>
-                <code>npm install</code>
-            </li>
+<li><code>npm install</code></li>
 
-            <li>
-                <code>dotnet restore</code>
-            </li>
+<li><code>dotnet restore</code></li>
 
-            <li>
-                <code>dotnet build</code>
-            </li>
+<li><code>dotnet build</code></li>
 
-            <li>
-                <code>dotnet run</code>
-            </li>
-        </ul>
-    </li>
+<li><code>dotnet run</code></li></ul>
+</li>
 
-    <li>
-        <strong>Create the database</strong>
-        <em>(required for second part and later)</em>
+<li><strong>Create the database</strong> <em>(required for second part and later)</em>
 
 
-        <ul>
-            <li>
-                <code>cd ./AspNetCoreIdentity</code> where the AspNetCoreIdentity.csproj exist</li>
+<ul>
+<li><code>cd ./AspNetCoreIdentity</code> where the AspNetCoreIdentity.csproj exist</li>
 
-            <li>
-                <code>dotnet ef migrations add initial_migration</code>
-            </li>
+<li><code>dotnet ef migrations add initial_migration</code></li>
 
-            <li>
-                <code>dotnet ef database update</code>
-            </li>
-        </ul>
-    </li>
+<li><code>dotnet ef database update</code></li></ul>
+</li>
 </ol>
+
+<blockquote>
+  <p>In case you don't want to use SQL Database simply set <strong>InMemoryProvider”: true</strong> in the <em>appsettings.json</em></p>
+</blockquote>
 
 <h3 style="font-weight:normal;">Follow chsakell's Blog</h3>
 
-<table id="gradient-style" style="box-shadow:3px -2px 10px #1F394C;font-size:12px;margin:15px;width:290px;text-align:left;border-collapse:collapse;"
-    summary="">
-    <thead>
-        <tr>
-            <th style="width:130px;font-size:13px;font-weight:bold;padding:8px;background:#1F1F1F repeat-x;border-top:2px solid #d3ddff;border-bottom:1px solid #fff;color:#E0E0E0;"
-                align="center" scope="col">Facebook</th>
-            <th style="font-size:13px;font-weight:bold;padding:8px;background:#1F1F1F repeat-x;border-top:2px solid #d3ddff;border-bottom:1px solid #fff;color:#E0E0E0;"
-                align="center" scope="col">Twitter</th>
-        </tr>
-    </thead>
-    <tfoot>
-        <tr>
-            <td colspan="4" style="text-align:center;">Microsoft Web Application Development</td>
-        </tr>
-    </tfoot>
-    <tbody>
-        <tr>
-            <td style="padding:8px;border-bottom:1px solid #fff;color:#FFA500;border-top:1px solid #fff;background:#1F394C repeat-x;">
-                <a href="https://www.facebook.com/chsakells.blog" target="_blank">
-                    <img src="https://chsakell.files.wordpress.com/2015/08/facebook.png?w=120&amp;h=120&amp;crop=1" alt="facebook"
-                        width="120" height="120" class="alignnone size-opti-archive wp-image-3578">
-                </a>
-            </td>
-            <td style="padding:8px;border-bottom:1px solid #fff;color:#FFA500;border-top:1px solid #fff;background:#1F394C repeat-x;">
-                <a href="https://twitter.com/chsakellsBlog" target="_blank">
-                    <img src="https://chsakell.files.wordpress.com/2015/08/twitter-small.png?w=120&amp;h=120&amp;crop=1" alt="twitter-small"
-                        width="120" height="120" class="alignnone size-opti-archive wp-image-3583">
-                </a>
-            </td>
-        </tr>
-    </tbody>
+<table id="gradient-style" style="box-shadow:3px -2px 10px #1F394C;font-size:12px;margin:15px;width:290px;text-align:left;border-collapse:collapse;" summary="">
+<thead>
+<tr>
+<th style="width:130px;font-size:13px;font-weight:bold;padding:8px;background:#1F1F1F repeat-x;border-top:2px solid #d3ddff;border-bottom:1px solid #fff;color:#E0E0E0;" align="center" scope="col">Facebook</th>
+<th style="font-size:13px;font-weight:bold;padding:8px;background:#1F1F1F repeat-x;border-top:2px solid #d3ddff;border-bottom:1px solid #fff;color:#E0E0E0;" align="center" scope="col">Twitter</th>
+</tr>
+</thead>
+<tfoot>
+<tr>
+<td colspan="4" style="text-align:center;">Microsoft Web Application Development</td>
+</tr>
+</tfoot>
+<tbody>
+<tr>
+<td style="padding:8px;border-bottom:1px solid #fff;color:#FFA500;border-top:1px solid #fff;background:#1F394C repeat-x;">
+<a href="https://www.facebook.com/chsakells.blog" target="_blank"><img src="https://chsakell.files.wordpress.com/2015/08/facebook.png?w=120&amp;h=120&amp;crop=1" alt="facebook" width="120" height="120" class="alignnone size-opti-archive wp-image-3578"></a>
+</td>
+<td style="padding:8px;border-bottom:1px solid #fff;color:#FFA500;border-top:1px solid #fff;background:#1F394C repeat-x;">
+<a href="https://twitter.com/chsakellsBlog" target="_blank"><img src="https://chsakell.files.wordpress.com/2015/08/twitter-small.png?w=120&amp;h=120&amp;crop=1" alt="twitter-small" width="120" height="120" class="alignnone size-opti-archive wp-image-3583"></a>
+</td>
+</tr>
+</tbody>
 </table>
 
 <h3>License</h3>
 
-<p>Code released under the
-    <a href="https://github.com/chsakell/aspnet-core-identity/blob/master/LICENSE" target="_blank"> MIT license</a>.</p>
+<p>Code released under the <a href="https://github.com/chsakell/aspnet-core-identity/blob/master/LICENSE" target="_blank"> MIT license</a>.</p>
