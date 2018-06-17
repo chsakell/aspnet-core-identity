@@ -29,6 +29,8 @@
 * Explain `Imperative authorization` by example
 * Associated repository branch: [authorization](https://github.com/chsakell/aspnet-core-identity/tree/authorization)
 
+> To be continued..
+
 ## Installation instructions
 
 The project is built with ASP.NET Core with Angular on the client side. 
