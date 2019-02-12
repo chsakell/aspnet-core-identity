@@ -1,5 +1,5 @@
 {
-  "name": "AspNetCoreIdentity",
+  "name": "aspnet-core-identity",
   "private": true,
   "version": "0.0.0",
   "scripts": {

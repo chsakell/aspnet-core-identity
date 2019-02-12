@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2015
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreIdentity", "AspNetCoreIdentity\AspNetCoreIdentity.csproj", "{1F8BFE1B-F23D-4E93-B12C-393976AF5371}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCoreIdentity", "AspNetCoreIdentity\AspNetCoreIdentity.csproj", "{1F8BFE1B-F23D-4E93-B12C-393976AF5371}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer", "IdentityServer\IdentityServer.csproj", "{5178703E-2DE1-4543-B220-CEFECB113CBE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{1F8BFE1B-F23D-4E93-B12C-393976AF5371}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F8BFE1B-F23D-4E93-B12C-393976AF5371}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F8BFE1B-F23D-4E93-B12C-393976AF5371}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5178703E-2DE1-4543-B220-CEFECB113CBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5178703E-2DE1-4543-B220-CEFECB113CBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5178703E-2DE1-4543-B220-CEFECB113CBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5178703E-2DE1-4543-B220-CEFECB113CBE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

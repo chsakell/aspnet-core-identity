@@ -43,7 +43,7 @@ namespace AspNetCoreIdentity {
                         optionsBuilder =>
                         optionsBuilder.MigrationsAssembly (typeof (Startup).Assembly.GetName ().Name));
                 } else {
-                    options.UseInMemoryDatabase ();
+                    options.UseInMemoryDatabase("AspNetCoreIdentityDb");
                 }
 
             });
