@@ -1,32 +1,82 @@
 ﻿using System;
+using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace IdentityServer
 {
     public class Startup
     {
-        private readonly IHostingEnvironment _env;
+        public IConfiguration Configuration { get; }
+        public IHostingEnvironment Environment { get; }
 
-        public Startup(IHostingEnvironment env)
+        public Startup(IHostingEnvironment env, IConfiguration configuration)
         {
-            _env = env;
+            Configuration = configuration;
+            Environment = env;
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_2_2);
+            bool useInMemoryProvider = bool.Parse(Configuration["InMemoryIdentityServer"]);
+            var connectionString = Configuration.GetConnectionString("IdentityServerConnection");
+            var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
-            var builder = services.AddIdentityServer()
-            .AddInMemoryIdentityResources(Config.GetIdentityResources())
-            .AddInMemoryApiResources(Config.GetApis())
-            .AddInMemoryClients(Config.GetClients())
-            .AddTestUsers(Config.GetUsers());
+            services.AddDbContext<IdentityDbContext>(options =>
+                options.UseSqlServer(connectionString));
 
-            if (_env.IsDevelopment())
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<IdentityDbContext>()
+                .AddDefaultTokenProviders();
+
+            services.AddMvc();
+
+            services.Configure<IISOptions>(iis =>
+            {
+                iis.AuthenticationDisplayName = "Windows";
+                iis.AutomaticAuthentication = false;
+            });
+
+            var builder = useInMemoryProvider ? 
+                services.AddIdentityServer()
+                    .AddInMemoryIdentityResources(Config.GetIdentityResources())
+                    .AddInMemoryApiResources(Config.GetApis())
+                    .AddInMemoryClients(Config.GetClients())
+                    .AddTestUsers(Config.GetUsers()) :
+                services.AddIdentityServer(options =>
+                    {
+                        options.Events.RaiseErrorEvents = true;
+                        options.Events.RaiseInformationEvents = true;
+                        options.Events.RaiseFailureEvents = true;
+                        options.Events.RaiseSuccessEvents = true;
+                    })
+                    // this adds the config data from DB (clients, resources)
+                    .AddConfigurationStore(options =>
+                    {
+                        options.ConfigureDbContext = b =>
+                            b.UseSqlServer(connectionString,
+                                sql => sql.MigrationsAssembly(migrationsAssembly));
+                    })
+                    // this adds the operational data from DB (codes, tokens, consents)
+                    .AddOperationalStore(options =>
+                    {
+                        options.ConfigureDbContext = b =>
+                            b.UseSqlServer(connectionString,
+                                sql => sql.MigrationsAssembly(migrationsAssembly));
+
+                        // this enables automatic token cleanup. this is optional.
+                        options.EnableTokenCleanup = true;
+                    })
+                    .AddAspNetIdentity<IdentityUser>();
+
+            if (Environment.IsDevelopment())
             {
                 builder.AddDeveloperSigningCredential();
             }

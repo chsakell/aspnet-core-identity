@@ -27,24 +27,24 @@ namespace IdentityServer
                 new TestUser
                 {
                     SubjectId = "1",
-                    Username = "alice",
+                    Username = "chsakell",
                     Password = "password",
 
                     Claims = new []
                     {
-                        new Claim("name", "Alice"),
+                        new Claim("name", "chsakell"),
                         new Claim("website", "https://alice.com")
                     }
                 },
                 new TestUser
                 {
                     SubjectId = "2",
-                    Username = "bob",
+                    Username = "admin",
                     Password = "password",
 
                     Claims = new []
                     {
-                        new Claim("name", "Bob"),
+                        new Claim("name", "admin"),
                         new Claim("website", "https://bob.com")
                     }
                 }
@@ -72,7 +72,7 @@ namespace IdentityServer
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "api1"
+                        "SocialAPI"
                     }
                 }
             };
@@ -82,7 +82,7 @@ namespace IdentityServer
         {
             return new List<ApiResource>
             {
-                new ApiResource("api1", "My API")
+                new ApiResource("SocialAPI", "Social Network API")
             };
         }
     }
