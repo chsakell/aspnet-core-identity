@@ -22,22 +22,22 @@ namespace IdentityServer
             provider.GetRequiredService<ConfigurationDbContext>().Database.Migrate();
 
             var userManager = provider.GetRequiredService<UserManager<IdentityUser>>();
-            var alice = userManager.FindByNameAsync("alice").Result;
-            if (alice == null)
+            var chsakell = userManager.FindByNameAsync("chsakell").Result;
+            if (chsakell == null)
             {
-                alice = new IdentityUser
+                chsakell = new IdentityUser
                 {
                     UserName = "chsakell"
                 };
-                var result = userManager.CreateAsync(alice, "$AspNetIdentity$").Result;
+                var result = userManager.CreateAsync(chsakell, "$AspNetIdentity$").Result;
                 if (!result.Succeeded)
                 {
                     throw new Exception(result.Errors.First().Description);
                 }
 
-                alice = userManager.FindByNameAsync("alice").Result;
+                chsakell = userManager.FindByNameAsync("chsakell").Result;
 
-                result = userManager.AddClaimsAsync(alice, new Claim[]{
+                result = userManager.AddClaimsAsync(chsakell, new Claim[]{
                     new Claim(JwtClaimTypes.Name, "Chris Sakellarios"),
                     new Claim(JwtClaimTypes.GivenName, "Chris"),
                     new Claim(JwtClaimTypes.FamilyName, "Sakellarios"),

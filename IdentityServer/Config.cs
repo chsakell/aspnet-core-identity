@@ -58,15 +58,15 @@ namespace IdentityServer
                 // JavaScript Client
                 new Client
                 {
-                    ClientId = "js",
-                    ClientName = "JavaScript Client",
+                    ClientId = "AspNetCoreIdentity",
+                    ClientName = "AspNetCoreIdentity Client",
                     AllowedGrantTypes = GrantTypes.Code,
                     RequirePkce = true,
                     RequireClientSecret = false,
 
-                    RedirectUris =           { "http://localhost:5003/callback.html" },
-                    PostLogoutRedirectUris = { "http://localhost:5003/index.html" },
-                    AllowedCorsOrigins =     { "http://localhost:5003" },
+                    RedirectUris =           { "http://localhost:5000/callback.html" },
+                    PostLogoutRedirectUris = { "http://localhost:5000/index.html" },
+                    AllowedCorsOrigins =     { "http://localhost:5000" },
 
                     AllowedScopes =
                     {
