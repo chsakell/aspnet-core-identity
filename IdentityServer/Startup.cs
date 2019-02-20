@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using IdentityServer.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -25,15 +26,24 @@ namespace IdentityServer
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            bool useInMemoryProvider = bool.Parse(Configuration["InMemoryIdentityServer"]);
+            bool useInMemoryStores = bool.Parse(Configuration["UseInMemoryStores"]);
             var connectionString = Configuration.GetConnectionString("IdentityServerConnection");
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
-            services.AddDbContext<IdentityDbContext>(options =>
-                options.UseSqlServer(connectionString));
+            services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                if (useInMemoryStores)
+                {
+                    options.UseInMemoryDatabase("IdentityServerDb");
+                }
+                else
+                {
+                    options.UseSqlServer(connectionString);
+                }
+            });
 
             services.AddIdentity<IdentityUser, IdentityRole>()
-                .AddEntityFrameworkStores<IdentityDbContext>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
             services.AddMvc();
@@ -44,7 +54,7 @@ namespace IdentityServer
                 iis.AutomaticAuthentication = false;
             });
 
-            var builder = useInMemoryProvider ? 
+            var builder = useInMemoryStores ? 
                 services.AddIdentityServer()
                     .AddInMemoryIdentityResources(Config.GetIdentityResources())
                     .AddInMemoryApiResources(Config.GetApis())

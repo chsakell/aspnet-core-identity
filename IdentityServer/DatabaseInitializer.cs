@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using IdentityModel;
+using IdentityServer.Data;
 using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.EntityFramework.Mappers;
 using Microsoft.AspNetCore.Identity;
@@ -15,11 +16,16 @@ namespace IdentityServer
 {
     public class DatabaseInitializer
     {
-        public static void Init(IServiceProvider provider)
+        public static void Init(IServiceProvider provider, bool useInMemoryStores)
         {
-            provider.GetRequiredService<IdentityDbContext>().Database.Migrate();
-            provider.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
-            provider.GetRequiredService<ConfigurationDbContext>().Database.Migrate();
+            if (!useInMemoryStores)
+            {
+                provider.GetRequiredService<ApplicationDbContext>().Database.Migrate();
+                provider.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
+                provider.GetRequiredService<ConfigurationDbContext>().Database.Migrate();
+
+                InitializeIdentityServer(provider);
+            }
 
             var userManager = provider.GetRequiredService<UserManager<IdentityUser>>();
             var chsakell = userManager.FindByNameAsync("chsakell").Result;
@@ -29,7 +35,7 @@ namespace IdentityServer
                 {
                     UserName = "chsakell"
                 };
-                var result = userManager.CreateAsync(chsakell, "$AspNetIdentity$").Result;
+                var result = userManager.CreateAsync(chsakell, "$AspNetIdentity10$").Result;
                 if (!result.Succeeded)
                 {
                     throw new Exception(result.Errors.First().Description);
@@ -59,7 +65,7 @@ namespace IdentityServer
             }
         }
 
-        private void InitializeIdentityServer(IServiceProvider provider)
+        private static void InitializeIdentityServer(IServiceProvider provider)
         {
             var context = provider.GetRequiredService<ConfigurationDbContext>();
             if (!context.Clients.Any())

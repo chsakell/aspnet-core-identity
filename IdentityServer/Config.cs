@@ -33,7 +33,7 @@ namespace IdentityServer
                     Claims = new []
                     {
                         new Claim("name", "chsakell"),
-                        new Claim("website", "https://alice.com")
+                        new Claim("website", "https://chsakell.com")
                     }
                 },
                 new TestUser
@@ -45,7 +45,7 @@ namespace IdentityServer
                     Claims = new []
                     {
                         new Claim("name", "admin"),
-                        new Claim("website", "https://bob.com")
+                        new Claim("website", "https://admin.com")
                     }
                 }
             };

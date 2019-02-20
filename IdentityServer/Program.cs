@@ -15,18 +15,15 @@ namespace IdentityServer
     {
         public static void Main(string[] args)
         {
-           var host = CreateWebHostBuilder(args).Build();
+            var host = CreateWebHostBuilder(args).Build();
 
-           using (var scope = host.Services.CreateScope())
-           {
-               var services = scope.ServiceProvider;
-               var config = services.GetService<IConfiguration>(); // the key/fix!
-               var useInMemoryIdentityServer = config.GetValue<bool>("InMemoryIdentityServer");
-               if (useInMemoryIdentityServer)
-               {
-                    DatabaseInitializer.Init(services);
-               }
-           }
+            using (var scope = host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                var config = services.GetService<IConfiguration>(); // the key/fix!
+                var useInMemoryStores = config.GetValue<bool>("UseInMemoryStores");
+                DatabaseInitializer.Init(services, useInMemoryStores);
+            }
 
             host.Run();
         }
