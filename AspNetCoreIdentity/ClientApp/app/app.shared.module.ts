@@ -19,6 +19,8 @@ import { AccessForbiddenComponent } from './components/claims/access-forbidden/a
 import { ManageComponent } from './components/manage/manage.component';
 import { StreamingRegisterComponent } from './components/streaming/register/register.component';
 import { AddVideoComponent } from './components/streaming/add/add-video.component';
+import { OidcCallbackComponent } from './components/oidc/callback';
+import { OpenConnectIdService } from './core/openconnect-id.service';
 
 @NgModule({
     declarations: [
@@ -32,7 +34,8 @@ import { AddVideoComponent } from './components/streaming/add/add-video.componen
         StreamingRegisterComponent,
         AddVideoComponent,
         AccessForbiddenComponent,
-        ManageComponent
+        ManageComponent,
+        OidcCallbackComponent
     ],
     imports: [
         CommonModule,
@@ -52,12 +55,14 @@ import { AddVideoComponent } from './components/streaming/add/add-video.componen
             { path: 'streaming/videos/add', component: AddVideoComponent },
             { path: 'access-forbidden', component: AccessForbiddenComponent },
             { path: 'manage/users', component: ManageComponent },
+            { path: 'callback', component: OidcCallbackComponent },
             { path: '**', redirectTo: 'home' }
         ])
     ],
     providers: [
         { provide: Http, useClass: HttpInterceptor },
-        StateService
+        StateService,
+        OpenConnectIdService
     ]
 })
 export class AppModuleShared {

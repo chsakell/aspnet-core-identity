@@ -46,7 +46,7 @@ namespace IdentityServer
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddMvc();
+            services.AddMvc().SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_2_2); ;
 
             services.Configure<IISOptions>(iis =>
             {
@@ -58,8 +58,7 @@ namespace IdentityServer
                 services.AddIdentityServer()
                     .AddInMemoryIdentityResources(Config.GetIdentityResources())
                     .AddInMemoryApiResources(Config.GetApis())
-                    .AddInMemoryClients(Config.GetClients())
-                    .AddTestUsers(Config.GetUsers()) :
+                    .AddInMemoryClients(Config.GetClients()) :
                 services.AddIdentityServer(options =>
                     {
                         options.Events.RaiseErrorEvents = true;
