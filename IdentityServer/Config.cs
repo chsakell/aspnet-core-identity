@@ -20,37 +20,6 @@ namespace IdentityServer
             };
         }
 
-        public static List<TestUser> GetUsers()
-        {
-            return new List<TestUser>
-            {
-                new TestUser
-                {
-                    SubjectId = "1",
-                    Username = "chsakell",
-                    Password = "password",
-
-                    Claims = new []
-                    {
-                        new Claim("name", "chsakell"),
-                        new Claim("website", "https://chsakell.com")
-                    }
-                },
-                new TestUser
-                {
-                    SubjectId = "2",
-                    Username = "admin",
-                    Password = "password",
-
-                    Claims = new []
-                    {
-                        new Claim("name", "admin"),
-                        new Claim("website", "https://admin.com")
-                    }
-                }
-            };
-        }
-
         public static IEnumerable<Client> GetClients()
         {
             return new List<Client>
@@ -64,7 +33,7 @@ namespace IdentityServer
                     RequirePkce = true,
                     RequireClientSecret = false,
 
-                    RedirectUris =           { "http://localhost:5000/callback" },
+                    RedirectUris =           { "http://localhost:5000" },
                     PostLogoutRedirectUris = { "http://localhost:5000" },
                     AllowedCorsOrigins =     { "http://localhost:5000" },
 
