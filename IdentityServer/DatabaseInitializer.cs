@@ -45,12 +45,12 @@ namespace IdentityServer
 
                 result = userManager.AddClaimsAsync(chsakell, new Claim[]{
                     new Claim(JwtClaimTypes.Name, "Chris Sakellarios"),
-                    new Claim(JwtClaimTypes.GivenName, "Chris"),
+                    new Claim(JwtClaimTypes.GivenName, "Christos"),
                     new Claim(JwtClaimTypes.FamilyName, "Sakellarios"),
                     new Claim(JwtClaimTypes.Email, "chsakellsblog@blog.com"),
                     new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
                     new Claim(JwtClaimTypes.WebSite, "https://chsakell.com"),
-                    new Claim(JwtClaimTypes.Address, @"{ 'street_address': 'One Hacker Way', 'locality': 'Heidelberg', 'postal_code': 69118, 'country': 'Germany' }", 
+                    new Claim(JwtClaimTypes.Address, @"{ 'street_address': 'Localhost 10', 'postal_code': 69118, 'country': 'Greece' }", 
                         IdentityServer4.IdentityServerConstants.ClaimValueTypes.Json),
                     new Claim(JwtClaimTypes.Subject, chsakell.Id) 
                 }).Result;

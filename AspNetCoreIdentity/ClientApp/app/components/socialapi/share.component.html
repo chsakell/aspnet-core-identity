@@ -34,11 +34,17 @@
                             <div class="col-lg-12">
                                 Congratulations! You have successfully connected with Social API!
                             </div>
+                            <div *ngIf="socialApiAccessDenied" class="col-lg-12 grant-error">
+                                It seems though you haven't granted access to the <b>Social API</b>
+                            </div>
                         </div>
                         <div class="row message">
                             <ul class="list-group">
                                 <li *ngFor="let contact of contacts" class="list-group-item"><span class="contact">{{contact.name}}</span> <span class="badge">{{contact.username}}</span></li>
                             </ul>
+                            <div *ngIf="!socialApiAccessDenied" class="col-lg-12 grant-success">
+                                <span>ASP.NET Core Identity Series</span> has been shared with your contacts
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-12">

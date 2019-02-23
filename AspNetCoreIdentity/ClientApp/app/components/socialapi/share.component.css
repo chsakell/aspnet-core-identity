@@ -90,3 +90,12 @@
     color: #4189C7;
     font-size: large;
 }
+
+.grant-error {
+    color: #E91E63;
+}
+
+.grant-success {
+    color: #029f5b;
+    text-align: center;
+}

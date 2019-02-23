@@ -20,7 +20,7 @@ import { ManageComponent } from './components/manage/manage.component';
 import { StreamingRegisterComponent } from './components/streaming/register/register.component';
 import { AddVideoComponent } from './components/streaming/add/add-video.component';
 import { SocialApiShareComponent } from './components/socialapi/share.component';
-import { OpenConnectIdService } from './core/openconnect-id.service';
+import { OpenIdConnectService } from './core/openid-connect.service';
 
 @NgModule({
     declarations: [
@@ -62,7 +62,7 @@ import { OpenConnectIdService } from './core/openconnect-id.service';
     providers: [
         { provide: Http, useClass: HttpInterceptor },
         StateService,
-        OpenConnectIdService
+        OpenIdConnectService
     ]
 })
 export class AppModuleShared {

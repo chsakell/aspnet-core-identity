@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Http } from '@angular/http';
 import { StateService, UserState } from '../../core/state.service';
-import { OpenConnectIdService } from '../../core/openconnect-id.service';
+import { OpenIdConnectService } from '../../core/openid-connect.service';
 
 @Component({
     selector: 'app',
@@ -11,7 +11,7 @@ import { OpenConnectIdService } from '../../core/openconnect-id.service';
 })
 export class AppComponent {
     constructor(public http: Http, stateService: StateService, router: Router,
-        @Inject('BASE_URL') public baseUrl: string, openConnectIdService: OpenConnectIdService) {
+        @Inject('BASE_URL') public baseUrl: string, openConnectIdService: OpenIdConnectService) {
         this.http.get(this.baseUrl + 'api/account/authenticated').subscribe(result => {
             var state = result.json() as UserState;
             console.log(state);

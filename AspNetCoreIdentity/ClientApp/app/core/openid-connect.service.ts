@@ -3,7 +3,7 @@
 declare var Oidc : any;
 
 @Injectable()
-export class OpenConnectIdService {
+export class OpenIdConnectService {
     
     config = {
         authority: "http://localhost:5005",

@@ -2,7 +2,7 @@
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { Router } from '@angular/router';
 import { StateService } from '../../core/state.service';
-import { OpenConnectIdService } from '../../core/openconnect-id.service';
+import { OpenIdConnectService } from '../../core/openid-connect.service';
 
 @Component({
     selector: 'social-api-share',
@@ -13,9 +13,10 @@ export class SocialApiShareComponent {
 
     public socialLoggedIn: any;
     public contacts: IContact[] = [];
+    public socialApiAccessDenied : boolean = false;
 
     constructor(public http: Http,
-        public openConnectIdService: OpenConnectIdService,
+        public openConnectIdService: OpenIdConnectService,
         public router: Router, public stateService: StateService) {
         openConnectIdService.getUser().then((user: any) => {
             if (user) {
@@ -33,7 +34,11 @@ export class SocialApiShareComponent {
                 this.http.get(socialApiContactsURI, options).subscribe(result => {
                     this.contacts = result.json() as IContact[];
 
-                }, error => console.error(error));
+                }, error => {
+                    if (error.status === 401) {
+                        this.socialApiAccessDenied = true;
+                    }
+                });
             }
 
         });

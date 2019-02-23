@@ -29,24 +29,40 @@
 * Explain `Imperative authorization` by example
 * Associated repository branch: [authorization](https://github.com/chsakell/aspnet-core-identity/tree/authorization)
 
+## Part 4 - [OAuth 2.0, OpenID Connect & IdentityServer](https://wp.me/p3mRWu-1ik)
+
+* Explain how `OAuth 2.0` works *(terminology, grant types, tokens, flows)*
+* Explain how `OpenID Connect` works *(terminology, grant types, tokens, flows)*
+* Learn how to use `IdentityServer` for integrating  `OAuth 2.0` and `OpenID Connect`
+* Associated repository branch: [identity-server](https://github.com/chsakell/aspnet-core-identity/tree/identity-server)
+
 > To be continued..
 
 ## Installation instructions
 
 The project is built with ASP.NET Core with Angular on the client side. 
-1. **Visual Studio 2017**: Just open the solution and wait to install the npm packages before running
-2. **Without Visual Studio**:
+1. **Basic project setup**:
     * `cd ./AspNetCoreIdentity` where the package.json file exist
     * `npm install`
     * `dotnet restore`
     * `dotnet build`
     * `dotnet run`
-3. **Create the database** *(required for second part and later)*
+2. **Create the *AspNetCoreIdentityDb* database**
     * `cd ./AspNetCoreIdentity` where the AspNetCoreIdentity.csproj exist
-    * `dotnet ef migrations add initial_migration`
-    * `dotnet ef database update`
+    * `Add-Migration initial_migration` *(optional if already exists)*
+    * `Update-Database`
+3. **Create the *IdentityServerDb* database**
+    * `cd ./IdentityServer` where the IdentityServer.csproj exist
+    * `Add-Migration InitialIdentityServerPersistedGrantDbMigration -c PersistedGrantDbContext -o Data/Migrations/IdentityServer/PersistedGrantDb` *(optional if already exists)*
+    * `Add-Migration InitialIdentityServerConfigurationDbMigration -c ConfigurationDbContext -o Data/Migrations/IdentityServer/ConfigurationDb` *(optional if already exists)*
+    * `Add-Migration InitialIdentityServerConfigurationDbMigration -c ApplicationDbContext -o Data/Migrations` *(optional if already exists)*
+    * `Update-Database -Context ApplicationDbContext`
+    * `Update-Database -Context PersistedGrantDbContext`
+    * `Update-Database -Context ConfigurationDbContext`
 
-> In case you don't want to use SQL Database simply set **InMemoryProvider: true** in the *appsettings.json*
+> In case you don't want to use a real SQL Server Database when running the `AspNetCoreIdentity` project, simply set **InMemoryProvider: true** in the *appsettings.json*
+
+> In case you don't want to use a real SQL Server Database when running the `IdentityServer` project simply set **UseInMemoryStores: true** in the relative *appsettings.json*
 
 <h3 style="font-weight:normal;">Follow chsakell's Blog</h3>
 <table id="gradient-style" style="box-shadow:3px -2px 10px #1F394C;font-size:12px;margin:15px;width:290px;text-align:left;border-collapse:collapse;" summary="">

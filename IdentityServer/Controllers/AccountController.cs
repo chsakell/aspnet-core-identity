@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using IdentityModel;
 using IdentityServer.Extensions;
@@ -200,7 +201,71 @@ namespace IdentityServer.Controllers
             return View("LoggedOut", vm);
         }
 
+        /// <summary>
+        /// Entry point into the login workflow
+        /// </summary>
+        [HttpGet]
+        public IActionResult Register(string returnUrl)
+        {
+            // build a model so we know what to show on the login page
+            var vm = new RegisterVM {ReturnUrl = returnUrl};
+            return View(vm);
+        }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(RegisterVM model)
+        {
+            if (ModelState.IsValid)
+            {
+                IdentityResult result = null;
+                var user = await _userManager.FindByNameAsync(model.Username);
+
+                if (user != null)
+                {
+                    ModelState.AddModelError(string.Empty, AccountOptions.UserAlreadyExistsErrorMessage);
+                    return View();
+                }
+
+                user = new IdentityUser
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    UserName = model.Username,
+                    Email = model.Email
+                };
+
+                result = await _userManager.CreateAsync(user, model.Password);
+
+                if (result.Succeeded)
+                {
+                    var userCreated = await _userManager.FindByNameAsync(model.Username);
+
+                    result = await _userManager.AddClaimsAsync(userCreated, new Claim[]{
+                        new Claim(JwtClaimTypes.Subject, userCreated.Id)
+                    });
+                    if (!result.Succeeded)
+                    {
+                        ModelState.AddModelError(result.Errors.First().Code, result.Errors.First().Description);
+                        return View();
+                    }
+
+                    return RedirectToAction("Login", new {returnUrl = model.ReturnUrl});
+                }
+                else
+                {
+                    var resultErrors = result.Errors.Select(e => "<li>" + e.Description + "</li>");
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(error.Code, error.Description);
+                    }
+                    return View();
+                }
+            }
+
+            var errors = ModelState.Keys.Select(e => "<li>" + e + "</li>");
+            ModelState.AddModelError(string.Empty, string.Join("", errors));
+            return View();
+        }
 
         /*****************************************/
         /* helper APIs for the AccountController */

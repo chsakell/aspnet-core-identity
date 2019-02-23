@@ -1,4 +1,9 @@
-﻿@model IdentityServer.Models.Account.LoginViewModel
+﻿@using Microsoft.AspNetCore.WebUtilities
+@model IdentityServer.Models.Account.LoginViewModel
+
+@{
+    var dictionary = new Dictionary<string, string> { {"ReturnUrl", Model.ReturnUrl }};
+}
 
 <div class="login-page">
     <div class="page-header">
@@ -11,8 +16,8 @@
 
         @if (Model.EnableLocalLogin)
         {
-            <div class="col-sm-6">
-                <div class="panel panel-default">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h3 class="panel-title">Local Login</h3>
                     </div>
@@ -41,12 +46,14 @@
                                 }
 
                                 <div>
-                                    <p>The default users are chsakell/admin, password: $AspNetIdentity10$</p>
+                                <p>The default user is: <b>chsakell</b>, password: <b>$AspNetIdentity10$</b></p>
                                 </div>
 
                                 <div class="form-group">
                                     <button class="btn btn-primary" name="button" value="login">Login</button>
+                                    <a asp-controller="Account"  class="btn btn-success" asp-action="Register" asp-all-route-data="@dictionary">Register</a>
                                     <button class="btn btn-default" name="button" value="cancel">Cancel</button>
+
                                 </div>
                             </fieldset>
                         </form>

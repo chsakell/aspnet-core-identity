@@ -20,5 +20,7 @@ namespace IdentityServer.Models.Account
         public static bool IncludeWindowsGroups = false;
 
         public static string InvalidCredentialsErrorMessage = "Invalid username or password";
+
+        public static string UserAlreadyExistsErrorMessage = "User already exists";
     }
 }

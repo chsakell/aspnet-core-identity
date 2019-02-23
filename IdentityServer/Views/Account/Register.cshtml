@@ -1,0 +1,51 @@
+﻿@model IdentityServer.Models.Account.RegisterVM
+
+<div class="register-page">
+    <div class="page-header">
+        <h1>Registration</h1>
+    </div>
+
+    <partial name="_ValidationSummary" />
+
+    <div class="row">
+
+
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Local Login</h3>
+                </div>
+                <div class="panel-body">
+
+                    <form asp-route="Register">
+                        <input type="hidden" asp-for="ReturnUrl" />
+
+                        <fieldset>
+                            <div class="form-group">
+                                <label asp-for="Username"></label>
+                                <input class="form-control" placeholder="Username" asp-for="Username" autofocus>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Email"></label>
+                                <input class="form-control" placeholder="Email" asp-for="Email" autofocus>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Password"></label>
+                                <input type="password" class="form-control" placeholder="Password" asp-for="Password" autocomplete="off">
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ConfirmPassword"></label>
+                                <input type="password" class="form-control" placeholder="Password" asp-for="ConfirmPassword" autocomplete="off">
+                            </div>
+
+                            <div class="form-group">
+                                <button class="btn btn-primary" name="button" value="register">Register</button>
+                                <button class="btn btn-default" name="button" value="cancel">Cancel</button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
