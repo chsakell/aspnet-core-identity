@@ -47,11 +47,11 @@ The project is built with ASP.NET Core with Angular on the client side.
     * `dotnet restore`
     * `dotnet build`
     * `dotnet run`
-2. **Create the *AspNetCoreIdentityDb* database**
+2. **Create the *AspNetCoreIdentityDb* database** *(skip if you want to run with In memory DB)*
     * `cd ./AspNetCoreIdentity` where the AspNetCoreIdentity.csproj exist
     * `Add-Migration initial_migration` *(optional if already exists)*
     * `Update-Database`
-3. **Create the *IdentityServerDb* database**
+3. **Create the *IdentityServerDb* database** *(skip if you want to run with In memory DB)*
     * `cd ./IdentityServer` where the IdentityServer.csproj exist
     * `Add-Migration InitialIdentityServerPersistedGrantDbMigration -c PersistedGrantDbContext -o Data/Migrations/IdentityServer/PersistedGrantDb` *(optional if already exists)*
     * `Add-Migration InitialIdentityServerConfigurationDbMigration -c ConfigurationDbContext -o Data/Migrations/IdentityServer/ConfigurationDb` *(optional if already exists)*
