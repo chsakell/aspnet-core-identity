@@ -54,12 +54,12 @@ namespace IdentityServer
                 iis.AutomaticAuthentication = false;
             });
 
-            var builder = useInMemoryStores ? 
-                services.AddIdentityServer()
-                    .AddInMemoryIdentityResources(Config.GetIdentityResources())
-                    .AddInMemoryApiResources(Config.GetApis())
-                    .AddInMemoryClients(Config.GetClients()) :
-                services.AddIdentityServer(options =>
+            //var builder = useInMemoryStores ? 
+            //    services.AddIdentityServer()
+            //        .AddInMemoryIdentityResources(Config.GetIdentityResources())
+            //        .AddInMemoryApiResources(Config.GetApis())
+            //        .AddInMemoryClients(Config.GetClients()) :
+                var builder = services.AddIdentityServer(options =>
                     {
                         options.Events.RaiseErrorEvents = true;
                         options.Events.RaiseInformationEvents = true;
@@ -69,16 +69,32 @@ namespace IdentityServer
                     // this adds the config data from DB (clients, resources)
                     .AddConfigurationStore(options =>
                     {
-                        options.ConfigureDbContext = b =>
-                            b.UseSqlServer(connectionString,
-                                sql => sql.MigrationsAssembly(migrationsAssembly));
+                        options.ConfigureDbContext = opt =>
+                        {
+                            if (useInMemoryStores)
+                            {
+                                opt.UseInMemoryDatabase("IdentityServerDb");
+                            }
+                            else
+                            {
+                                opt.UseSqlServer(connectionString);
+                            }
+                        };
                     })
                     // this adds the operational data from DB (codes, tokens, consents)
                     .AddOperationalStore(options =>
                     {
-                        options.ConfigureDbContext = b =>
-                            b.UseSqlServer(connectionString,
-                                sql => sql.MigrationsAssembly(migrationsAssembly));
+                        options.ConfigureDbContext = opt =>
+                        {
+                            if (useInMemoryStores)
+                            {
+                                opt.UseInMemoryDatabase("IdentityServerDb");
+                            }
+                            else
+                            {
+                                opt.UseSqlServer(connectionString);
+                            }
+                        };
 
                         // this enables automatic token cleanup. this is optional.
                         options.EnableTokenCleanup = true;

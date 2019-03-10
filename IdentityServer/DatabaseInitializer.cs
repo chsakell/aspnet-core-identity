@@ -24,8 +24,9 @@ namespace IdentityServer
                 provider.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
                 provider.GetRequiredService<ConfigurationDbContext>().Database.Migrate();
 
-                InitializeIdentityServer(provider);
+                //InitializeIdentityServer(provider);
             }
+            InitializeIdentityServer(provider);
 
             var userManager = provider.GetRequiredService<UserManager<IdentityUser>>();
             var chsakell = userManager.FindByNameAsync("chsakell").Result;
@@ -51,9 +52,14 @@ namespace IdentityServer
                     new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
                     new Claim(JwtClaimTypes.WebSite, "https://chsakell.com"),
                     new Claim(JwtClaimTypes.Address, @"{ 'street_address': 'Localhost 10', 'postal_code': 69118, 'country': 'Greece' }", 
-                        IdentityServer4.IdentityServerConstants.ClaimValueTypes.Json),
-                    new Claim(JwtClaimTypes.Subject, chsakell.Id) 
+                        IdentityServer4.IdentityServerConstants.ClaimValueTypes.Json)
                 }).Result;
+
+                if (useInMemoryStores)
+                {
+                    //userManager.AddClaimAsync(chsakell, new Claim(JwtClaimTypes.Subject, chsakell.Id));
+                }
+
                 if (!result.Succeeded)
                 {
                     throw new Exception(result.Errors.First().Description);

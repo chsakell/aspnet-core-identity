@@ -108,7 +108,7 @@ namespace IdentityServer.Controllers
                 {
                     var user = await _userManager.FindByNameAsync(model.Username);
                     await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.UserName));
-
+                    var claims = await _userManager.GetClaimsAsync(user);
                     if (context != null)
                     {
                         if (await _clientStore.IsPkceClientAsync(context.ClientId))

@@ -36,8 +36,3 @@ export class OpenIdConnectService {
     }
 
 }
-
-//export interface UserState {
-//    userName: string;
-//    isAuthenticated: boolean;
-//}
