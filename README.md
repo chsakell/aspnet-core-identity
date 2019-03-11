@@ -53,9 +53,6 @@ The project is built with ASP.NET Core with Angular on the client side.
     * `Update-Database`
 3. **Create the *IdentityServerDb* database** *(skip if you want to run with In memory DB)*
     * `cd ./IdentityServer` where the IdentityServer.csproj exist
-    * `Add-Migration InitialIdentityServerPersistedGrantDbMigration -c PersistedGrantDbContext -o Data/Migrations/IdentityServer/PersistedGrantDb` *(optional if already exists)*
-    * `Add-Migration InitialIdentityServerConfigurationDbMigration -c ConfigurationDbContext -o Data/Migrations/IdentityServer/ConfigurationDb` *(optional if already exists)*
-    * `Add-Migration InitialIdentityServerConfigurationDbMigration -c ApplicationDbContext -o Data/Migrations` *(optional if already exists)*
     * `Update-Database -Context ApplicationDbContext`
     * `Update-Database -Context PersistedGrantDbContext`
     * `Update-Database -Context ConfigurationDbContext`
