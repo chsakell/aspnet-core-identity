@@ -29,7 +29,7 @@
 * Explain `Imperative authorization` by example
 * Associated repository branch: [authorization](https://github.com/chsakell/aspnet-core-identity/tree/authorization)
 
-## Part 4 - [OAuth 2.0, OpenID Connect & IdentityServer](https://wp.me/p3mRWu-1ik)
+## Part 4 - [OAuth 2.0, OpenID Connect & IdentityServer](https://wp.me/p3mRWu-1Ag)
 
 * Explain how `OAuth 2.0` works *(terminology, grant types, tokens, flows)*
 * Explain how `OpenID Connect` works *(terminology, grant types, tokens, flows)*
