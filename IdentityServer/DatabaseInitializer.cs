@@ -23,8 +23,6 @@ namespace IdentityServer
                 provider.GetRequiredService<ApplicationDbContext>().Database.Migrate();
                 provider.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
                 provider.GetRequiredService<ConfigurationDbContext>().Database.Migrate();
-
-                //InitializeIdentityServer(provider);
             }
             InitializeIdentityServer(provider);
 
@@ -51,14 +49,9 @@ namespace IdentityServer
                     new Claim(JwtClaimTypes.Email, "chsakellsblog@blog.com"),
                     new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
                     new Claim(JwtClaimTypes.WebSite, "https://chsakell.com"),
-                    new Claim(JwtClaimTypes.Address, @"{ 'street_address': 'Localhost 10', 'postal_code': 69118, 'country': 'Greece' }", 
+                    new Claim(JwtClaimTypes.Address, @"{ 'street_address': 'localhost 10', 'postal_code': 11146, 'country': 'Greece' }", 
                         IdentityServer4.IdentityServerConstants.ClaimValueTypes.Json)
                 }).Result;
-
-                if (useInMemoryStores)
-                {
-                    //userManager.AddClaimAsync(chsakell, new Claim(JwtClaimTypes.Subject, chsakell.Id));
-                }
 
                 if (!result.Succeeded)
                 {

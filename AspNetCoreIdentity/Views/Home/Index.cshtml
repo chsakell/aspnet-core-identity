@@ -3,8 +3,8 @@
 }
 
 <app asp-ng2-prerender-module="ClientApp/dist/main-server">Loading...</app>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/oidc-client/1.6.1/oidc-client.js"></script>
-
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/oidc-client/1.6.1/oidc-client.js"></script>*@
+<script src="~/js/oidc-client.js"></script>
 <script src="~/dist/vendor.js" asp-append-version="true"></script>
 @section scripts {
     <script src="~/dist/main-client.js" asp-append-version="true"></script>

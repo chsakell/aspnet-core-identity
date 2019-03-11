@@ -54,11 +54,6 @@ namespace IdentityServer
                 iis.AutomaticAuthentication = false;
             });
 
-            //var builder = useInMemoryStores ? 
-            //    services.AddIdentityServer()
-            //        .AddInMemoryIdentityResources(Config.GetIdentityResources())
-            //        .AddInMemoryApiResources(Config.GetApis())
-            //        .AddInMemoryClients(Config.GetClients()) :
                 var builder = services.AddIdentityServer(options =>
                     {
                         options.Events.RaiseErrorEvents = true;

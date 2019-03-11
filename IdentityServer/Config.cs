@@ -24,7 +24,6 @@ namespace IdentityServer
         {
             return new List<Client>
             {
-                // JavaScript Client
                 new Client
                 {
                     ClientId = "AspNetCoreIdentity",
