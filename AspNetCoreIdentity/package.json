@@ -26,7 +26,7 @@
     "aspnet-prerendering": "^3.0.1",
     "aspnet-webpack": "^2.0.1",
     "awesome-typescript-loader": "3.2.1",
-    "bootstrap": "3.4.0",
+    "bootstrap": "3.4.1",
     "chai": "4.0.2",
     "css": "2.2.1",
     "css-loader": "0.28.4",
