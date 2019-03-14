@@ -31,8 +31,8 @@
 
 ## Part 4 - [OAuth 2.0, OpenID Connect & IdentityServer](https://wp.me/p3mRWu-1Ag)
 
-* Explain how `OAuth 2.0` works *(terminology, grant types, tokens, flows)*
-* Explain how `OpenID Connect` works *(terminology, grant types, tokens, flows)*
+* Explain how `OAuth 2.0` works *(terminology, grant types, tokens)*
+* Explain how `OpenID Connect` works *(terminology, tokens, flows)*
 * Learn how to use `IdentityServer` for integrating  `OAuth 2.0` and `OpenID Connect`
 * Associated repository branch: [identity-server](https://github.com/chsakell/aspnet-core-identity/tree/identity-server)
 
