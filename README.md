@@ -2,6 +2,8 @@
 
 ![ASP.NET Core Identity Series](https://chsakell.files.wordpress.com/2018/04/aspnet-core-identity-13.png)
 
+[![License](https://img.shields.io/github/license/chsakell/aspnet-core-identity.svg)](https://github.com/chsakell/aspnet-core-identity/blob/master/LICENSE)
+
 ## Part 1 - [Getting Started](http://chsakell.com/2018/04/28/asp-net-core-identity-series-getting-started)
 
 * Introduction to ASP.NET Core Identity library
