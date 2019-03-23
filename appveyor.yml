@@ -1,0 +1,24 @@
+version: '2.0.{build}'
+image: Visual Studio 2017
+branches:
+  only:
+  - master
+clone_depth: 1
+init:
+  # Good practise, because Windows
+  - git config --global core.autocrlf true
+  
+# Install scripts. (runs after repo cloning)
+install:
+  # Get the latest stable version of Node.js or io.js
+  - cd AspNetCoreIdentity
+  # install npm modules
+  - ps: Install-Product node $env:nodejs_version
+  - npm install
+  - node node_modules/webpack/bin/webpack.js --config webpack.config.vendor.js --env.prod
+before_build:
+  # Display minimal restore text
+  - cmd: dotnet restore --verbosity m
+build_script:
+  # output will be in ./AspNetCoreIdentity/bin/Release/netcoreapp2.0/publish/
+  - cmd: dotnet publish -c Release
