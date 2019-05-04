@@ -56,10 +56,7 @@ The project is built with ASP.NET Core with Angular on the client side.
     * `Add-Migration initial_migration` or `dotnet ef migrations add initial_migration`
     * `Update-Database` or `dotnet ef database update`
 3. **Create the *IdentityServerDb* database** *(skip if you want to run with In memory DB)*
-    * `cd ./IdentityServer` where the IdentityServer.csproj exist
-    * `Update-Database -Context ApplicationDbContext` or `dotnet ef database update -Context ApplicationDbContext`
-    * `Update-Database -Context PersistedGrantDbContext` or `dotnet ef database update -Context PersistedGrantDbContext`
-    * `Update-Database -Context ConfigurationDbContext` or `dotnet ef database update -Context ConfigurationDbContext`
+    * Follow the [instructions](https://github.com/chsakell/aspnet-core-identity/blob/master/IdentityServer/Data/Migrations/instructions.md)
 
 > In case you don't want to use a real SQL Server Database when running the `AspNetCoreIdentity` project, simply set **InMemoryProvider: true** in the *appsettings.json*. This option will use in memory database
 
