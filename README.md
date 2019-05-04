@@ -54,7 +54,7 @@ The project is built with ASP.NET Core with Angular on the client side.
 2. **Create the *AspNetCoreIdentityDb* database** *(skip if you want to run with In memory DB)*
     * `cd ./AspNetCoreIdentity` where the AspNetCoreIdentity.csproj exist
     * `Add-Migration initial_migration` or `dotnet ef migrations add initial_migration`
-    * `Update-Database`
+    * `Update-Database` or `dotnet ef database update`
 3. **Create the *IdentityServerDb* database** *(skip if you want to run with In memory DB)*
     * `cd ./IdentityServer` where the IdentityServer.csproj exist
     * `Update-Database -Context ApplicationDbContext` or `dotnet ef database update -Context ApplicationDbContext`
