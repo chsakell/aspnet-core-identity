@@ -72,7 +72,9 @@ namespace IdentityServer
                             }
                             else
                             {
-                                opt.UseSqlServer(connectionString);
+                                opt.UseSqlServer(connectionString,
+                                    optionsBuilder =>
+                                        optionsBuilder.MigrationsAssembly(typeof(Startup).Assembly.GetName().Name));
                             }
                         };
                     })
@@ -87,7 +89,9 @@ namespace IdentityServer
                             }
                             else
                             {
-                                opt.UseSqlServer(connectionString);
+                                opt.UseSqlServer(connectionString,
+                                    optionsBuilder =>
+                                        optionsBuilder.MigrationsAssembly(typeof(Startup).Assembly.GetName().Name));
                             }
                         };
 
