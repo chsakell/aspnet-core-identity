@@ -1,5 +1,9 @@
+using System;
+using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AspNetCoreIdentity.Infrastructure;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -44,6 +48,23 @@ namespace AspNetCoreIdentity {
             services.AddIdentity<IdentityUser, IdentityRole> ()
                 .AddEntityFrameworkStores<IdentityDbContext> ()
                 .AddDefaultTokenProviders ();
+
+            services.AddAuthentication().AddGoogle(o =>
+            {
+                // Configure your auth keys, usually stored in Config or User Secrets
+                o.ClientId = "774413183119-9s4a9jvnvjsmd2chfeund7a69lv2a778.apps.googleusercontent.com";
+                o.ClientSecret = "QrbLm3fdrI8RrkROVe_Qw26l";
+                o.Scope.Add("https://www.googleapis.com/auth/plus.me");
+                o.ClaimActions.MapJsonKey(ClaimTypes.Gender, "gender");
+                o.SaveTokens = true;
+                o.Events.OnCreatingTicket = ctx =>
+                {
+                    List<AuthenticationToken> tokens = ctx.Properties.GetTokens() as List<AuthenticationToken>;
+                    tokens.Add(new AuthenticationToken() { Name = "TicketCreated", Value = DateTime.UtcNow.ToString() });
+                    ctx.Properties.StoreTokens(tokens);
+                    return Task.CompletedTask;
+                };
+            });
 
             services.ConfigureApplicationCookie (options => {
                 options.Events.OnRedirectToLogin = context => {

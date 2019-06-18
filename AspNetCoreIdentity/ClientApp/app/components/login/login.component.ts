@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
 import { Router } from '@angular/router';
 import { StateService } from '../../core/state.service';
@@ -8,13 +8,17 @@ import { StateService } from '../../core/state.service';
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
     public user: LoginVM = { userName: '', password: '' }
     public errors: string = '';
 
     constructor(public http: Http, 
                 @Inject('BASE_URL') public baseUrl: string,
                 public router: Router, public stateService: StateService) {
+    }
+
+    ngOnInit() {
+        console.log('yeahh');
     }
 
     login() {
