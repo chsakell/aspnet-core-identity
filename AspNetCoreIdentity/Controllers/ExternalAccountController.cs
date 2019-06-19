@@ -62,9 +62,7 @@ namespace AspNetCoreIdentity.Controllers
 
 
             // If the user does not have an account, then ask the user to create an account.
-
-            var loginProvider = info.LoginProvider;
-
+            
             var userEmail = info.Principal.FindFirstValue(ClaimTypes.Email);
 
             var user = new IdentityUser { Id = Guid.NewGuid().ToString(), UserName = userEmail, Email = userEmail };
