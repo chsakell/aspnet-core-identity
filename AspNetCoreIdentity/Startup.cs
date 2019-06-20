@@ -45,15 +45,21 @@ namespace AspNetCoreIdentity {
 
             });
 
+            
             services.AddIdentity<IdentityUser, IdentityRole> ()
                 .AddEntityFrameworkStores<IdentityDbContext> ()
                 .AddDefaultTokenProviders ();
 
+            // Google
+
+            //dotnet user-secrets set "Authentication:Google:ClientId" ""
+            //dotnet user-secrets set "Authentication:Google:ClientSecret" ""
+
             services.AddAuthentication().AddGoogle(o =>
             {
                 // Configure your auth keys, usually stored in Config or User Secrets
-                o.ClientId = "774413183119-9s4a9jvnvjsmd2chfeund7a69lv2a778.apps.googleusercontent.com";
-                o.ClientSecret = "QrbLm3fdrI8RrkROVe_Qw26l";
+                o.ClientId = Configuration["Authentication:Google:ClientId"];
+                o.ClientSecret = Configuration["Authentication:Google:ClientSecret"]; 
                 o.Scope.Add("https://www.googleapis.com/auth/plus.me");
                 o.ClaimActions.MapJsonKey(ClaimTypes.Gender, "gender");
                 o.SaveTokens = true;
@@ -64,6 +70,17 @@ namespace AspNetCoreIdentity {
                     ctx.Properties.StoreTokens(tokens);
                     return Task.CompletedTask;
                 };
+            });
+
+            // Facebook
+
+            // dotnet user-secrets set Authentication:Facebook:AppId ""
+            // dotnet user-secrets set Authentication:Facebook:AppSecret ""
+
+            services.AddAuthentication().AddFacebook(facebookOptions =>
+            {
+                facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
+                facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
             });
 
             services.ConfigureApplicationCookie (options => {
