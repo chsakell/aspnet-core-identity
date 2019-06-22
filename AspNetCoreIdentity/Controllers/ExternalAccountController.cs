@@ -90,5 +90,13 @@ namespace AspNetCoreIdentity.Controllers
 
             return LocalRedirect(returnUrl);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Providers()
+        {
+            var schemes = await _signInManager.GetExternalAuthenticationSchemesAsync();
+
+            return Ok(schemes.Select(s => s.DisplayName).ToList());
+        }
     }
 }

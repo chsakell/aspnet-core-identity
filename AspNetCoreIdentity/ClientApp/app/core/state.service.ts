@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class StateService {
-    userState: UserState = { userName: '', isAuthenticated: false };
+    userState: UserState = { username: '', isAuthenticated: false };
 
     constructor() { }
 
@@ -16,9 +16,13 @@ export class StateService {
     public isAuthenticated() {
         return this.userState.isAuthenticated;
     }
+
+    public username() {
+        return this.userState.username;
+    }
 }
 
 export interface UserState {
-    userName: string;
+    username: string;
     isAuthenticated: boolean;
 }

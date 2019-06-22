@@ -9,8 +9,9 @@ import { StateService } from '../../core/state.service';
     styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-    public user: LoginVM = { userName: '', password: '' }
+    public user: LoginVM = { username: '', password: '' }
     public errors: string = '';
+    public socialProviders: Array<string> = [];
 
     constructor(public http: Http, 
                 @Inject('BASE_URL') public baseUrl: string,
@@ -19,6 +20,12 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         console.log('yeahh');
+        this.http.get(this.baseUrl + 'externalaccount/providers')
+            .subscribe(result => {
+                this.socialProviders = result.json() as Array<string>;
+
+                console.log(this.socialProviders);
+            });
     }
 
     login() {
@@ -27,7 +34,7 @@ export class LoginComponent implements OnInit {
         this.http.post(this.baseUrl + 'api/account/login', this.user).subscribe(result => {
             let loginResult = result.json() as ResultVM;
             if (loginResult.status === StatusEnum.Success) {
-                this.stateService.setAuthentication({ isAuthenticated: true, userName: this.user.userName })
+                this.stateService.setAuthentication({ isAuthenticated: true, username: this.user.username })
                 this.router.navigate(['/home']);
             } else if (loginResult.status === StatusEnum.Error) {
                 this.errors = loginResult.data.toString();
@@ -38,7 +45,7 @@ export class LoginComponent implements OnInit {
 }
 
 interface LoginVM {
-    userName: string;
+    username: string;
     password: string;
 }
 

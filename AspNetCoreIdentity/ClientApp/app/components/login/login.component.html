@@ -15,7 +15,7 @@
                         <div class="col-lg-12">
                             <form id="login-form" action="" method="post" role="form">
                                 <div class="form-group">
-                                    <input type="text" name="username" id="username" [(ngModel)]="user.userName" tabindex="1" class="form-control" placeholder="Username" value="">
+                                    <input type="text" name="username" id="username" [(ngModel)]="user.username" tabindex="1" class="form-control" placeholder="Username" value="">
                                 </div>
                                 <div class="form-group">
                                     <input type="password" name="password" id="password" [(ngModel)]="user.password" tabindex="2" class="form-control" placeholder="Password">
@@ -43,7 +43,7 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="">
-                            <a href="#" class="active" id="login-form-link">External Providers</a>
+                            <a href="#" class="active" id="login-form-link">Social Login</a>
                         </div>
                     </div>
                     <hr>
@@ -53,16 +53,21 @@
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <div class="row">
-                                    <div class="col-sm-12">
-                                        <a href="/externalaccount/login?provider=Google" style="display: block;width: 100%;text-align: center;">
-                                            <img src="/images/btn_google_signin_dark_normal_web@2x.png" style="width:100%" />
+                                    <div class="col-sm-12" *ngFor="let provider of socialProviders">
+                                        <a href="/externalaccount/login?provider={{provider}}" style="display: block;width: 100%;text-align: center;margin-bottom: 10px">
+                                            <img src="/images/sign-in-{{provider}}.png" style="width:70%" />
+                                        </a>
+                                    </div>
+                                    <!--<div class="col-sm-12">
+                                        <a href="/externalaccount/login?provider=Google" style="display: block; width: 100%; text-align: center; margin-bottom: 10px">
+                                            <img src="/images/sign-in-google.png" style="width: 70%" />
                                         </a>
                                     </div>
                                     <div class="col-sm-12">
-                                        <a href="/externalaccount/login?provider=Facebook" style="display: block;width: 100%;text-align: center;">
-                                            Facebook
+                                        <a href="/externalaccount/login?provider=Facebook" style="display: block; width: 100%; text-align: center; margin-bottom: 10px">
+                                            <img src="/images/sign-in-facebook.png" style="width: 70%" />
                                         </a>
-                                    </div>
+                                    </div>-->
                                 </div>
                             </div>
                             <div class="form-group">
