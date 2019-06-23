@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
@@ -41,14 +42,14 @@ namespace AspNetCoreIdentity.Controllers
             if (remoteError != null)
             {
                 //ErrorMessage = $"Error from external provider: {remoteError}";
-                return RedirectToPage("./Login", new { ReturnUrl = returnUrl });
+                return RedirectToPage("./", new { ReturnUrl = returnUrl });
             }
 
             var info = await _signInManager.GetExternalLoginInfoAsync();
             if (info == null)
             {
                 //ErrorMessage = "Error loading external login information.";
-                return RedirectToPage("./Login", new { ReturnUrl = returnUrl });
+                return RedirectToPage("./", new { ReturnUrl = returnUrl });
             }
 
             // Sign in the user with this external login provider if the user already has a login.
@@ -56,16 +57,16 @@ namespace AspNetCoreIdentity.Controllers
                 isPersistent: false, bypassTwoFactor: true);
             if (result.Succeeded)
             {
-                //_logger.LogInformation("{Name} logged in with {LoginProvider} provider.", info.Principal.Identity.Name, info.LoginProvider);
                 return LocalRedirect(returnUrl);
             }
 
 
-            // If the user does not have an account, then ask the user to create an account.
-            
-            var userEmail = info.Principal.FindFirstValue(ClaimTypes.Email);
+            // If the user does not have an account, create one.
 
-            var user = new IdentityUser { Id = Guid.NewGuid().ToString(), UserName = userEmail, Email = userEmail };
+            var userEmail = info.Principal.FindFirstValue(ClaimTypes.Email);
+            var name = info.Principal.FindFirstValue(ClaimTypes.Name);
+
+            var user = new IdentityUser { Id = Guid.NewGuid().ToString(), UserName = name.Replace(" ", "_"), Email = userEmail };
 
             var createUserResult = await _userManager.CreateAsync(user);
             if (createUserResult.Succeeded)
@@ -83,12 +84,8 @@ namespace AspNetCoreIdentity.Controllers
                 return LocalRedirect(returnUrl);
             }
 
-            foreach (var error in createUserResult.Errors)
-            {
-                return LocalRedirect(returnUrl);
-            }
-
-            return LocalRedirect(returnUrl);
+            TempData["Error"] = createUserResult.Errors.First().Description;
+            return LocalRedirect("/login");
         }
 
         [HttpGet]

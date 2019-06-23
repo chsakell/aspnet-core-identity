@@ -96,6 +96,17 @@ namespace AspNetCoreIdentity {
                 };
             });
 
+            // Twitter
+
+            // dotnet user-secrets set Authentication:Twitter:ConsumerAPIKey ""
+            // dotnet user-secrets set Authentication:Twitter:ConsumerAPISecret ""
+
+            services.AddAuthentication().AddTwitter(twitterOptions =>
+            {
+                twitterOptions.ConsumerKey = Configuration["Authentication:Twitter:ConsumerAPIKey"];
+                twitterOptions.ConsumerSecret = Configuration["Authentication:Twitter:ConsumerAPISecret"];
+            });
+
             services.AddScoped<IDbInitializer, DbInitializer> ();
         }
 

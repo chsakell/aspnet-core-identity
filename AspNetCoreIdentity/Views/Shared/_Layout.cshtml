@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -7,9 +7,14 @@
     <base href="~/" />
     <link rel="stylesheet" href="~/dist/vendor.css" asp-append-version="true" />
     <link href="/content/ng2-toastr.min.css" rel="stylesheet" />
-   
+
 </head>
-<body style="background: #232222;color:whitesmoke;">
+<body style="background: #232222; color: whitesmoke;">
+<div class="alert alert-danger alert-dismissible fade show" role="alert" 
+     style="opacity: 1 !important;background-color: #232222; border-color: #232222;position: absolute; z-index: 2; bottom: 0;text-align: center;width: 100%;font-size: 20px;">
+        @TempData["Error"]
+    </div>
+
     @RenderBody()
 
     @RenderSection("scripts", required: false)

@@ -1,6 +1,6 @@
 <div class="">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6 col-md-offset-3">
             <div class="panel panel-login">
                 <div class="panel-heading">
                     <div class="row">
@@ -35,44 +35,13 @@
                             </form>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="panel panel-login">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="">
-                            <a href="#" class="active" id="login-form-link">Social Login</a>
-                        </div>
-                    </div>
-                    <hr>
-                </div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-sm-12" *ngFor="let provider of socialProviders">
-                                        <a href="/externalaccount/login?provider={{provider}}" style="display: block;width: 100%;text-align: center;margin-bottom: 10px">
-                                            <img src="/images/sign-in-{{provider}}.png" style="width:70%" />
-                                        </a>
-                                    </div>
-                                    <!--<div class="col-sm-12">
-                                        <a href="/externalaccount/login?provider=Google" style="display: block; width: 100%; text-align: center; margin-bottom: 10px">
-                                            <img src="/images/sign-in-google.png" style="width: 70%" />
-                                        </a>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <a href="/externalaccount/login?provider=Facebook" style="display: block; width: 100%; text-align: center; margin-bottom: 10px">
-                                            <img src="/images/sign-in-facebook.png" style="width: 70%" />
-                                        </a>
-                                    </div>-->
-                                </div>
-                            </div>
-                            <div class="form-group">
-                            </div>
-                        </div>
+                    <hr />
+                    <div style="font-size: 20px;text-align: center">
+                        <div style="margin-bottom: 10px">Or login with your Social account:</div>
+
+                        <a *ngFor="let provider of socialProviders" href="/externalaccount/login?provider={{provider}}" style="">
+                            <img src="/images/{{provider}}.png" style="width: 65px; margin: 0 10px;" />
+                        </a>
                     </div>
                 </div>
             </div>
