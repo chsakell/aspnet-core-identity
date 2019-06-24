@@ -107,6 +107,17 @@ namespace AspNetCoreIdentity {
                 twitterOptions.ConsumerSecret = Configuration["Authentication:Twitter:ConsumerAPISecret"];
             });
 
+            // Microsoft
+
+            // dotnet user-secrets set Authentication:Microsoft:ClientId ""
+            // dotnet user-secrets set Authentication:Microsoft:ClientSecret ""
+
+            services.AddAuthentication().AddMicrosoftAccount(microsoftOptions =>
+            {
+                microsoftOptions.ClientId = Configuration["Authentication:Microsoft:ClientId"];
+                microsoftOptions.ClientSecret = Configuration["Authentication:Microsoft:ClientSecret"];
+            });
+
             services.AddScoped<IDbInitializer, DbInitializer> ();
         }
 
