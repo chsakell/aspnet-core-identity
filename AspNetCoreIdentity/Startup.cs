@@ -14,41 +14,48 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace AspNetCoreIdentity {
-    public class Startup {
-        public Startup (IConfiguration configuration) {
+namespace AspNetCoreIdentity
+{
+    public class Startup
+    {
+        public Startup(IConfiguration configuration)
+        {
             Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices (IServiceCollection services) {
+        public void ConfigureServices(IServiceCollection services)
+        {
 
-            services.AddTransient<IAuthorizationPolicyProvider, StreamingCategoryPolicyProvider> ();
+            services.AddTransient<IAuthorizationPolicyProvider, StreamingCategoryPolicyProvider>();
 
             // As always, handlers must be provided for the requirements of the authorization policies
-            services.AddTransient<IAuthorizationHandler, StreamingCategoryAuthorizationHandler> ();
-            services.AddTransient<IAuthorizationHandler, UserCategoryAuthorizationHandler> ();
+            services.AddTransient<IAuthorizationHandler, StreamingCategoryAuthorizationHandler>();
+            services.AddTransient<IAuthorizationHandler, UserCategoryAuthorizationHandler>();
 
-            services.AddMvc ();
+            services.AddMvc();
 
-            bool useInMemoryProvider = bool.Parse (Configuration["InMemoryProvider"]);
-            services.AddDbContext<IdentityDbContext> (options => {
-                if (!useInMemoryProvider) {
-                    options.UseSqlServer (Configuration.GetConnectionString ("AspNetCoreIdentityDb"),
+            bool useInMemoryProvider = bool.Parse(Configuration["InMemoryProvider"]);
+            services.AddDbContext<IdentityDbContext>(options =>
+            {
+                if (!useInMemoryProvider)
+                {
+                    options.UseSqlServer(Configuration.GetConnectionString("AspNetCoreIdentityDb"),
                         optionsBuilder =>
-                        optionsBuilder.MigrationsAssembly (typeof (Startup).Assembly.GetName ().Name));
-                } else {
+                        optionsBuilder.MigrationsAssembly(typeof(Startup).Assembly.GetName().Name));
+                }
+                else
+                {
                     options.UseInMemoryDatabase("AspNetCoreIdentityDb");
                 }
-
             });
 
-            
-            services.AddIdentity<IdentityUser, IdentityRole> ()
-                .AddEntityFrameworkStores<IdentityDbContext> ()
-                .AddDefaultTokenProviders ();
+
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<IdentityDbContext>()
+                .AddDefaultTokenProviders();
 
             // Google
 
@@ -59,7 +66,7 @@ namespace AspNetCoreIdentity {
             {
                 // Configure your auth keys, usually stored in Config or User Secrets
                 o.ClientId = Configuration["Authentication:Google:ClientId"];
-                o.ClientSecret = Configuration["Authentication:Google:ClientSecret"]; 
+                o.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
                 o.Scope.Add("https://www.googleapis.com/auth/plus.me");
                 o.ClaimActions.MapJsonKey(ClaimTypes.Gender, "gender");
                 o.SaveTokens = true;
@@ -83,13 +90,16 @@ namespace AspNetCoreIdentity {
                 facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
             });
 
-            services.ConfigureApplicationCookie (options => {
-                options.Events.OnRedirectToLogin = context => {
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Events.OnRedirectToLogin = context =>
+                {
                     context.Response.Headers["Location"] = context.RedirectUri;
                     context.Response.StatusCode = 401;
                     return Task.CompletedTask;
                 };
-                options.Events.OnRedirectToAccessDenied = context => {
+                options.Events.OnRedirectToAccessDenied = context =>
+                {
                     context.Response.Headers["Location"] = context.RedirectUri;
                     context.Response.StatusCode = 403;
                     return Task.CompletedTask;
@@ -118,32 +128,49 @@ namespace AspNetCoreIdentity {
                 microsoftOptions.ClientSecret = Configuration["Authentication:Microsoft:ClientSecret"];
             });
 
-            services.AddScoped<IDbInitializer, DbInitializer> ();
+            // GitHub
+
+            // dotnet user-secrets set Authentication:GitHub:ClientId ""
+            // dotnet user-secrets set Authentication:GitHub:ClientSecret ""
+
+            services.AddAuthentication().AddGitHub(gitHubOptions =>
+            {
+                gitHubOptions.ClientId = Configuration["Authentication:GitHub:ClientId"];
+                gitHubOptions.ClientSecret = Configuration["Authentication:GitHub:ClientSecret"];
+            });
+
+            services.AddScoped<IDbInitializer, DbInitializer>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure (IApplicationBuilder app, IHostingEnvironment env) {
-            if (env.IsDevelopment ()) {
-                app.UseDeveloperExceptionPage ();
-                app.UseWebpackDevMiddleware (new WebpackDevMiddlewareOptions {
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
+                {
                     HotModuleReplacement = true
                 });
-            } else {
-                app.UseExceptionHandler ("/Home/Error");
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseAuthentication ();
+            app.UseAuthentication();
 
-            app.UseStaticFiles ();
+            app.UseStaticFiles();
 
-            app.UseMvc (routes => {
-                routes.MapRoute (
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
 
-                routes.MapSpaFallbackRoute (
+                routes.MapSpaFallbackRoute(
                     name: "spa-fallback",
-                    defaults : new { controller = "Home", action = "Index" });
+                    defaults: new { controller = "Home", action = "Index" });
             });
         }
     }
