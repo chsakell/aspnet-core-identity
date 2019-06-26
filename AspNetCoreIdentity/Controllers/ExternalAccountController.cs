@@ -66,7 +66,7 @@ namespace AspNetCoreIdentity.Controllers
             var userEmail = info.Principal.FindFirstValue(ClaimTypes.Email);
             var name = info.Principal.FindFirstValue(ClaimTypes.Name);
 
-            var user = new IdentityUser { Id = Guid.NewGuid().ToString(), UserName = $"{name.Replace(" ", "_")}-{info.ProviderDisplayName}", Email = userEmail };
+            var user = new IdentityUser { Id = Guid.NewGuid().ToString(), UserName = $"{name.Replace(" ", "_")}", Email = userEmail };
 
             var createUserResult = await _userManager.CreateAsync(user);
             if (createUserResult.Succeeded)
