@@ -115,6 +115,7 @@ namespace AspNetCoreIdentity
             {
                 twitterOptions.ConsumerKey = Configuration["Authentication:Twitter:ConsumerAPIKey"];
                 twitterOptions.ConsumerSecret = Configuration["Authentication:Twitter:ConsumerAPISecret"];
+                twitterOptions.RetrieveUserDetails = true;
             });
 
             // Microsoft

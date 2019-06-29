@@ -62,11 +62,9 @@ namespace AspNetCoreIdentity.Controllers
 
 
             // If the user does not have an account, create one.
-
             var userEmail = info.Principal.FindFirstValue(ClaimTypes.Email);
-            var name = info.Principal.FindFirstValue(ClaimTypes.Name);
 
-            var user = new IdentityUser { Id = Guid.NewGuid().ToString(), UserName = userEmail, Email = userEmail };
+            var user = new IdentityUser { Id = Guid.NewGuid().ToString(), UserName = userEmail, Email = userEmail};
 
             var createUserResult = await _userManager.CreateAsync(user);
             if (createUserResult.Succeeded)
@@ -83,6 +81,19 @@ namespace AspNetCoreIdentity.Controllers
                     return LocalRedirect(returnUrl);
                 }
                 return LocalRedirect(returnUrl);
+            }
+
+            if (createUserResult.Errors.Any(e => e.Code == "DuplicateUserName"))
+            {
+                // It means the user already exists, so just add the login provider
+                var dbUser = await _userManager.FindByEmailAsync(userEmail);
+
+                createUserResult = await _userManager.AddLoginAsync(dbUser, info);
+                if (createUserResult.Succeeded)
+                {
+                    await _signInManager.SignInAsync(dbUser, isPersistent: false);
+                    return LocalRedirect(returnUrl);
+                }
             }
 
             TempData["Error"] = createUserResult.Errors.First().Description;

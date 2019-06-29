@@ -11,129 +11,159 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AspNetCoreIdentity.Controllers {
-    [Route ("api/[controller]/[action]")]
-    public class AccountController : Controller {
+namespace AspNetCoreIdentity.Controllers
+{
+    [Route("api/[controller]/[action]")]
+    public class AccountController : Controller
+    {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
 
-        public AccountController (UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager) {
+        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        {
             _userManager = userManager;
             _signInManager = signInManager;
         }
 
         [HttpPost]
-        public async Task<ResultVM> Register ([FromBody] RegisterVM model) {
-            if (ModelState.IsValid) {
+        public async Task<ResultVM> Register([FromBody] RegisterVM model)
+        {
+            if (ModelState.IsValid)
+            {
                 IdentityResult result = null;
-                var user = await _userManager.FindByNameAsync (model.UserName);
+                var user = await _userManager.FindByNameAsync(model.UserName);
 
-                if (user != null) {
-                    return new ResultVM {
-                    Status = Status.Error,
-                    Message = "Invalid data",
-                    Data = "<li>User already exists</li>"
+                if (user != null)
+                {
+                    return new ResultVM
+                    {
+                        Status = Status.Error,
+                        Message = "Invalid data",
+                        Data = "<li>User already exists</li>"
                     };
                 }
 
-                user = new IdentityUser {
-                    Id = Guid.NewGuid ().ToString (),
+                user = new IdentityUser
+                {
+                    Id = Guid.NewGuid().ToString(),
                     UserName = model.UserName,
                     Email = model.Email
                 };
 
-                result = await _userManager.CreateAsync (user, model.Password);
+                result = await _userManager.CreateAsync(user, model.Password);
 
-                if (result.Succeeded) {
-                    if (model.StartFreeTrial) {
-                        Claim trialClaim = new Claim ("Trial", DateTime.Now.ToString ());
-                        await _userManager.AddClaimAsync (user, trialClaim);
-                    } else if (model.IsAdmin) {
-                        await _userManager.AddToRoleAsync (user, "Admin");
+                if (result.Succeeded)
+                {
+                    if (model.StartFreeTrial)
+                    {
+                        Claim trialClaim = new Claim("Trial", DateTime.Now.ToString());
+                        await _userManager.AddClaimAsync(user, trialClaim);
+                    }
+                    else if (model.IsAdmin)
+                    {
+                        await _userManager.AddToRoleAsync(user, "Admin");
                     }
 
-                    return new ResultVM {
+                    return new ResultVM
+                    {
                         Status = Status.Success,
-                            Message = "User Created",
-                            Data = user
+                        Message = "User Created",
+                        Data = user
                     };
-                } else {
-                    var resultErrors = result.Errors.Select (e => "<li>" + e.Description + "</li>");
-                    return new ResultVM {
+                }
+                else
+                {
+                    var resultErrors = result.Errors.Select(e => "<li>" + e.Description + "</li>");
+                    return new ResultVM
+                    {
                         Status = Status.Error,
-                            Message = "Invalid data",
-                            Data = string.Join ("", resultErrors)
+                        Message = "Invalid data",
+                        Data = string.Join("", resultErrors)
                     };
                 }
             }
 
-            var errors = ModelState.Keys.Select (e => "<li>" + e + "</li>");
-            return new ResultVM {
+            var errors = ModelState.Keys.Select(e => "<li>" + e + "</li>");
+            return new ResultVM
+            {
                 Status = Status.Error,
-                    Message = "Invalid data",
-                    Data = string.Join ("", errors)
+                Message = "Invalid data",
+                Data = string.Join("", errors)
             };
         }
 
         [HttpPost]
-        public async Task<ResultVM> Login ([FromBody] LoginVM model) {
-            if (ModelState.IsValid) {
-                var user = await _userManager.FindByNameAsync (model.UserName);
+        public async Task<ResultVM> Login([FromBody] LoginVM model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByNameAsync(model.UserName);
 
-                if (user != null && await _userManager.CheckPasswordAsync (user, model.Password)) {
+                if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
+                {
 
-                    await _signInManager.PasswordSignInAsync (model.UserName, model.Password, true, lockoutOnFailure : false);
+                    await _signInManager.PasswordSignInAsync(model.UserName, model.Password, true, lockoutOnFailure: false);
 
-                    return new ResultVM {
+                    return new ResultVM
+                    {
                         Status = Status.Success,
-                            Message = "Succesfull login",
-                            Data = model
+                        Message = "Succesfull login",
+                        Data = model
                     };
                 }
 
-                return new ResultVM {
+                return new ResultVM
+                {
                     Status = Status.Error,
-                        Message = "Invalid data",
-                        Data = "<li>Invalid Username or Password</li>"
+                    Message = "Invalid data",
+                    Data = "<li>Invalid Username or Password</li>"
                 };
             }
 
-            var errors = ModelState.Keys.Select (e => "<li>" + e + "</li>");
-            return new ResultVM {
+            var errors = ModelState.Keys.Select(e => "<li>" + e + "</li>");
+            return new ResultVM
+            {
                 Status = Status.Error,
-                    Message = "Invalid data",
-                    Data = string.Join ("", errors)
+                Message = "Invalid data",
+                Data = string.Join("", errors)
             };
         }
 
         [HttpGet]
         [Authorize]
-        public async Task<UserClaims> Claims () {
-            var loggedInUser = await _userManager.GetUserAsync (User);
+        public async Task<UserClaims> Claims()
+        {
+            var loggedInUser = await _userManager.GetUserAsync(User);
             var userClaims = await _userManager.GetClaimsAsync(loggedInUser);
+            var claims = userClaims.Union(User.Claims)
+                .GroupBy(c => c.Type)
+                .Select(c => new ClaimVM
+                {
+                    Type = c.First().Type,
+                    Value = c.First().Value
+                });
 
-            var claims = userClaims.Union(User.Claims).Select (c => new ClaimVM {
-                Type = c.Type,
-                    Value = c.Value
-            });
-
-            return new UserClaims {
+            return new UserClaims
+            {
                 UserName = User.Identity.Name,
-                    Claims = claims
+                Claims = claims
             };
         }
 
         [HttpGet]
-        public async Task<UserStateVM> Authenticated () {
-            return new UserStateVM {
+        public async Task<UserStateVM> Authenticated()
+        {
+            return new UserStateVM
+            {
                 IsAuthenticated = User.Identity.IsAuthenticated,
-                    Username = User.Identity.IsAuthenticated ? User.Identity.Name : string.Empty
+                Username = User.Identity.IsAuthenticated ? User.Identity.Name : string.Empty
             };
         }
 
         [HttpPost]
-        public async Task SignOut () {
-            await _signInManager.SignOutAsync ();
+        public async Task SignOut()
+        {
+            await _signInManager.SignOutAsync();
         }
     }
 }
