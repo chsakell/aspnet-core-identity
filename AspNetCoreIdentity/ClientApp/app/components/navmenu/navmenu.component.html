@@ -62,6 +62,11 @@
                         <span class='glyphicon glyphicon-share'></span> Share
                     </a>
                 </li>
+                <li *ngIf="stateService.getNotification().message !== ''">
+                    <div class="alert" [ngClass]="{'alert-success': stateService.getNotification().type === 'success', 'alert-danger': stateService.getNotification().type === 'danger'}">
+                        <strong>{{stateService.getNotification().message}}</strong>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>

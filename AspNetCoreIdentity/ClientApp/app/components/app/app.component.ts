@@ -18,13 +18,26 @@ export class AppComponent {
             stateService.setAuthentication(state);
         }, error => console.error(error));
 
-        var code = this.getUrlParameter("code");
+        let code = this.getUrlParameter("code");
         if (code) {
             openConnectIdService.signinRedirectCallback().then(() => {
                 router.navigate(['/share']);
             }).catch((error: any) => {
                 console.error(error);
             });
+        }
+
+        let message = this.getUrlParameter("message");
+        if (message) {
+            let type = this.getUrlParameter("type");
+            if (!type) {
+                type = "success";
+            }
+            stateService.displayNotification({ message, type: type });
+            console.log(message, type);
+            if (type === "success") {
+                router.navigate((['/']));
+            }
         }
     }
 

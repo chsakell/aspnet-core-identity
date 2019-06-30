@@ -76,9 +76,8 @@ namespace AspNetCoreIdentity.Controllers
                 createUserResult = await _userManager.AddLoginAsync(user, info);
                 if (createUserResult.Succeeded)
                 {
-                    TempData["Success"] = $"User {user.UserName} has been created successfully";
                     await _signInManager.SignInAsync(user, isPersistent: false);
-                    return LocalRedirect(returnUrl);
+                    return LocalRedirect($"/?message=User {user.UserName} has been created successfully&type=success");
                 }
                 return LocalRedirect(returnUrl);
             }
@@ -92,12 +91,11 @@ namespace AspNetCoreIdentity.Controllers
                 if (createUserResult.Succeeded)
                 {
                     await _signInManager.SignInAsync(dbUser, isPersistent: false);
-                    return LocalRedirect(returnUrl);
+                    return LocalRedirect($"{returnUrl}?message={info.ProviderDisplayName} has been added successfully");
                 }
             }
 
-            TempData["Error"] = createUserResult.Errors.First().Description;
-            return LocalRedirect("/login");
+            return LocalRedirect($"/login?message={createUserResult.Errors.First().Description}&type=danger");
         }
 
         [HttpGet]
