@@ -140,6 +140,18 @@ namespace AspNetCoreIdentity
                 gitHubOptions.ClientSecret = Configuration["Authentication:GitHub:ClientSecret"];
             });
 
+            // LinkedIn
+
+            // dotnet user-secrets set Authentication:LinkedIn:ClientId ""
+            // dotnet user-secrets set Authentication:LinkedIn:ClientSecret ""
+
+            services.AddAuthentication().AddLinkedIn(linkedInOptions =>
+            {
+                linkedInOptions.ClientId = Configuration["Authentication:LinkedIn:ClientId"];
+                linkedInOptions.ClientSecret = Configuration["Authentication:LinkedIn:ClientSecret"];
+                linkedInOptions.CallbackPath = "/signin-linkedin";
+            });
+
             services.AddScoped<IDbInitializer, DbInitializer>();
         }
 
