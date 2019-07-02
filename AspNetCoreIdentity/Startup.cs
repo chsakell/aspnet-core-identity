@@ -152,6 +152,18 @@ namespace AspNetCoreIdentity
                 linkedInOptions.CallbackPath = "/signin-linkedin";
             });
 
+            // LinkedIn
+
+            // dotnet user-secrets set Authentication:DropBox:ClientId ""
+            // dotnet user-secrets set Authentication:DropBox:ClientSecret ""
+
+            services.AddAuthentication().AddDropbox(dropBoxOptions =>
+            {
+                dropBoxOptions.ClientId = Configuration["Authentication:DropBox:ClientId"];
+                dropBoxOptions.ClientSecret = Configuration["Authentication:DropBox:ClientSecret"];
+                dropBoxOptions.CallbackPath = "/signin-dropbox";
+            });
+
             services.AddScoped<IDbInitializer, DbInitializer>();
         }
 
