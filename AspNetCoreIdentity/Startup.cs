@@ -152,7 +152,7 @@ namespace AspNetCoreIdentity
                 linkedInOptions.CallbackPath = "/signin-linkedin";
             });
 
-            // LinkedIn
+            // DropBox
 
             // dotnet user-secrets set Authentication:DropBox:ClientId ""
             // dotnet user-secrets set Authentication:DropBox:ClientSecret ""
