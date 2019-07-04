@@ -35,6 +35,14 @@ namespace AspNetCoreIdentity
             services.AddTransient<IAuthorizationHandler, StreamingCategoryAuthorizationHandler>();
             services.AddTransient<IAuthorizationHandler, UserCategoryAuthorizationHandler>();
 
+            // Send Grid
+
+            // dotnet user-secrets set SendGridUser ""
+            // dotnet user-secrets set SendGridKey ""
+
+            services.AddTransient<IEmailSender, EmailSender>();
+            services.Configure<AuthMessageSenderOptions>(Configuration);
+
             services.AddMvc();
 
             bool useInMemoryProvider = bool.Parse(Configuration["InMemoryProvider"]);
@@ -53,7 +61,10 @@ namespace AspNetCoreIdentity
             });
 
 
-            services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddIdentity<IdentityUser, IdentityRole>(config =>
+                {
+                    config.SignIn.RequireConfirmedEmail = true;
+                })
                 .AddEntityFrameworkStores<IdentityDbContext>()
                 .AddDefaultTokenProviders();
 
