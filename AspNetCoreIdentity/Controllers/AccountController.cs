@@ -81,7 +81,7 @@ namespace AspNetCoreIdentity.Controllers
                     return new ResultVM
                     {
                         Status = Status.Success,
-                        Message = "User Created",
+                        Message = "User has been created, please confirm your email",
                         Data = user
                     };
                 }
@@ -195,10 +195,39 @@ namespace AspNetCoreIdentity.Controllers
             }
 
             var result = await _userManager.ConfirmEmailAsync(user, code);
+
+            if (result.Succeeded)
+            {
+                await _signInManager.SignInAsync(user, false);
+            }
+
             var message = !result.Succeeded ? $"Error confirming email for user with ID '{userId}':" : "Confirmation succeeded";
 
-
             return new LocalRedirectResult($"/?message={message}&type={(result.Succeeded ? "success" : "danger")}");
+        }
+
+
+        [HttpGet]
+        [Route("/account/ConfirmExternalProvider")]
+        public async Task<IActionResult> ConfirmExternalProvider(string userId, string code,
+            string loginProvider, string providerDisplayName, string providerKey)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            // This comes from an external provider so we can confirm the email as well
+            var confirmationResult = await _userManager.ConfirmEmailAsync(user, code);
+            if (!confirmationResult.Succeeded)
+                return new LocalRedirectResult($"/?message={providerDisplayName} failed to associate&type=danger");
+
+            var newLoginResult = await _userManager.AddLoginAsync(user,
+                new ExternalLoginInfo(null, loginProvider, providerKey,
+                    providerDisplayName));
+
+            if (!newLoginResult.Succeeded)
+                return new LocalRedirectResult($"/?message={providerDisplayName} failed to associate&type=danger");
+
+            await _signInManager.SignInAsync(user, false);
+            return new LocalRedirectResult($"/?message={providerDisplayName} has been added successfully");
         }
 
         [HttpPost]
