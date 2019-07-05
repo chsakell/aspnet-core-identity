@@ -22,7 +22,7 @@ namespace AspNetCoreIdentity.Controllers
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IEmailSender _emailSender;
 
-        public AccountController(UserManager<IdentityUser> userManager, 
+        public AccountController(UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager, IEmailSender emailSender)
         {
             _userManager = userManager;
@@ -113,17 +113,26 @@ namespace AspNetCoreIdentity.Controllers
             {
                 var user = await _userManager.FindByNameAsync(model.UserName);
 
-                if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
+                if (user != null)
                 {
+                    var result = new ResultVM();
 
-                    await _signInManager.PasswordSignInAsync(model.UserName, model.Password, true, lockoutOnFailure: false);
-
-                    return new ResultVM
+                    if (!await _userManager.IsEmailConfirmedAsync(user))
                     {
-                        Status = Status.Success,
-                        Message = "Succesfull login",
-                        Data = model
-                    };
+                        result.Status = Status.Error;
+                        result.Data = "<li>Email confirmation required</li>";
+                    }
+                    else if (await _userManager.CheckPasswordAsync(user, model.Password))
+                    {
+                        await _signInManager.PasswordSignInAsync(model.UserName, model.Password, true,
+                            lockoutOnFailure: false);
+
+                        result.Status = Status.Success;
+                        result.Message = "Successful login";
+                        result.Data = model;
+                    }
+
+                    return result;
                 }
 
                 return new ResultVM
@@ -186,12 +195,10 @@ namespace AspNetCoreIdentity.Controllers
             }
 
             var result = await _userManager.ConfirmEmailAsync(user, code);
-            if (!result.Succeeded)
-            {
-                throw new InvalidOperationException($"Error confirming email for user with ID '{userId}':");
-            }
+            var message = !result.Succeeded ? $"Error confirming email for user with ID '{userId}':" : "Confirmation succeeded";
 
-            return new LocalRedirectResult("/");
+
+            return new LocalRedirectResult($"/?message={message}&type={(result.Succeeded ? "success" : "danger")}");
         }
 
         [HttpPost]
