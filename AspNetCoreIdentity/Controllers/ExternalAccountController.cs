@@ -35,7 +35,7 @@ namespace AspNetCoreIdentity.Controllers
         [HttpGet]
         public IActionResult Login(string provider, string returnUrl = null)
         {
-            var redirectUrl = "/ExternalAccount/Callback";
+            var redirectUrl = Url.Action("Callback", "ExternalAccount");
             var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
             return new ChallengeResult(provider, properties);
         }
@@ -46,7 +46,6 @@ namespace AspNetCoreIdentity.Controllers
             returnUrl = returnUrl ?? Url.Content("~/");
             if (remoteError != null)
             {
-                //ErrorMessage = $"Error from external provider: {remoteError}";
                 return RedirectToPage("./", new { ReturnUrl = returnUrl });
             }
 
@@ -64,40 +63,24 @@ namespace AspNetCoreIdentity.Controllers
                 return LocalRedirect(returnUrl);
             }
 
-
-            // If the user does not have an account, create one.
             var userEmail = info.Principal.FindFirstValue(ClaimTypes.Email);
-
-            var user = new IdentityUser { Id = Guid.NewGuid().ToString(), UserName = userEmail, Email = userEmail };
 
             var userDb = await _userManager.FindByEmailAsync(userEmail);
 
             if (userDb != null)
             {
-                var emailConfirmed = await _userManager.IsEmailConfirmedAsync(userDb);
-
-                if (!result.IsNotAllowed)
+                if (!userDb.EmailConfirmed)
                 {
-                    var newLoginResult = await _userManager.AddLoginAsync(userDb, info);
-                    if (newLoginResult.Succeeded)
-                    {
-                        // Check Email Confirmation
-                        if (emailConfirmed)
-                        {
-                            await _signInManager.SignInAsync(userDb, isPersistent: false);
-                            return LocalRedirect(
-                                $"{returnUrl}?message={info.ProviderDisplayName} has been added successfully");
-                        }
+                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(userDb);
+                    await _userManager.ConfirmEmailAsync(userDb, code);
+                }
 
-                        return LocalRedirect(
-                            $"{returnUrl}?message={info.ProviderDisplayName} has been added but email confirmation is pending");
-                    }
-                }
-                else
-                {
-                    return LocalRedirect(
-                        $"{returnUrl}?message=Email ({user.Email}) confirmation is pending&type=danger");
-                }
+                // Add the external provider
+                await _userManager.AddLoginAsync(userDb, info);
+
+                await _signInManager.SignInAsync(userDb, isPersistent: false);
+                return LocalRedirect(
+                    $"{returnUrl}?message={info.ProviderDisplayName} has been added successfully");
             }
 
             return LocalRedirect($"/register?associate={userEmail}&loginProvider={info.LoginProvider}&providerDisplayName={info.ProviderDisplayName}&providerKey={info.ProviderKey}");

@@ -81,7 +81,7 @@ namespace AspNetCoreIdentity.Controllers
                     return new ResultVM
                     {
                         Status = Status.Success,
-                        Message = "User has been created, please confirm your email",
+                        Message = "Email confirmation is pending",
                         Data = user
                     };
                 }
