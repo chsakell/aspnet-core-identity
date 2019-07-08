@@ -162,6 +162,16 @@ namespace AspNetCoreIdentity.Controllers
 
             if (userDb != null)
             {
+                if (!userDb.EmailConfirmed)
+                {
+                    return new ResultVM
+                    {
+                        Status = Status.Error,
+                        Message = "Invalid data",
+                        Data = $"<li>Associated account (<i>{associate.AssociateEmail}</i>) hasn't been confirmed yet.</li><li>Confirm the account and try again</li>"
+                    };
+                }
+
                 var token = await _userManager.GenerateEmailConfirmationTokenAsync(userDb);
 
                 var callbackUrl = Url.Action("ConfirmExternalProvider", "Account",

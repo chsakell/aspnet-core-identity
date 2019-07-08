@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { Http } from '@angular/http';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { StateService } from '../../core/state.service';
 
 @Component({
@@ -33,14 +33,31 @@ export class RegisterComponent {
     constructor(public http: Http,
         @Inject('BASE_URL') public baseUrl: string,
         public router: Router, public stateService: StateService) {
-        if (this.getUrlParameter("associate")) {
-            this.externalRegistration.associate = true;
-            this.externalRegistration.originalEmail = this.getUrlParameter("associate");
-            this.externalRegistration.loginProvider = this.getUrlParameter("loginProvider");
-            this.externalRegistration.providerDisplayName = this.getUrlParameter("providerDisplayName");
-            this.externalRegistration.providerKey = this.getUrlParameter("providerKey");
-            this.user.email = this.externalRegistration.originalEmail;
-        }
+
+        this.checkExternalRegistration();
+
+        router.events.subscribe((val) => {
+            if (val instanceof NavigationEnd) {
+                console.log(val);
+                this.checkExternalRegistration();
+            }
+        });
+    }
+
+    checkExternalRegistration() {
+        var inAssociateMode = this.getUrlParameter("associate").length > 0;
+        console.log(inAssociateMode);
+
+        this.externalRegistration.associate = inAssociateMode;
+        this.externalRegistration.originalEmail = inAssociateMode ? this.getUrlParameter("associate") : '';
+        this.externalRegistration.loginProvider = inAssociateMode ? this.getUrlParameter("loginProvider") : '';
+        this.externalRegistration.providerDisplayName = inAssociateMode ? this.getUrlParameter("providerDisplayName") : '';
+        this.externalRegistration.providerKey = inAssociateMode ? this.getUrlParameter("providerKey") : '';
+        this.user.email = inAssociateMode ? this.externalRegistration.originalEmail : '';
+
+        this.externalRegistration.associateExistingAccount = false;
+        this.externalRegistration.associateEmail = '';
+        this.externalRegistration.username = '';
     }
 
     register() {

@@ -19,11 +19,9 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log('yeahh');
         this.http.get(this.baseUrl + 'externalaccount/providers')
             .subscribe(result => {
                 this.socialProviders = result.json() as Array<string>;
-
                 console.log(this.socialProviders);
             });
     }
