@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace AspNetCoreIdentity.Controllers
 {
@@ -124,12 +125,12 @@ namespace AspNetCoreIdentity.Controllers
                     }
                     else if (await _userManager.CheckPasswordAsync(user, model.Password))
                     {
-                        await _signInManager.PasswordSignInAsync(model.UserName, model.Password, true,
+                        var signInResult = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, true,
                             lockoutOnFailure: false);
 
-                        result.Status = Status.Success;
-                        result.Message = "Successful login";
-                        result.Data = model;
+                        result.Status = signInResult == SignInResult.Success ? Status.Success : Status.Error;
+                        result.Message = signInResult == SignInResult.Success ? $"Welcome {user.UserName}" : "Invalid login";
+                        result.Data = signInResult == SignInResult.Success ? (object)model : $"<li>Invalid login attempt - Error code: {signInResult.ToString()}</li>";
                     }
 
                     return result;
