@@ -130,7 +130,7 @@ namespace AspNetCoreIdentity.Controllers
 
                         result.Status = signInResult == SignInResult.Success ? Status.Success : Status.Error;
                         result.Message = signInResult == SignInResult.Success ? $"Welcome {user.UserName}" : "Invalid login";
-                        result.Data = signInResult == SignInResult.Success ? (object)model : $"<li>Invalid login attempt - Error code: {signInResult.ToString()}</li>";
+                        result.Data = signInResult == SignInResult.Success ? (object)model : $"<li>Invalid login attempt - {signInResult.ToString()}</li>";
                     }
 
                     return result;
