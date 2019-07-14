@@ -11,13 +11,13 @@ using Microsoft.AspNetCore.Mvc;
 namespace AspNetCoreIdentity.Controllers
 {
     [Route("[controller]/[action]")]
-    public class ExternalAccountController : Controller
+    public class SocialAccountController : Controller
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IEmailSender _emailSender;
 
-        public ExternalAccountController(SignInManager<IdentityUser> signInManager,
+        public SocialAccountController(SignInManager<IdentityUser> signInManager,
             UserManager<IdentityUser> userManager, IEmailSender emailSender)
         {
             _signInManager = signInManager;
@@ -33,7 +33,7 @@ namespace AspNetCoreIdentity.Controllers
         [HttpGet]
         public IActionResult Login(string provider, string returnUrl = null)
         {
-            var redirectUrl = Url.Action("Callback", "ExternalAccount");
+            var redirectUrl = Url.Action("Callback", "SocialAccount");
             var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
             return new ChallengeResult(provider, properties);
         }
@@ -94,7 +94,7 @@ namespace AspNetCoreIdentity.Controllers
         }
 
         [HttpPost]
-        [Route("/api/externalaccount/associate")]
+        [Route("/api/socialaccount/associate")]
         public async Task<ResultVM> Associate([FromBody] AssociateViewModel associate)
         {
             // Create a new account..

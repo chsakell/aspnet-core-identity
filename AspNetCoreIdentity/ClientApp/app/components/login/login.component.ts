@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.http.get(this.baseUrl + 'externalaccount/providers')
+        this.http.get(this.baseUrl + 'socialaccount/providers')
             .subscribe(result => {
                 this.socialProviders = result.json() as Array<string>;
                 console.log(this.socialProviders);

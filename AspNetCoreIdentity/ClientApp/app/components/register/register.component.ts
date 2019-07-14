@@ -77,7 +77,7 @@ export class RegisterComponent {
         } else {
             this.externalRegistration.username = this.user.userName;
 
-            this.http.post(this.baseUrl + 'api/externalaccount/associate', this.externalRegistration).subscribe(result => {
+            this.http.post(this.baseUrl + 'api/socialaccount/associate', this.externalRegistration).subscribe(result => {
                 console.log(this.externalRegistration);
                 let registerResult = result.json() as ResultVM;
                 if (registerResult.status === StatusEnum.Success) {
