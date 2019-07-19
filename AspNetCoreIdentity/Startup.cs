@@ -77,20 +77,8 @@ namespace AspNetCoreIdentity
             {
                 services.AddAuthentication().AddGoogle(o =>
                 {
-                    // Configure your auth keys, usually stored in Config or User Secrets
                     o.ClientId = Configuration["Authentication:Google:ClientId"];
                     o.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
-                    o.Scope.Add("https://www.googleapis.com/auth/plus.me");
-                    o.ClaimActions.MapJsonKey(ClaimTypes.Gender, "gender");
-                    o.SaveTokens = true;
-                    o.Events.OnCreatingTicket = ctx =>
-                    {
-                        List<AuthenticationToken> tokens = ctx.Properties.GetTokens() as List<AuthenticationToken>;
-                        tokens.Add(new AuthenticationToken()
-                            {Name = "TicketCreated", Value = DateTime.UtcNow.ToString()});
-                        ctx.Properties.StoreTokens(tokens);
-                        return Task.CompletedTask;
-                    };
                 });
             }
 
