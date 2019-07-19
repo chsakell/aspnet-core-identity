@@ -73,33 +73,113 @@ namespace AspNetCoreIdentity
             //dotnet user-secrets set "Authentication:Google:ClientId" ""
             //dotnet user-secrets set "Authentication:Google:ClientSecret" ""
 
-            services.AddAuthentication().AddGoogle(o =>
+            if (Configuration["Authentication:Google:ClientId"] != null)
             {
-                // Configure your auth keys, usually stored in Config or User Secrets
-                o.ClientId = Configuration["Authentication:Google:ClientId"];
-                o.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
-                o.Scope.Add("https://www.googleapis.com/auth/plus.me");
-                o.ClaimActions.MapJsonKey(ClaimTypes.Gender, "gender");
-                o.SaveTokens = true;
-                o.Events.OnCreatingTicket = ctx =>
+                services.AddAuthentication().AddGoogle(o =>
                 {
-                    List<AuthenticationToken> tokens = ctx.Properties.GetTokens() as List<AuthenticationToken>;
-                    tokens.Add(new AuthenticationToken() { Name = "TicketCreated", Value = DateTime.UtcNow.ToString() });
-                    ctx.Properties.StoreTokens(tokens);
-                    return Task.CompletedTask;
-                };
-            });
+                    // Configure your auth keys, usually stored in Config or User Secrets
+                    o.ClientId = Configuration["Authentication:Google:ClientId"];
+                    o.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+                    o.Scope.Add("https://www.googleapis.com/auth/plus.me");
+                    o.ClaimActions.MapJsonKey(ClaimTypes.Gender, "gender");
+                    o.SaveTokens = true;
+                    o.Events.OnCreatingTicket = ctx =>
+                    {
+                        List<AuthenticationToken> tokens = ctx.Properties.GetTokens() as List<AuthenticationToken>;
+                        tokens.Add(new AuthenticationToken()
+                            {Name = "TicketCreated", Value = DateTime.UtcNow.ToString()});
+                        ctx.Properties.StoreTokens(tokens);
+                        return Task.CompletedTask;
+                    };
+                });
+            }
 
             // Facebook
 
             // dotnet user-secrets set Authentication:Facebook:AppId ""
             // dotnet user-secrets set Authentication:Facebook:AppSecret ""
 
-            services.AddAuthentication().AddFacebook(facebookOptions =>
+            if (Configuration["Authentication:Facebook:AppId"] != null)
             {
-                facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
-                facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
-            });
+                services.AddAuthentication().AddFacebook(facebookOptions =>
+                {
+                    facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
+                    facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+                });
+            }
+
+            // Twitter
+
+            // dotnet user-secrets set Authentication:Twitter:ConsumerAPIKey ""
+            // dotnet user-secrets set Authentication:Twitter:ConsumerAPISecret ""
+
+            if (Configuration["Authentication:Twitter:ConsumerAPIKey"] != null)
+            {
+                services.AddAuthentication().AddTwitter(twitterOptions =>
+                {
+                    twitterOptions.ConsumerKey = Configuration["Authentication:Twitter:ConsumerAPIKey"];
+                    twitterOptions.ConsumerSecret = Configuration["Authentication:Twitter:ConsumerAPISecret"];
+                    twitterOptions.RetrieveUserDetails = true;
+                });
+            }
+
+            // Microsoft
+
+            // dotnet user-secrets set Authentication:Microsoft:ClientId ""
+            // dotnet user-secrets set Authentication:Microsoft:ClientSecret ""
+
+            if (Configuration["Authentication:Microsoft:ClientId"] != null)
+            {
+                services.AddAuthentication().AddMicrosoftAccount(microsoftOptions =>
+                {
+                    microsoftOptions.ClientId = Configuration["Authentication:Microsoft:ClientId"];
+                    microsoftOptions.ClientSecret = Configuration["Authentication:Microsoft:ClientSecret"];
+                });
+            }
+
+            // GitHub
+
+            // dotnet user-secrets set Authentication:GitHub:ClientId ""
+            // dotnet user-secrets set Authentication:GitHub:ClientSecret ""
+
+            if (Configuration["Authentication:GitHub:ClientId"] != null)
+            {
+                services.AddAuthentication().AddGitHub(gitHubOptions =>
+                {
+                    gitHubOptions.ClientId = Configuration["Authentication:GitHub:ClientId"];
+                    gitHubOptions.ClientSecret = Configuration["Authentication:GitHub:ClientSecret"];
+                });
+            }
+
+            // LinkedIn
+
+            // dotnet user-secrets set Authentication:LinkedIn:ClientId ""
+            // dotnet user-secrets set Authentication:LinkedIn:ClientSecret ""
+
+            if (Configuration["Authentication:LinkedIn:ClientId"] != null)
+            {
+                services.AddAuthentication().AddLinkedIn(linkedInOptions =>
+                {
+                    linkedInOptions.ClientId = Configuration["Authentication:LinkedIn:ClientId"];
+                    linkedInOptions.ClientSecret = Configuration["Authentication:LinkedIn:ClientSecret"];
+                    linkedInOptions.CallbackPath = "/signin-linkedin";
+                });
+            }
+
+            // DropBox
+
+            // dotnet user-secrets set Authentication:DropBox:ClientId ""
+            // dotnet user-secrets set Authentication:DropBox:ClientSecret ""
+
+            if (Configuration["Authentication:DropBox:ClientId"] != null)
+            {
+                services.AddAuthentication().AddDropbox(dropBoxOptions =>
+                {
+                    dropBoxOptions.ClientId = Configuration["Authentication:DropBox:ClientId"];
+                    dropBoxOptions.ClientSecret = Configuration["Authentication:DropBox:ClientSecret"];
+                    dropBoxOptions.CallbackPath = "/signin-dropbox";
+                });
+            }
 
             services.ConfigureApplicationCookie(options =>
             {
@@ -115,64 +195,6 @@ namespace AspNetCoreIdentity
                     context.Response.StatusCode = 403;
                     return Task.CompletedTask;
                 };
-            });
-
-            // Twitter
-
-            // dotnet user-secrets set Authentication:Twitter:ConsumerAPIKey ""
-            // dotnet user-secrets set Authentication:Twitter:ConsumerAPISecret ""
-
-            services.AddAuthentication().AddTwitter(twitterOptions =>
-            {
-                twitterOptions.ConsumerKey = Configuration["Authentication:Twitter:ConsumerAPIKey"];
-                twitterOptions.ConsumerSecret = Configuration["Authentication:Twitter:ConsumerAPISecret"];
-                twitterOptions.RetrieveUserDetails = true;
-            });
-
-            // Microsoft
-
-            // dotnet user-secrets set Authentication:Microsoft:ClientId ""
-            // dotnet user-secrets set Authentication:Microsoft:ClientSecret ""
-
-            services.AddAuthentication().AddMicrosoftAccount(microsoftOptions =>
-            {
-                microsoftOptions.ClientId = Configuration["Authentication:Microsoft:ClientId"];
-                microsoftOptions.ClientSecret = Configuration["Authentication:Microsoft:ClientSecret"];
-            });
-
-            // GitHub
-
-            // dotnet user-secrets set Authentication:GitHub:ClientId ""
-            // dotnet user-secrets set Authentication:GitHub:ClientSecret ""
-
-            services.AddAuthentication().AddGitHub(gitHubOptions =>
-            {
-                gitHubOptions.ClientId = Configuration["Authentication:GitHub:ClientId"];
-                gitHubOptions.ClientSecret = Configuration["Authentication:GitHub:ClientSecret"];
-            });
-
-            // LinkedIn
-
-            // dotnet user-secrets set Authentication:LinkedIn:ClientId ""
-            // dotnet user-secrets set Authentication:LinkedIn:ClientSecret ""
-
-            services.AddAuthentication().AddLinkedIn(linkedInOptions =>
-            {
-                linkedInOptions.ClientId = Configuration["Authentication:LinkedIn:ClientId"];
-                linkedInOptions.ClientSecret = Configuration["Authentication:LinkedIn:ClientSecret"];
-                linkedInOptions.CallbackPath = "/signin-linkedin";
-            });
-
-            // DropBox
-
-            // dotnet user-secrets set Authentication:DropBox:ClientId ""
-            // dotnet user-secrets set Authentication:DropBox:ClientSecret ""
-
-            services.AddAuthentication().AddDropbox(dropBoxOptions =>
-            {
-                dropBoxOptions.ClientId = Configuration["Authentication:DropBox:ClientId"];
-                dropBoxOptions.ClientSecret = Configuration["Authentication:DropBox:ClientSecret"];
-                dropBoxOptions.CallbackPath = "/signin-dropbox";
             });
 
             services.AddScoped<IDbInitializer, DbInitializer>();
