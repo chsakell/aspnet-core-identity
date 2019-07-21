@@ -63,6 +63,12 @@ namespace AspNetCoreIdentity.Controllers
 
             var userEmail = info.Principal.FindFirstValue(ClaimTypes.Email);
 
+            if (string.IsNullOrEmpty(userEmail))
+            {
+                return LocalRedirect(
+                    $"{returnUrl}?message=Email scope access is required to add {info.ProviderDisplayName} provider&type=danger");
+            }
+
             var userDb = await _userManager.FindByEmailAsync(userEmail);
 
             if (userDb != null)

@@ -171,7 +171,7 @@ namespace AspNetCoreIdentity.Controllers
         }
 
         [HttpGet]
-        public async Task<UserStateVM> Authenticated()
+        public UserStateVM Authenticated()
         {
             return new UserStateVM
             {
