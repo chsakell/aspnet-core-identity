@@ -93,22 +93,22 @@ namespace AspNetCoreIdentity.Infrastructure
                 {
                     linkedInOptions.ClientId = configuration["Authentication:LinkedIn:ClientId"];
                     linkedInOptions.ClientSecret = configuration["Authentication:LinkedIn:ClientSecret"];
-                    linkedInOptions.CallbackPath = "/signin-linkedin";
+                    //linkedInOptions.CallbackPath = "/signin-linkedin";
                 });
             }
 
             // DropBox
 
-            // dotnet user-secrets set Authentication:DropBox:ClientId ""
+            // dotnet user-secrets set Authentication:DropBox:ClientKey ""
             // dotnet user-secrets set Authentication:DropBox:ClientSecret ""
 
-            if (configuration["Authentication:DropBox:ClientId"] != null)
+            if (configuration["Authentication:DropBox:ClientKey"] != null)
             {
                 services.AddAuthentication().AddDropbox(dropBoxOptions =>
                 {
-                    dropBoxOptions.ClientId = configuration["Authentication:DropBox:ClientId"];
+                    dropBoxOptions.ClientId = configuration["Authentication:DropBox:ClientKey"];
                     dropBoxOptions.ClientSecret = configuration["Authentication:DropBox:ClientSecret"];
-                    dropBoxOptions.CallbackPath = "/signin-dropbox";
+                    //dropBoxOptions.CallbackPath = "/signin-dropbox";
                 });
             }
         }
