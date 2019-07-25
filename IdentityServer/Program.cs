@@ -14,7 +14,7 @@ namespace IdentityServer
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
-                var config = services.GetService<IConfiguration>(); // the key/fix!
+                var config = services.GetService<IConfiguration>();
                 var useInMemoryStores = config.GetValue<bool>("UseInMemoryStores");
                 DatabaseInitializer.Init(services, useInMemoryStores);
             }

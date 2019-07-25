@@ -6,15 +6,9 @@ namespace AspNetCoreIdentity.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IDbInitializer dbInitializer;
 
-        public HomeController(IDbInitializer dbInitializer)
-        {
-            this.dbInitializer = dbInitializer;
+        public HomeController() { }
 
-            var task = dbInitializer.Initialize();
-            task.Wait();
-        }
         public IActionResult Index()
         {
             return View();
