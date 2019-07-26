@@ -43,7 +43,7 @@
 ## Part 5 - [External provider authentication & registration strategy](#)
 
 * Step by step guides for enabling `OAuth 2.0` and signing in with external authentication providers *(Facebook, Google, Twitter, Microsoft, GitHub, LinkedIn, DropBox)*
-* Setup email confirmation during registration using  `Send Grid`
+* Setup email confirmation during registration using `Send Grid`
 * Build a registration and social account association strategy *(associate a social account with an existing one or create a new one)*
 * Associated repository branch: [external-authentication](https://github.com/chsakell/aspnet-core-identity/tree/external-authentication)
 
