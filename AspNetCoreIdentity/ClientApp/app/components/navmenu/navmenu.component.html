@@ -52,14 +52,17 @@
                         <span class='glyphicon glyphicon-cog'></span> Admin panel
                     </a>
                 </li>
-                <li [routerLinkActive]="['link-active']" *ngIf="stateService.isAuthenticated()">
-                    <a (click)="logout()" class="logout">
-                        <span class='glyphicon glyphicon-log-out'></span> Logout <i>({{stateService.username()}})</i>
-                    </a>
-                </li>
                 <li [routerLinkActive]="['link-active']">
                     <a [routerLink]="['/share']">
                         <span class='glyphicon glyphicon-share'></span> Share
+                    </a>
+                </li>
+                <li [routerLinkActive]="['link-active']" *ngIf="stateService.isAuthenticated()">
+                    <a (click)="logout()" class="logout">
+                        <span class='glyphicon glyphicon-log-out'></span> Logout <i>({{stateService.username()}})</i>
+                        <span *ngIf="stateService.authenticationMethod() && stateService.authenticationMethod().length > 0">
+                            <img src="/images/{{stateService.authenticationMethod()}}.png" style="width: 20px; margin: 5px 5px 10px;" />
+                        </span>
                     </a>
                 </li>
                 <li *ngIf="stateService.getNotification().message !== ''">

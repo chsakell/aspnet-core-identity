@@ -60,6 +60,12 @@ export class RegisterComponent {
         this.externalRegistration.username = '';
     }
 
+    onKeydown(event: any) {
+        if (event.key === "Enter") {
+            this.register();
+        }
+    }
+
     register() {
         this.errors = '';
         if (!this.externalRegistration.associate) {
@@ -87,7 +93,8 @@ export class RegisterComponent {
                         this.stateService.setAuthentication(
                             {
                                 isAuthenticated: true,
-                                username: registerResult.data.username
+                                username: registerResult.data.username,
+                                authenticationMethod: this.externalRegistration.providerDisplayName
                             });
                     }
 

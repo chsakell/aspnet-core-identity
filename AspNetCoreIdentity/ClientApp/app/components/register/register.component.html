@@ -20,18 +20,18 @@
                             <form id="register-form" method="post" role="form">
                                 <div *ngIf="!externalRegistration.associateExistingAccount">
                                     <div class="form-group">
-                                        <input type="text" name="username" id="username" [(ngModel)]="user.userName" tabindex="1" class="form-control" placeholder="Username" value="">
+                                        <input (keydown)="onKeydown($event)" type="text" name="username" id="username" [(ngModel)]="user.userName" tabindex="1" class="form-control" placeholder="Username" value="">
                                     </div>
                                     <div class="form-group">
-                                        <input [disabled]="externalRegistration.associate" type="email" name="email" id="email" [(ngModel)]="user.email" tabindex="2" class="form-control" placeholder="Email Address" value="">
+                                        <input (keydown)="onKeydown($event)" [disabled]="externalRegistration.associate" type="email" name="email" id="email" [(ngModel)]="user.email" tabindex="2" class="form-control" placeholder="Email Address" value="">
                                     </div>
                                 </div>
                                 <div *ngIf="!externalRegistration.associate">
                                     <div class="form-group">
-                                        <input type="password" name="password" id="password" [(ngModel)]="user.password" tabindex="3" class="form-control" placeholder="Password">
+                                        <input type="password" (keydown)="onKeydown($event)" name="password" id="password" [(ngModel)]="user.password" tabindex="3" class="form-control" placeholder="Password">
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" name="confirm-password" id="confirm-password" [(ngModel)]="user.confirmPassword" tabindex="4" class="form-control" placeholder="Confirm Password">
+                                        <input type="password" (keydown)="onKeydown($event)" name="confirm-password" id="confirm-password" [(ngModel)]="user.confirmPassword" tabindex="4" class="form-control" placeholder="Confirm Password">
                                     </div>
                                     <div class="form-group" *ngIf="errors.length > 0">
                                         <ul [innerHTML]="errors" style="color: #E91E63"></ul>
@@ -51,7 +51,7 @@
                                         <label class="checkbox-inline" title="Associate an existing account"><input type="checkbox" name="start-trial" [(ngModel)]="externalRegistration.associateExistingAccount" (ngModelChange)="setAssociateEmail($event)">Associate an existing account</label>
                                     </div>
                                     <div class="form-group" *ngIf="externalRegistration.associateExistingAccount">
-                                        <input type="email" name="associateEmail" id="associateEmail" [(ngModel)]="externalRegistration.associateEmail" tabindex="2" class="form-control" placeholder="Existing Email Address" value="">
+                                        <input type="email" (keydown)="onKeydown($event)" name="associateEmail" id="associateEmail" [(ngModel)]="externalRegistration.associateEmail" tabindex="2" class="form-control" placeholder="Existing Email Address" value="">
                                     </div>
                                     <div class="form-group" *ngIf="errors.length > 0">
                                         <ul [innerHTML]="errors" style="color: #E91E63"></ul>

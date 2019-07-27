@@ -22,7 +22,7 @@ export class HttpInterceptor extends Http {
                 return Observable.throw(error);
 
             if ((error.status === 401) && (window.location.href.match(/\?/g) || []).length < 2) {
-                this.stateService.setAuthentication({ username: '', isAuthenticated: false });
+                this.stateService.setAuthentication({ username: '', isAuthenticated: false, authenticationMethod: '' });
                 this.router.navigate(['/login']);
             }
             else if ((error.status === 403) && (window.location.href.match(/\?/g) || []).length < 2) {

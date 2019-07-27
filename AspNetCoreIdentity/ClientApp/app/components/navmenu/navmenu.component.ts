@@ -17,7 +17,7 @@ export class NavMenuComponent {
 
     logout() {
         this.http.post(this.baseUrl + 'api/account/signout', {}).subscribe(result => {
-            this.stateService.setAuthentication({ username: '', isAuthenticated: false });
+            this.stateService.setAuthentication({ username: '', isAuthenticated: false, authenticationMethod: '' });
             this.router.navigate(['/home']);
         }, error => console.error(error));
 

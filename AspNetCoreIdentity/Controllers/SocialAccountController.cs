@@ -173,7 +173,7 @@ namespace AspNetCoreIdentity.Controllers
                     protocol: Request.Scheme);
 
                 await _emailSender.SendEmailAsync(userDb.Email, $"Confirm {associate.ProviderDisplayName} external login",
-                    $"Please confirm association of your {associate.ProviderDisplayName} account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    $"Please confirm association of your {associate.ProviderDisplayName} account by clicking <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>here</a>.");
 
                 return new ResultVM
                 {

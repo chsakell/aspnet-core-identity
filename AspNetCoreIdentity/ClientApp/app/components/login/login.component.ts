@@ -26,13 +26,19 @@ export class LoginComponent implements OnInit {
             });
     }
 
+    onKeydown(event: any) {
+        if (event.key === "Enter") {
+            this.login();
+        }
+    }
+
     login() {
         this.errors = '';
         console.log(this.user);
         this.http.post(this.baseUrl + 'api/account/login', this.user).subscribe(result => {
             let loginResult = result.json() as ResultVM;
             if (loginResult.status === StatusEnum.Success) {
-                this.stateService.setAuthentication({ isAuthenticated: true, username: this.user.username });
+                this.stateService.setAuthentication({ isAuthenticated: true, username: this.user.username, authenticationMethod: '' });
                 this.router.navigate(['/home']);
             } else if (loginResult.status === StatusEnum.Error) {
                 this.errors = loginResult.data.toString();

@@ -114,20 +114,26 @@ namespace AspNetCoreIdentity.Controllers
                 {
                     var result = new ResultVM();
 
-                    if (!await _userManager.IsEmailConfirmedAsync(user))
+                    if (await _userManager.CheckPasswordAsync(user, model.Password))
                     {
-                        result.Status = Status.Error;
-                        result.Data = "<li>Email confirmation required</li>";
-                    }
-                    else if (await _userManager.CheckPasswordAsync(user, model.Password))
-                    {
+                        if (!await _userManager.IsEmailConfirmedAsync(user))
+                        {
+                            result.Status = Status.Error;
+                            result.Data = "<li>Email confirmation required</li>";
+
+                            return result;
+                        }
+
                         var signInResult = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, true,
                             lockoutOnFailure: false);
 
                         result.Status = signInResult == SignInResult.Success ? Status.Success : Status.Error;
                         result.Message = signInResult == SignInResult.Success ? $"Welcome {user.UserName}" : "Invalid login";
-                        result.Data = signInResult == SignInResult.Success ? (object)model : $"<li>Invalid login attempt - {signInResult.ToString()}</li>";
+                        result.Data = signInResult == SignInResult.Success ? (object)model : $"<li>Invalid login attempt - {signInResult}</li>";
                     }
+
+                    result.Status = Status.Error;
+                    result.Data = $"<li>Invalid Username or Password</li>";
 
                     return result;
                 }
@@ -176,7 +182,8 @@ namespace AspNetCoreIdentity.Controllers
             return new UserStateVM
             {
                 IsAuthenticated = User.Identity.IsAuthenticated,
-                Username = User.Identity.IsAuthenticated ? User.Identity.Name : string.Empty
+                Username = User.Identity.IsAuthenticated ? User.Identity.Name : string.Empty,
+                AuthenticationMethod = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.AuthenticationMethod)?.Value
             };
         }
 
@@ -223,7 +230,9 @@ namespace AspNetCoreIdentity.Controllers
             if (!newLoginResult.Succeeded)
                 return new LocalRedirectResult($"/?message={providerDisplayName} failed to associate&type=danger");
 
-            await _signInManager.SignInAsync(user, false);
+            //await _signInManager.SignInAsync(user, false);
+            var result = await _signInManager.ExternalLoginSignInAsync(loginProvider, providerKey,
+                isPersistent: false, bypassTwoFactor: true);
             return new LocalRedirectResult($"/?message={providerDisplayName} has been added successfully");
         }
 

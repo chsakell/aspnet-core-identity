@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class StateService {
-    userState: UserState = { username: '', isAuthenticated: false };
+    userState: UserState = { username: '', isAuthenticated: false, authenticationMethod: '' };
     notification: Notification = { message: '', type: '' };
 
     constructor() { }
@@ -20,6 +20,10 @@ export class StateService {
 
     public username() {
         return this.userState.username;
+    }
+
+    public authenticationMethod() {
+        return this.userState.authenticationMethod;
     }
 
     public displayNotification(notify: Notification) {
@@ -40,6 +44,7 @@ export class StateService {
 export interface UserState {
     username: string;
     isAuthenticated: boolean;
+    authenticationMethod: string;
 }
 
 export interface Notification {
