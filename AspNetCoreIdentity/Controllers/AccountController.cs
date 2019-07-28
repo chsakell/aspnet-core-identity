@@ -74,7 +74,6 @@ namespace AspNetCoreIdentity.Controllers
                     await _emailSender.SendEmailAsync(user.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-
                     return new ResultVM
                     {
                         Status = Status.Success,
@@ -229,7 +228,6 @@ namespace AspNetCoreIdentity.Controllers
             var newLoginResult = await _userManager.AddLoginAsync(user,
                 new ExternalLoginInfo(null, loginProvider, providerKey,
                     providerDisplayName));
-
 
             if (!newLoginResult.Succeeded)
                 return new LocalRedirectResult($"/?message={providerDisplayName} failed to associate&type=danger");

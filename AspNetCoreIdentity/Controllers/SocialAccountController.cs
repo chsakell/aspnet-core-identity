@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
+using System.Threading;
 using System.Threading.Tasks;
 using AspNetCoreIdentity.Infrastructure;
 using AspNetCoreIdentity.ViewModels;
@@ -141,11 +142,12 @@ namespace AspNetCoreIdentity.Controllers
                                 associate.ProviderDisplayName));
                     if (createUserResult.Succeeded)
                     {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        await _signInManager.ExternalLoginSignInAsync(associate.LoginProvider, associate.ProviderKey, false);
 
                         // Rule #2
-                        var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                        await _userManager.ConfirmEmailAsync(user, code);
+                        user.EmailConfirmed = true;
+                        await _userManager.UpdateAsync(user);
+
                         return new ResultVM
                         {
                             Status = Status.Success,
