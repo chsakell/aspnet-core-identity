@@ -142,11 +142,11 @@ namespace AspNetCoreIdentity.Controllers
                                 associate.ProviderDisplayName));
                     if (createUserResult.Succeeded)
                     {
-                        await _signInManager.ExternalLoginSignInAsync(associate.LoginProvider, associate.ProviderKey, false);
-
                         // Rule #2
                         user.EmailConfirmed = true;
                         await _userManager.UpdateAsync(user);
+
+                        await _signInManager.ExternalLoginSignInAsync(associate.LoginProvider, associate.ProviderKey, false);
 
                         return new ResultVM
                         {
