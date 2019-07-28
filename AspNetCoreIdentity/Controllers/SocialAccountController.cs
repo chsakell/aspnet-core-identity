@@ -73,16 +73,35 @@ namespace AspNetCoreIdentity.Controllers
 
             if (userDb != null)
             {
+                // RULE #5
                 if (!userDb.EmailConfirmed)
                 {
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(userDb);
-                    await _userManager.ConfirmEmailAsync(userDb, code);
+                    var token = await _userManager.GenerateEmailConfirmationTokenAsync(userDb);
+
+                    var callbackUrl = Url.Action("ConfirmExternalProvider", "Account",
+                        values: new
+                        {
+                            userId = userDb.Id,
+                            code = token,
+                            loginProvider = info.LoginProvider,
+                            providerDisplayName = info.LoginProvider,
+                            providerKey = info.ProviderKey
+                        },
+                        protocol: Request.Scheme);
+
+                    await _emailSender.SendEmailAsync(userDb.Email, $"Confirm {info.ProviderDisplayName} external login",
+                        $"Please confirm association of your {info.ProviderDisplayName} account by clicking <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>here</a>.");
+
+                    return LocalRedirect(
+                        $"{returnUrl}?message=External account association with {info.ProviderDisplayName} is pending.Please check your email");
                 }
 
                 // Add the external provider
                 await _userManager.AddLoginAsync(userDb, info);
 
-                await _signInManager.SignInAsync(userDb, isPersistent: false);
+                 await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey,
+                    isPersistent: false, bypassTwoFactor: true);
+
                 return LocalRedirect(
                     $"{returnUrl}?message={info.ProviderDisplayName} has been added successfully");
             }
@@ -124,7 +143,7 @@ namespace AspNetCoreIdentity.Controllers
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
 
-                        // No need to send a confirmation email here..
+                        // Rule #2
                         var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                         await _userManager.ConfirmEmailAsync(user, code);
                         return new ResultVM
@@ -149,6 +168,7 @@ namespace AspNetCoreIdentity.Controllers
 
             if (userDb != null)
             {
+                // Rule #5
                 if (!userDb.EmailConfirmed)
                 {
                     return new ResultVM
@@ -159,6 +179,7 @@ namespace AspNetCoreIdentity.Controllers
                     };
                 }
 
+                // Rule #4
                 var token = await _userManager.GenerateEmailConfirmationTokenAsync(userDb);
 
                 var callbackUrl = Url.Action("ConfirmExternalProvider", "Account",

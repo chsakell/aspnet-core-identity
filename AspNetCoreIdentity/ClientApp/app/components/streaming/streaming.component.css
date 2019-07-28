@@ -1,5 +1,6 @@
 .video {
-    background-color: #232222;
+    background-color: #000000;
+    background-image: linear-gradient(147deg, #000000 0%, #2c3e50 74%);
     padding-bottom: 20px;
     padding-top:10px;
 }

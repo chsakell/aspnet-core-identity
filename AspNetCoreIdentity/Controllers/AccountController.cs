@@ -116,7 +116,8 @@ namespace AspNetCoreIdentity.Controllers
 
                     if (await _userManager.CheckPasswordAsync(user, model.Password))
                     {
-                        if (!await _userManager.IsEmailConfirmedAsync(user))
+                        // Rule #1
+                        if (!await _signInManager.CanSignInAsync(user))
                         {
                             result.Status = Status.Error;
                             result.Data = "<li>Email confirmation required</li>";
@@ -130,6 +131,8 @@ namespace AspNetCoreIdentity.Controllers
                         result.Status = signInResult == SignInResult.Success ? Status.Success : Status.Error;
                         result.Message = signInResult == SignInResult.Success ? $"Welcome {user.UserName}" : "Invalid login";
                         result.Data = signInResult == SignInResult.Success ? (object)model : $"<li>Invalid login attempt - {signInResult}</li>";
+
+                        return result;
                     }
 
                     result.Status = Status.Error;
@@ -227,10 +230,10 @@ namespace AspNetCoreIdentity.Controllers
                 new ExternalLoginInfo(null, loginProvider, providerKey,
                     providerDisplayName));
 
+
             if (!newLoginResult.Succeeded)
                 return new LocalRedirectResult($"/?message={providerDisplayName} failed to associate&type=danger");
 
-            //await _signInManager.SignInAsync(user, false);
             var result = await _signInManager.ExternalLoginSignInAsync(loginProvider, providerKey,
                 isPersistent: false, bypassTwoFactor: true);
             return new LocalRedirectResult($"/?message={providerDisplayName} has been added successfully");
