@@ -40,11 +40,17 @@
 * Learn how to use `IdentityServer` for integrating  `OAuth 2.0` and `OpenID Connect`
 * Associated repository branch: [identity-server](https://github.com/chsakell/aspnet-core-identity/tree/identity-server)
 
-## Part 5 - [External provider authentication & registration strategy](#)
+## Part 5 - [External provider authentication & registration strategy](https://wp.me/p3mRWu-1Kq)
 
-* Step by step guides for enabling `OAuth 2.0` and signing in with external authentication providers *(Facebook, Google, Twitter, Microsoft, GitHub, LinkedIn, DropBox)*
-* Setup email confirmation during registration using `Send Grid`
-* Build a registration and social account association strategy *(associate a social account with an existing one or create a new one)*
+* Step by step guides for enabling external provider authentication
+  *  [Google authentication](https://wp.me/p3mRWu-1Kq#google)
+  *  [Facebook authentication](https://wp.me/p3mRWu-1Kq#facebook)
+  *  [Twitter authentication](https://wp.me/p3mRWu-1Kq#twitter)
+  *  [Microsoft authentication](https://wp.me/p3mRWu-1Kq#microsoft)
+  *  [GitHub authentication](https://wp.me/p3mRWu-1Kq#github)
+  *  [LinkedIn authentication](https://wp.me/p3mRWu-1Kq#linkedin)
+  *  [DropBox authentication](https://wp.me/p3mRWu-1Kq#dropbox)
+* Implement an external provider [registration strategy](https://wp.me/p3mRWu-1Kq#registration-strategy)
 * Associated repository branch: [external-authentication](https://github.com/chsakell/aspnet-core-identity/tree/external-authentication)
 
 
