@@ -1,5 +1,7 @@
 # ASP.NET Core Identity Series
 
+## The most complete guide for ASP.NET Core Identity 
+
 ![ASP.NET Core Identity Series](https://chsakell.files.wordpress.com/2018/04/aspnet-core-identity-13.png)
 
 [![License](https://img.shields.io/github/license/chsakell/aspnet-core-identity.svg)](https://github.com/chsakell/aspnet-core-identity/blob/master/LICENSE) [![Build status](https://ci.appveyor.com/api/projects/status/44f1gsf3quf0fbw2/branch/master?svg=true
