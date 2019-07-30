@@ -13,9 +13,10 @@ export class AppComponent {
     constructor(public http: Http, stateService: StateService, router: Router,
         @Inject('BASE_URL') public baseUrl: string, openConnectIdService: OpenIdConnectService) {
         this.http.get(this.baseUrl + 'api/account/authenticated').subscribe(result => {
-            var state = result.json() as UserState;
+            var state = result.json() as any;
             console.log(state);
             stateService.setAuthentication(state);
+            stateService.setDisplayPassword(state.displaySetPassword);
         }, error => console.error(error));
 
         let code = this.getUrlParameter("code");

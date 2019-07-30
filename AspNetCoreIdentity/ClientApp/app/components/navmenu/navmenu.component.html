@@ -70,6 +70,11 @@
                         <strong>{{stateService.getNotification().message}}</strong>
                     </div>
                 </li>
+                <li [routerLinkActive]="['link-active']" *ngIf="stateService.displayPassword()">
+                    <a [routerLink]="['/password']">
+                        <span class='glyphicon glyphicon-lock'></span> Set password
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

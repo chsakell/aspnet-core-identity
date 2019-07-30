@@ -21,6 +21,7 @@ import { StreamingRegisterComponent } from './components/streaming/register/regi
 import { AddVideoComponent } from './components/streaming/add/add-video.component';
 import { SocialApiShareComponent } from './components/socialapi/share.component';
 import { OpenIdConnectService } from './core/openid-connect.service';
+import { PasswordComponent } from './components/password/password.component';
 
 @NgModule({
     declarations: [
@@ -35,7 +36,8 @@ import { OpenIdConnectService } from './core/openid-connect.service';
         AddVideoComponent,
         AccessForbiddenComponent,
         ManageComponent,
-        SocialApiShareComponent
+        SocialApiShareComponent,
+        PasswordComponent
     ],
     imports: [
         CommonModule,
@@ -55,6 +57,7 @@ import { OpenIdConnectService } from './core/openid-connect.service';
             { path: 'streaming/videos/add', component: AddVideoComponent },
             { path: 'access-forbidden', component: AccessForbiddenComponent },
             { path: 'manage/users', component: ManageComponent },
+            { path: 'password', component: PasswordComponent },
             { path: 'share', component: SocialApiShareComponent },
             { path: '**', redirectTo: 'home' }
         ])

@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 export class StateService {
     userState: UserState = { username: '', isAuthenticated: false, authenticationMethod: '' };
     notification: Notification = { message: '', type: '' };
+    displaySetPassword: boolean = false;
 
     constructor() { }
 
@@ -38,6 +39,14 @@ export class StateService {
 
     public getNotification() {
         return this.notification;
+    }
+
+    public setDisplayPassword(display: boolean) {
+        this.displaySetPassword = display;
+    }
+
+    public displayPassword() {
+        return this.displaySetPassword;
     }
 }
 

@@ -179,14 +179,18 @@ namespace AspNetCoreIdentity.Controllers
         }
 
         [HttpGet]
-        public UserStateVM Authenticated()
+        public async Task<IActionResult> Authenticated()
         {
-            return new UserStateVM
+            return Ok(new
             {
-                IsAuthenticated = User.Identity.IsAuthenticated,
+                User.Identity.IsAuthenticated,
                 Username = User.Identity.IsAuthenticated ? User.Identity.Name : string.Empty,
-                AuthenticationMethod = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.AuthenticationMethod)?.Value
-            };
+                AuthenticationMethod = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.AuthenticationMethod)?.Value,
+                DisplaySetPassword = User.Identity.IsAuthenticated 
+                                     && !(await _userManager.HasPasswordAsync(
+                                         (await _userManager.GetUserAsync(User))
+                                         ))
+            });
         }
 
         [HttpGet]
