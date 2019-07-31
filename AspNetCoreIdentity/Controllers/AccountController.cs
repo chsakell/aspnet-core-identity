@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
@@ -239,6 +240,47 @@ namespace AspNetCoreIdentity.Controllers
             var result = await _signInManager.ExternalLoginSignInAsync(loginProvider, providerKey,
                 isPersistent: false, bypassTwoFactor: true);
             return new LocalRedirectResult($"/?message={providerDisplayName} has been added successfully");
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<ResultVM> ManagePassword([FromBody] UpdatePasswordVM updatePassword)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.GetUserAsync(User);
+
+                // This will set the password only if it's NULL
+                var result = await _userManager.AddPasswordAsync(user, updatePassword.Password);
+
+                if (result.Succeeded)
+                {
+                    return new ResultVM
+                    {
+                        Status = Status.Success,
+                        Message = "Password has been updated successfully"
+                    };
+                }
+
+                var errors = result.Errors.Select(e => e.Description).Select(e => "<li>" + e + "</li>");
+
+                return new ResultVM
+                {
+                    Status = Status.Error,
+                    Message = "Invalid data",
+                    Data = string.Join("", errors)
+                };
+            }
+            else
+            {
+                var errors = ModelState.Keys.Select(e => "<li>" + e + "</li>");
+                return new ResultVM
+                {
+                    Status = Status.Error,
+                    Message = "Invalid data",
+                    Data = string.Join("", errors)
+                };
+            }
         }
 
         [HttpPost]
