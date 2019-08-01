@@ -73,7 +73,7 @@ namespace AspNetCoreIdentity.Controllers
                         protocol: Request.Scheme);
 
                     await _emailSender.SendEmailAsync(user.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                        $"Please confirm your account by clicking <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>here</a>.");
 
                     return new ResultVM
                     {
