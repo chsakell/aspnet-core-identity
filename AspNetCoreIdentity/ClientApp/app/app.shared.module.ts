@@ -22,6 +22,7 @@ import { AddVideoComponent } from './components/streaming/add/add-video.componen
 import { SocialApiShareComponent } from './components/socialapi/share.component';
 import { OpenIdConnectService } from './core/openid-connect.service';
 import { PasswordComponent } from './components/password/password.component';
+import { AccountComponent } from './components/account/account.component';
 
 @NgModule({
     declarations: [
@@ -37,7 +38,8 @@ import { PasswordComponent } from './components/password/password.component';
         AccessForbiddenComponent,
         ManageComponent,
         SocialApiShareComponent,
-        PasswordComponent
+        PasswordComponent,
+        AccountComponent
     ],
     imports: [
         CommonModule,
@@ -59,6 +61,7 @@ import { PasswordComponent } from './components/password/password.component';
             { path: 'manage/users', component: ManageComponent },
             { path: 'password', component: PasswordComponent },
             { path: 'share', component: SocialApiShareComponent },
+            { path: 'manage/account', component: AccountComponent },
             { path: '**', redirectTo: 'home' }
         ])
     ],

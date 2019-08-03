@@ -57,6 +57,16 @@
                         <span class='glyphicon glyphicon-share'></span> Share
                     </a>
                 </li>
+                <li [routerLinkActive]="['link-active']" *ngIf="stateService.displayPassword()">
+                    <a [routerLink]="['/password']">
+                        <span class='glyphicon glyphicon-lock'></span> Set password
+                    </a>
+                </li>
+                <li [routerLinkActive]="['link-active']" *ngIf="stateService.isAuthenticated()">
+                    <a [routerLink]="['/manage/account']">
+                        <span class='glyphicon glyphicon-edit'></span> Manage Account
+                    </a>
+                </li>
                 <li [routerLinkActive]="['link-active']" *ngIf="stateService.isAuthenticated()">
                     <a (click)="logout()" class="logout">
                         <span class='glyphicon glyphicon-log-out'></span> Logout <i>({{stateService.username()}})</i>
@@ -69,11 +79,6 @@
                     <div class="alert" [ngClass]="{'alert-success': stateService.getNotification().type === 'success', 'alert-danger': stateService.getNotification().type === 'danger'}">
                         <strong>{{stateService.getNotification().message}}</strong>
                     </div>
-                </li>
-                <li [routerLinkActive]="['link-active']" *ngIf="stateService.displayPassword()">
-                    <a [routerLink]="['/password']">
-                        <span class='glyphicon glyphicon-lock'></span> Set password
-                    </a>
                 </li>
             </ul>
         </div>
