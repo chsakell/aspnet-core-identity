@@ -1,1 +1,90 @@
-﻿<h1>Manage account!!</h1>
+﻿<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="page-header">
+            <h3>Account management</h3>
+        </div>
+        <div class="panel with-nav-tabs panel-primary">
+            <div class="panel-heading">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#profile" data-toggle="tab">Profile</a></li>
+                    <li class="dropdown">
+                        <a href="#" data-toggle="dropdown">Security <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#2fa" data-toggle="tab">2 Factor Authentication</a></li>
+                            <li><a href="#resetpassword" data-toggle="tab">Reset password</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="panel-body">
+                <div class="tab-content">
+                    <div class="tab-pane fade in active" id="profile">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <caption>Basic info</caption>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Username</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Phone</th>
+                                        <th scope="col">2FA Enabled</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{accountDetails.username}}</td>
+                                        <td>{{accountDetails.email}}</td>
+                                        <td>{{accountDetails.phoneNumber}}</td>
+                                        <td>{{accountDetails.twoFactorEnabled}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <hr />
+                        <div class="table-responsive">
+                            <table class="table">
+                                <caption>External providers</caption>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Provider</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let provider of accountDetails.externalLogins; let i = index">
+                                        <th scope="row">{{i+1}}</th>
+                                        <td>{{provider}}</td>
+                                        <td>
+                                            <img src="/images/{{provider}}.png" style="width: 20px; margin: 5px 5px 10px;" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row tab-pane fade" id="2fa">
+                        <div class="col-sm-6 col-sm-offset-3" style="margin-bottom:20px" *ngIf="!displayAuthenticator">
+                            <button type="button" (click)="setupAuthenticator()" class="form-control btn">Setup authenticator</button>
+                        </div>
+                        <div class="col-sm-6 col-sm-offset-3" style="margin-bottom:20px" *ngIf="displayAuthenticator">
+                            <p>Scan the QR Code or enter the following key into your two factor authenticator app. Spaces and casing do not matter</p>
+                            <div style="text-align: center; color: lightgreen;font-size: 20px;">{{authenticatorDetails.sharedKey}}</div>
+                            <div id="genQrCode"><span *ngIf="generatingQrCode">Generating...</span></div>
+                        <div>
+                            Once you have scanned the QR code or input the key above, your two factor authentication app will provide you with a unique code. Enter the code in the confirmation box below
+                            <input class="form-control" type="text" placeholder="Verification Code" style="margin: 10px 0;" />
+                            <button type="button" (click)="setupAuthenticator()" class="form-control btn btn-primary">Verify</button>
+                        </div>
+                        </div>
+                        <div class="col-sm-6 col-sm-offset-3" *ngIf="accountDetails.hasAuthenticator">
+                            <button type="button" class="form-control btn btn-danger">Reset authenticator</button>
+                            
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="resetpassword">Default 5</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
