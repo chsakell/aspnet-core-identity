@@ -1,5 +1,6 @@
 ﻿import { Component, Inject } from '@angular/core';
 import { Http } from '@angular/http';
+import { StateService } from '../../core/state.service';
 
 declare var QRCode: any;
 
@@ -14,10 +15,14 @@ export class AccountComponent {
     public authenticatorDetails: AuthenticatorDetailsVM = <AuthenticatorDetailsVM>{};
     public displayAuthenticator: boolean = false;
     public generatingQrCode: boolean = false;
+    public verificationCode: string = '';
+    public errors: string = '';
+    public recoveryCodes: string[] = [];
 
     public generatedQRCode: any;
 
-    constructor(public http: Http, @Inject('BASE_URL') public baseUrl: string) {
+    constructor(public http: Http, @Inject('BASE_URL') public baseUrl: string,
+        public stateService: StateService) {
         this.http.get(this.baseUrl + 'api/manageaccount/details').subscribe(result => {
             this.accountDetails = result.json() as AccountDetailsVM;
             console.log(this.accountDetails);
@@ -31,7 +36,7 @@ export class AccountComponent {
             console.log(this.authenticatorDetails);
             this.displayAuthenticator = true;
             this.generatingQrCode = true;
-            
+
             setTimeout(function () {
                 self.generatedQRCode = new QRCode(document.getElementById("genQrCode"),
                     {
@@ -48,6 +53,33 @@ export class AccountComponent {
                 1000);
 
         }, error => console.error(error));
+    }
+
+    verifyAuthenticator() {
+        var verification = {
+            verificationCode: this.verificationCode
+        };
+
+        this.errors = '';
+
+        this.http.post(this.baseUrl + 'api/manageaccount/verifyAuthenticator', verification).subscribe(result => {
+
+            let verifyAuthenticatorResult = result.json() as ResultVM;
+            if (verifyAuthenticatorResult.status === StatusEnum.Success) {
+                this.stateService.displayNotification({ message: verifyAuthenticatorResult.message, type: "success" });
+
+                if (verifyAuthenticatorResult.data && verifyAuthenticatorResult.data.recoveryCodes) {
+                    // display new recovery codes
+                    this.recoveryCodes = verifyAuthenticatorResult.data.recoveryCodes;
+                }
+
+                this.displayAuthenticator = false;
+
+            } else if (verifyAuthenticatorResult.status === StatusEnum.Error) {
+                this.errors = verifyAuthenticatorResult.data.toString();
+            }
+        },
+            error => console.error(error));
     }
 }
 
@@ -66,4 +98,15 @@ interface AccountDetailsVM {
 interface AuthenticatorDetailsVM {
     sharedKey: string;
     authenticatorUri: string;
+}
+
+interface ResultVM {
+    status: StatusEnum;
+    message: string;
+    data: any;
+}
+
+enum StatusEnum {
+    Success = 1,
+    Error = 2
 }

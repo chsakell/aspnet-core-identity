@@ -71,15 +71,23 @@
                             <p>Scan the QR Code or enter the following key into your two factor authenticator app. Spaces and casing do not matter</p>
                             <div style="text-align: center; color: lightgreen;font-size: 20px;">{{authenticatorDetails.sharedKey}}</div>
                             <div id="genQrCode"><span *ngIf="generatingQrCode">Generating...</span></div>
-                        <div>
-                            Once you have scanned the QR code or input the key above, your two factor authentication app will provide you with a unique code. Enter the code in the confirmation box below
-                            <input class="form-control" type="text" placeholder="Verification Code" style="margin: 10px 0;" />
-                            <button type="button" (click)="setupAuthenticator()" class="form-control btn btn-primary">Verify</button>
-                        </div>
+                            <div>
+                                Once you have scanned the QR code or input the key above, your two factor authentication app will provide you with a unique code. Enter the code in the confirmation box below
+                                <input class="form-control" name="username" id="username" [(ngModel)]="verificationCode" type="text" placeholder="Verification Code" style="margin: 10px 0;" />
+                                <button type="button" (click)="verifyAuthenticator()" class="form-control btn btn-primary">Verify</button>
+                            </div>
+                            <div class="form-group" *ngIf="errors.length > 0">
+                                <ul [innerHTML]="errors" style="color: #E91E63; margin: 10px 0;"></ul>
+                            </div>
                         </div>
                         <div class="col-sm-6 col-sm-offset-3" *ngIf="accountDetails.hasAuthenticator">
                             <button type="button" class="form-control btn btn-danger">Reset authenticator</button>
-                            
+                        </div>
+                        <div class="col-sm-6 col-sm-offset-3" *ngIf="recoveryCodes.length > 0">
+                            <h5>Copy and save your recovery codes</h5>
+                            <ul>
+                                <li *ngFor="let recoveryCode of recoveryCodes">{{recoveryCode}}</li>
+                            </ul>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="resetpassword">Default 5</div>
