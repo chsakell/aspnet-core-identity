@@ -55,6 +55,8 @@
 * Implement an external provider [registration strategy](https://wp.me/p3mRWu-1Kq#registration-strategy)
 * Associated repository branch: [external-authentication](https://github.com/chsakell/aspnet-core-identity/tree/external-authentication)
 
+## Part 6 - [Two Factor Authentication]()
+
 
 > To be continued..
 
