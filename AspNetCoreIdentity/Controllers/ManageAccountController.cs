@@ -101,9 +101,77 @@ namespace AspNetCoreIdentity.Controllers
             if (await _userManager.CountRecoveryCodesAsync(user) != 0) return result;
 
             var recoveryCodes = await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10);
-            result.Data = new {recoveryCodes};
+            result.Data = new { recoveryCodes };
             return result;
+        }
 
+        [HttpPost]
+        [Authorize]
+        public async Task<ResultVM> ResetAuthenticator()
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            await _userManager.SetTwoFactorEnabledAsync(user, false);
+            await _userManager.ResetAuthenticatorKeyAsync(user);
+
+            await _signInManager.RefreshSignInAsync(user);
+
+            var result = new ResultVM
+            {
+                Status = Status.Success,
+                Message = "Your authenticator app key has been reset, you will need to configure your authenticator app using the new key."
+            };
+
+            return result;
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<ResultVM> Disable2FA()
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            if (!await _userManager.GetTwoFactorEnabledAsync(user))
+            {
+                return new ResultVM
+                {
+                    Status = Status.Error,
+                    Message = "Cannot disable 2FA as it's not currently enabled"
+                };
+            }
+
+            return new ResultVM
+            {
+                Status = Status.Success,
+                Message = "2FA has been successfully disabled"
+            };
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<ResultVM> GenerateRecoveryCodes()
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            var isTwoFactorEnabled = await _userManager.GetTwoFactorEnabledAsync(user);
+
+            if (!isTwoFactorEnabled)
+            {
+                return new ResultVM
+                {
+                    Status = Status.Error,
+                    Message = "Cannot generate recovery codes as you do not have 2FA enabled"
+                };
+            }
+
+            var recoveryCodes = await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10);
+
+            return new ResultVM
+            {
+                Status = Status.Success,
+                Message = "You have generated new recovery codes",
+                Data = new { recoveryCodes }
+            };
         }
 
         private List<string> GetErrors(ModelStateDictionary modelState)
@@ -161,7 +229,7 @@ namespace AspNetCoreIdentity.Controllers
         {
             return string.Format(
                 AuthenticatorUriFormat,
-                _urlEncoder.Encode("ExternalAuthApp"),
+                _urlEncoder.Encode("ASP.NET Core Identity"),
                 _urlEncoder.Encode(email),
                 unformattedKey);
         }

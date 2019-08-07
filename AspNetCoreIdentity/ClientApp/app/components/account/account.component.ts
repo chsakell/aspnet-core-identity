@@ -81,6 +81,20 @@ export class AccountComponent {
         },
             error => console.error(error));
     }
+
+    resetAuthenticator() {
+        this.http.post(this.baseUrl + 'api/manageaccount/resetAuthenticator', {}).subscribe(result => {
+
+            let resetAuthenticatorResult = result.json() as ResultVM;
+
+            if (resetAuthenticatorResult.status === StatusEnum.Success) {
+                this.stateService.displayNotification({ message: resetAuthenticatorResult.message, type: "success" });
+                this.accountDetails.hasAuthenticator = false;
+                this.accountDetails.twoFactorEnabled = false;
+            }
+        },
+            error => console.error(error));
+    }
 }
 
 interface AccountDetailsVM {

@@ -11,6 +11,7 @@
                         <a href="#" data-toggle="dropdown">Security <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="#2fa" data-toggle="tab">2 Factor Authentication</a></li>
+                            <li *ngIf="accountDetails.hasAuthenticator"><a href="#resetAuthenticator" data-toggle="tab">Reset authenticator</a></li>
                             <li><a href="#resetpassword" data-toggle="tab">Reset password</a></li>
                         </ul>
                     </li>
@@ -26,16 +27,16 @@
                                     <tr>
                                         <th scope="col">Username</th>
                                         <th scope="col">Email</th>
-                                        <th scope="col">Phone</th>
                                         <th scope="col">2FA Enabled</th>
+                                        <th scope="col">Has Authenticator</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td>{{accountDetails.username}}</td>
                                         <td>{{accountDetails.email}}</td>
-                                        <td>{{accountDetails.phoneNumber}}</td>
                                         <td>{{accountDetails.twoFactorEnabled}}</td>
+                                        <td>{{accountDetails.hasAuthenticator}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -67,6 +68,12 @@
                         <div class="col-sm-6 col-sm-offset-3" style="margin-bottom:20px" *ngIf="!displayAuthenticator">
                             <button type="button" (click)="setupAuthenticator()" class="form-control btn">Setup authenticator</button>
                         </div>
+                        <div class="col-sm-3 col-sm-offset-3" style="margin-bottom: 20px" *ngIf="!displayAuthenticator && accountDetails.twoFactorEnabled">
+                            <button type="button" (click)="resetRecoverCodes()" class="form-control btn">Reset recovery codes</button>
+                        </div>
+                        <div class="col-sm-3" style="margin-bottom: 20px" *ngIf="!displayAuthenticator && accountDetails.twoFactorEnabled">
+                            <button type="button" (click)="disable2FA()" class="form-control btn btn-danger">Disable 2FA</button>
+                        </div>
                         <div class="col-sm-6 col-sm-offset-3" style="margin-bottom:20px" *ngIf="displayAuthenticator">
                             <p>Scan the QR Code or enter the following key into your two factor authenticator app. Spaces and casing do not matter</p>
                             <div style="text-align: center; color: lightgreen;font-size: 20px;">{{authenticatorDetails.sharedKey}}</div>
@@ -80,14 +87,26 @@
                                 <ul [innerHTML]="errors" style="color: #E91E63; margin: 10px 0;"></ul>
                             </div>
                         </div>
-                        <div class="col-sm-6 col-sm-offset-3" *ngIf="accountDetails.hasAuthenticator">
-                            <button type="button" class="form-control btn btn-danger">Reset authenticator</button>
-                        </div>
                         <div class="col-sm-6 col-sm-offset-3" *ngIf="recoveryCodes.length > 0">
                             <h5>Copy and save your recovery codes</h5>
                             <ul>
                                 <li *ngFor="let recoveryCode of recoveryCodes">{{recoveryCode}}</li>
                             </ul>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="resetAuthenticator">
+                        <div class="col-sm-6 col-sm-offset-3">
+                            <div class="alert alert-warning" role="alert">
+                                <p>
+                                    <span class="glyphicon glyphicon-warning-sign"></span>
+                                    <strong>If you reset your authenticator key your authenticator app will not work until you reconfigure it.</strong>
+                                </p>
+                                <p>
+                                    This process disables 2FA until you verify your authenticator app.
+                                    If you do not complete your authenticator app configuration you may lose access to your account.
+                                </p>
+                            </div>
+                            <button type="button" class="form-control btn btn-danger">Reset authenticator</button>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="resetpassword">Default 5</div>
