@@ -57,6 +57,10 @@
 
 ## Part 6 - [Two Factor Authentication]()
 
+* Explain how `2FA` works 
+* Explain what `QRCode` is and how it works
+* Implement all 2FA flows *(enable, disable, reset authenticator, re-generate tokens)*
+* Secure Authenticator Key and Generated tokens
 
 > To be continued..
 
