@@ -140,10 +140,12 @@ namespace AspNetCoreIdentity.Controllers
                 };
             }
 
+            var result = await _userManager.SetTwoFactorEnabledAsync(user, false);
+
             return new ResultVM
             {
-                Status = Status.Success,
-                Message = "2FA has been successfully disabled"
+                Status = result.Succeeded ? Status.Success : Status.Error,
+                Message = result.Succeeded ?  "2FA has been successfully disabled" : $"Failed to disable 2FA {result.Errors.FirstOrDefault()?.Description}"
             };
         }
 

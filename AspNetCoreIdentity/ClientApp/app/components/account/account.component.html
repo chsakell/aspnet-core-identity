@@ -69,7 +69,7 @@
                             <button type="button" (click)="setupAuthenticator()" class="form-control btn">Setup authenticator</button>
                         </div>
                         <div class="col-sm-3 col-sm-offset-3" style="margin-bottom: 20px" *ngIf="!displayAuthenticator && accountDetails.twoFactorEnabled">
-                            <button type="button" (click)="resetRecoverCodes()" class="form-control btn">Reset recovery codes</button>
+                            <button [disabled]="!accountDetails.twoFactorEnabled" type="button" (click)="resetRecoverCodes()" class="form-control btn">Reset recovery codes</button>
                         </div>
                         <div class="col-sm-3" style="margin-bottom: 20px" *ngIf="!displayAuthenticator && accountDetails.twoFactorEnabled">
                             <button type="button" (click)="disable2FA()" class="form-control btn btn-danger">Disable 2FA</button>

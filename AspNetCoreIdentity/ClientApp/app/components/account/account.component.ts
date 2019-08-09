@@ -50,7 +50,7 @@ export class AccountComponent {
                 self.generatingQrCode = false;
                 (document.querySelector("#genQrCode > img") as HTMLInputElement).style.margin = "0 auto";
             },
-                1000);
+                200);
 
         }, error => console.error(error));
     }
@@ -74,6 +74,9 @@ export class AccountComponent {
                 }
 
                 this.displayAuthenticator = false;
+                this.generatingQrCode = false;
+                this.accountDetails.hasAuthenticator = true;
+                this.accountDetails.twoFactorEnabled = true;
 
             } else if (verifyAuthenticatorResult.status === StatusEnum.Error) {
                 this.errors = verifyAuthenticatorResult.data.toString();
@@ -93,6 +96,40 @@ export class AccountComponent {
                 this.accountDetails.twoFactorEnabled = false;
             }
         },
+            error => console.error(error));
+    }
+
+    disable2FA() {
+        this.http.post(this.baseUrl + 'api/manageaccount/disable2FA', {}).subscribe(result => {
+
+            let disable2FAResult = result.json() as ResultVM;
+
+            if (disable2FAResult.status === StatusEnum.Success) {
+                this.stateService.displayNotification({ message: disable2FAResult.message, type: "success" });
+                this.accountDetails.twoFactorEnabled = false;
+            } else {
+                this.stateService.displayNotification({ message: disable2FAResult.message, type: "danger" });
+            }
+        },
+            error => console.error(error));
+    }
+
+    resetRecoverCodes() {
+        this.http.post(this.baseUrl + 'api/manageaccount/generateRecoveryCodes', {}).subscribe(result => {
+
+                let generateRecoverCodesResult = result.json() as ResultVM;
+
+            if (generateRecoverCodesResult.status === StatusEnum.Success) {
+                this.stateService.displayNotification({ message: generateRecoverCodesResult.message, type: "success" });
+
+                if (generateRecoverCodesResult.data && generateRecoverCodesResult.data.recoveryCodes) {
+                        // display new recovery codes
+                    this.recoveryCodes = generateRecoverCodesResult.data.recoveryCodes;
+                    }
+                } else {
+                this.stateService.displayNotification({ message: generateRecoverCodesResult.message, type: "danger" });
+                }
+            },
             error => console.error(error));
     }
 }
