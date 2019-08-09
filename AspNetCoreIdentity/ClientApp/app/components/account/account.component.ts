@@ -18,12 +18,13 @@ export class AccountComponent {
     public verificationCode: string = '';
     public errors: string = '';
     public recoveryCodes: string[] = [];
+    public authenticatorNeedsSetup: boolean = false;
 
     public generatedQRCode: any;
 
     constructor(public http: Http, @Inject('BASE_URL') public baseUrl: string,
         public stateService: StateService) {
-        this.http.get(this.baseUrl + 'api/manageaccount/details').subscribe(result => {
+        this.http.get(this.baseUrl + 'api/twoFactorAuthentication/details').subscribe(result => {
             this.accountDetails = result.json() as AccountDetailsVM;
             console.log(this.accountDetails);
         }, error => console.error(error));
@@ -31,7 +32,7 @@ export class AccountComponent {
 
     setupAuthenticator() {
         let self = this;
-        this.http.get(this.baseUrl + 'api/manageaccount/setupAuthenticator').subscribe(result => {
+        this.http.get(this.baseUrl + 'api/twoFactorAuthentication/setupAuthenticator').subscribe(result => {
             this.authenticatorDetails = result.json() as AuthenticatorDetailsVM;
             console.log(this.authenticatorDetails);
             this.displayAuthenticator = true;
@@ -62,7 +63,7 @@ export class AccountComponent {
 
         this.errors = '';
 
-        this.http.post(this.baseUrl + 'api/manageaccount/verifyAuthenticator', verification).subscribe(result => {
+        this.http.post(this.baseUrl + 'api/twoFactorAuthentication/verifyAuthenticator', verification).subscribe(result => {
 
             let verifyAuthenticatorResult = result.json() as ResultVM;
             if (verifyAuthenticatorResult.status === StatusEnum.Success) {
@@ -85,22 +86,28 @@ export class AccountComponent {
             error => console.error(error));
     }
 
+    onKeydown(event: any) {
+        if (event.key === "Enter") {
+            this.verifyAuthenticator();
+        }
+    }
+
     resetAuthenticator() {
-        this.http.post(this.baseUrl + 'api/manageaccount/resetAuthenticator', {}).subscribe(result => {
+        this.http.post(this.baseUrl + 'api/twoFactorAuthentication/resetAuthenticator', {}).subscribe(result => {
 
             let resetAuthenticatorResult = result.json() as ResultVM;
 
             if (resetAuthenticatorResult.status === StatusEnum.Success) {
                 this.stateService.displayNotification({ message: resetAuthenticatorResult.message, type: "success" });
-                this.accountDetails.hasAuthenticator = false;
                 this.accountDetails.twoFactorEnabled = false;
+                this.authenticatorNeedsSetup = true;
             }
         },
             error => console.error(error));
     }
 
     disable2FA() {
-        this.http.post(this.baseUrl + 'api/manageaccount/disable2FA', {}).subscribe(result => {
+        this.http.post(this.baseUrl + 'api/twoFactorAuthentication/disable2FA', {}).subscribe(result => {
 
             let disable2FAResult = result.json() as ResultVM;
 
@@ -115,7 +122,7 @@ export class AccountComponent {
     }
 
     resetRecoverCodes() {
-        this.http.post(this.baseUrl + 'api/manageaccount/generateRecoveryCodes', {}).subscribe(result => {
+        this.http.post(this.baseUrl + 'api/twoFactorAuthentication/generateRecoveryCodes', {}).subscribe(result => {
 
                 let generateRecoverCodesResult = result.json() as ResultVM;
 

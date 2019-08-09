@@ -12,6 +12,8 @@ export class LoginComponent implements OnInit {
     public user: LoginVM = { username: '', password: '' }
     public errors: string = '';
     public socialProviders: Array<string> = [];
+    public requires2FA: boolean = false;
+    public twoFaCode : string = '';
 
     constructor(public http: Http, 
                 @Inject('BASE_URL') public baseUrl: string,
@@ -35,16 +37,45 @@ export class LoginComponent implements OnInit {
     login() {
         this.errors = '';
         console.log(this.user);
-        this.http.post(this.baseUrl + 'api/account/login', this.user).subscribe(result => {
-            let loginResult = result.json() as ResultVM;
-            if (loginResult.status === StatusEnum.Success) {
-                this.stateService.setAuthentication({ isAuthenticated: true, username: this.user.username, authenticationMethod: '' });
-                this.router.navigate(['/home']);
-            } else if (loginResult.status === StatusEnum.Error) {
-                this.errors = loginResult.data.toString();
-            }
 
-        }, error => console.error(error));
+        if (this.requires2FA) {
+            this.http.post(this.baseUrl + 'api/twoFactorAuthentication/login', { TwoFactorCode: this.twoFaCode }).subscribe(result => {
+                    let loginResult = result.json() as ResultVM;
+                    if (loginResult.status === StatusEnum.Success) {
+                        this.stateService.setAuthentication({
+                            isAuthenticated: true,
+                            username: this.user.username,
+                            authenticationMethod: ''
+                        });
+                        this.router.navigate(['/home']);
+                    } else if (loginResult.status === StatusEnum.Error) {
+                        this.errors = loginResult.data.toString();
+                    }
+
+                },
+                error => console.error(error));
+        } else {
+            this.http.post(this.baseUrl + 'api/account/login', this.user).subscribe(result => {
+                    let loginResult = result.json() as ResultVM;
+                    if (loginResult.status === StatusEnum.Success) {
+                        if (loginResult.data.requires2FA) {
+                            this.requires2FA = true;
+                            this.stateService.displayNotification({ message: loginResult.message, type: "danger" });
+                            return;
+                        }
+                        this.stateService.setAuthentication({
+                            isAuthenticated: true,
+                            username: this.user.username,
+                            authenticationMethod: ''
+                        });
+                        this.router.navigate(['/home']);
+                    } else if (loginResult.status === StatusEnum.Error) {
+                        this.errors = loginResult.data.toString();
+                    }
+
+                },
+                error => console.error(error));
+        }
     }
 }
 
@@ -56,7 +87,7 @@ interface LoginVM {
 interface ResultVM {
     status: StatusEnum;
     message: string;
-    data: {}
+    data: any
 }
 
 enum StatusEnum {

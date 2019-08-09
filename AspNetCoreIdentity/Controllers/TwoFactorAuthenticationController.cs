@@ -9,18 +9,19 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace AspNetCoreIdentity.Controllers
 {
     [Route("api/[controller]/[action]")]
-    public class ManageAccountController : Controller
+    public class TwoFactorAuthenticationController : Controller
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UrlEncoder _urlEncoder;
         private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
 
-        public ManageAccountController(UserManager<IdentityUser> userManager,
+        public TwoFactorAuthenticationController(UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager, UrlEncoder urlEncoder)
         {
             _userManager = userManager;
@@ -145,7 +146,7 @@ namespace AspNetCoreIdentity.Controllers
             return new ResultVM
             {
                 Status = result.Succeeded ? Status.Success : Status.Error,
-                Message = result.Succeeded ?  "2FA has been successfully disabled" : $"Failed to disable 2FA {result.Errors.FirstOrDefault()?.Description}"
+                Message = result.Succeeded ? "2FA has been successfully disabled" : $"Failed to disable 2FA {result.Errors.FirstOrDefault()?.Description}"
             };
         }
 
@@ -173,6 +174,64 @@ namespace AspNetCoreIdentity.Controllers
                 Status = Status.Success,
                 Message = "You have generated new recovery codes",
                 Data = new { recoveryCodes }
+            };
+        }
+
+        [HttpPost]
+        public async Task<ResultVM> Login([FromBody] TwoFactorLoginVM model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
+
+                if (user == null)
+                {
+                    return new ResultVM
+                    {
+                        Status = Status.Error,
+                        Message = "Invalid data",
+                        Data = "<li>Unable to load two-factor authentication user</li>"
+                    };
+                }
+
+                var authenticatorCode = model.TwoFactorCode.Replace(" ", string.Empty).Replace("-", string.Empty);
+
+                var result = await _signInManager.TwoFactorAuthenticatorSignInAsync(authenticatorCode, true, false /*Input.RememberMachine*/);
+
+                if (result.Succeeded)
+                {
+                    return new ResultVM
+                    {
+                        Status = Status.Success,
+                        Message = $"Welcome {user.UserName}"
+                    };
+                }
+                else if (result.IsLockedOut)
+                {
+                    return new ResultVM
+                    {
+                        Status = Status.Error,
+                        Message = "Invalid data",
+                        Data = "<li>Account locked out</li>"
+                    };
+                }
+                else
+                {
+                    return new ResultVM
+                    {
+                        Status = Status.Error,
+                        Message = "Invalid data",
+                        Data = "<li>Invalid authenticator code</li>"
+                    };
+                }
+            }
+
+            var errors = GetErrors(ModelState).Select(e => "<li>" + e + "</li>");
+            return new ResultVM
+            {
+                Status = Status.Error,
+                Message = "Invalid data",
+                Data = string.Join("", errors)
             };
         }
 
