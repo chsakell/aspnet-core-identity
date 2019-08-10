@@ -45,8 +45,8 @@ export class LoginComponent implements OnInit {
 
         if (this.requires2FA) {
 
-            var data = {};
-            var uri = '';
+            let data = {};
+            let uri = '';
 
             if (this.useRecoveryCode) {
                 data = {

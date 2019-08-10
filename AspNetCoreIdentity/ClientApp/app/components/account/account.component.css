@@ -87,3 +87,9 @@
     text-align: center;
     background: #ffffff;
 }
+
+.validVerificationCode {
+    margin-right: 5px;
+    color: lightgreen;
+    cursor: pointer;
+}

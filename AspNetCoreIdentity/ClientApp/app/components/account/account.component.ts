@@ -19,6 +19,9 @@ export class AccountComponent {
     public errors: string = '';
     public recoveryCodes: string[] = [];
     public authenticatorNeedsSetup: boolean = false;
+    public validVerificationCodes: number[] = [];
+    public pollForValidVerificationCodes: any = null;
+    public displayValidVerificationCodes: boolean = false;
 
     public generatedQRCode: any;
 
@@ -56,6 +59,36 @@ export class AccountComponent {
         }, error => console.error(error));
     }
 
+    toggleValidVerificationCodes(event: any) {
+        let self = this;
+        self.displayValidVerificationCodes = event;
+        if (event) {
+            self.getValidVerificationCodes();
+
+            self.pollForValidVerificationCodes = setInterval(self.getValidVerificationCodes,
+                10000);
+        } else {
+            this.clearValidVerificationCodes();
+        }
+    }
+
+    getValidVerificationCodes() {
+        this.http.get(this.baseUrl + 'api/twoFactorAuthentication/validAutheticatorCodes').subscribe(
+            result => {
+                this.validVerificationCodes = result.json() as number[];
+            });
+    }
+
+    clearValidVerificationCodes() {
+        this.displayValidVerificationCodes = false;
+        this.validVerificationCodes = [];
+
+        if (this.pollForValidVerificationCodes != null) {
+            clearInterval(this.pollForValidVerificationCodes);
+            this.pollForValidVerificationCodes = null;
+        }
+    }
+
     verifyAuthenticator() {
         var verification = {
             verificationCode: this.verificationCode
@@ -78,7 +111,7 @@ export class AccountComponent {
                 this.generatingQrCode = false;
                 this.accountDetails.hasAuthenticator = true;
                 this.accountDetails.twoFactorEnabled = true;
-
+                this.clearValidVerificationCodes();
             } else if (verifyAuthenticatorResult.status === StatusEnum.Error) {
                 this.errors = verifyAuthenticatorResult.data.toString();
             }
@@ -124,19 +157,19 @@ export class AccountComponent {
     resetRecoverCodes() {
         this.http.post(this.baseUrl + 'api/twoFactorAuthentication/generateRecoveryCodes', {}).subscribe(result => {
 
-                let generateRecoverCodesResult = result.json() as ResultVM;
+            let generateRecoverCodesResult = result.json() as ResultVM;
 
             if (generateRecoverCodesResult.status === StatusEnum.Success) {
                 this.stateService.displayNotification({ message: generateRecoverCodesResult.message, type: "success" });
 
                 if (generateRecoverCodesResult.data && generateRecoverCodesResult.data.recoveryCodes) {
-                        // display new recovery codes
+                    // display new recovery codes
                     this.recoveryCodes = generateRecoverCodesResult.data.recoveryCodes;
-                    }
-                } else {
-                this.stateService.displayNotification({ message: generateRecoverCodesResult.message, type: "danger" });
                 }
-            },
+            } else {
+                this.stateService.displayNotification({ message: generateRecoverCodesResult.message, type: "danger" });
+            }
+        },
             error => console.error(error));
     }
 }

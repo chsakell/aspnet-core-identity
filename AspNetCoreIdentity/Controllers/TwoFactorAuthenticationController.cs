@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
@@ -59,6 +60,29 @@ namespace AspNetCoreIdentity.Controllers
             var authenticatorDetails = await LoadSharedKeyAndQrCodeUriAsync(user);
 
             return authenticatorDetails;
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<List<int>> ValidAutheticatorCodes()
+        {
+            List<int> validCodes = new List<int>();
+
+            var user = await _userManager.GetUserAsync(User);
+
+            var key = await _userManager.GetAuthenticatorKeyAsync(user);
+
+            var hash = new HMACSHA1(Infrastructure.Identity.Internals.Base32.FromBase32(key));
+            var unixTimestamp = Convert.ToInt64(Math.Round((DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds));
+            var timestep = Convert.ToInt64(unixTimestamp / 30);
+            // Allow codes from 90s in each direction (we could make this configurable?)
+            for (int i = -2; i <= 2; i++)
+            {
+                var expectedCode = Infrastructure.Identity.Internals.Rfc6238AuthenticationService.ComputeTotp(hash, (ulong)(timestep + i), modifier: null);
+                validCodes.Add(expectedCode);
+            }
+
+            return validCodes;
         }
 
         [HttpPost]
@@ -183,7 +207,7 @@ namespace AspNetCoreIdentity.Controllers
         {
             if (ModelState.IsValid)
             {
-                return await TwoFaLogin(model.Code, isRecoveryCode:false,  model.RememberMachine);
+                return await TwoFaLogin(model.TwoFactorCode, isRecoveryCode:false,  model.RememberMachine);
             }
 
             var errors = GetErrors(ModelState).Select(e => "<li>" + e + "</li>");
