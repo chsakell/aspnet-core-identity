@@ -13,7 +13,8 @@ export class LoginComponent implements OnInit {
     public errors: string = '';
     public socialProviders: Array<string> = [];
     public requires2FA: boolean = false;
-    public twoFaCode : string = '';
+    public twoFaCode: string = '';
+    public useRecoveryCode: boolean = false;
 
     constructor(public http: Http, 
                 @Inject('BASE_URL') public baseUrl: string,
@@ -34,12 +35,32 @@ export class LoginComponent implements OnInit {
         }
     }
 
+    twoFaPlaceholder() {
+        return this.useRecoveryCode ? 'Enter recovery code' : '6-digit code';
+    }
+
     login() {
         this.errors = '';
         console.log(this.user);
 
         if (this.requires2FA) {
-            this.http.post(this.baseUrl + 'api/twoFactorAuthentication/login', { TwoFactorCode: this.twoFaCode }).subscribe(result => {
+
+            var data = {};
+            var uri = '';
+
+            if (this.useRecoveryCode) {
+                data = {
+                    recoveryCode: this.twoFaCode
+                };
+                uri = 'api/twoFactorAuthentication/loginWithRecovery';
+            } else {
+                data = {
+                    twoFactorCode: this.twoFaCode
+                };
+                uri = 'api/twoFactorAuthentication/login';
+            }
+
+            this.http.post(this.baseUrl + uri, data).subscribe(result => {
                     let loginResult = result.json() as ResultVM;
                     if (loginResult.status === StatusEnum.Success) {
                         this.stateService.setAuthentication({

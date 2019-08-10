@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.VisualStudio.Web.CodeGeneration.Design;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace AspNetCoreIdentity.Controllers
@@ -182,48 +183,7 @@ namespace AspNetCoreIdentity.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
-
-                if (user == null)
-                {
-                    return new ResultVM
-                    {
-                        Status = Status.Error,
-                        Message = "Invalid data",
-                        Data = "<li>Unable to load two-factor authentication user</li>"
-                    };
-                }
-
-                var authenticatorCode = model.TwoFactorCode.Replace(" ", string.Empty).Replace("-", string.Empty);
-
-                var result = await _signInManager.TwoFactorAuthenticatorSignInAsync(authenticatorCode, true, false /*Input.RememberMachine*/);
-
-                if (result.Succeeded)
-                {
-                    return new ResultVM
-                    {
-                        Status = Status.Success,
-                        Message = $"Welcome {user.UserName}"
-                    };
-                }
-                else if (result.IsLockedOut)
-                {
-                    return new ResultVM
-                    {
-                        Status = Status.Error,
-                        Message = "Invalid data",
-                        Data = "<li>Account locked out</li>"
-                    };
-                }
-                else
-                {
-                    return new ResultVM
-                    {
-                        Status = Status.Error,
-                        Message = "Invalid data",
-                        Data = "<li>Invalid authenticator code</li>"
-                    };
-                }
+                return await TwoFaLogin(model.Code, isRecoveryCode:false,  model.RememberMachine);
             }
 
             var errors = GetErrors(ModelState).Select(e => "<li>" + e + "</li>");
@@ -233,6 +193,79 @@ namespace AspNetCoreIdentity.Controllers
                 Message = "Invalid data",
                 Data = string.Join("", errors)
             };
+        }
+
+        [HttpPost]
+        public async Task<ResultVM> LoginWithRecovery([FromBody] TwoFactorRecoveryCodeLoginVM model)
+        {
+            if (ModelState.IsValid)
+            {
+                return await TwoFaLogin(model.RecoveryCode, isRecoveryCode: true);
+            }
+
+            var errors = GetErrors(ModelState).Select(e => "<li>" + e + "</li>");
+            return new ResultVM
+            {
+                Status = Status.Error,
+                Message = "Invalid data",
+                Data = string.Join("", errors)
+            };
+        }
+
+        private async Task<ResultVM> TwoFaLogin(string code, bool isRecoveryCode, bool rememberMachine = false)
+        {
+            SignInResult result = null;
+
+            var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
+
+            if (user == null)
+            {
+                return new ResultVM
+                {
+                    Status = Status.Error,
+                    Message = "Invalid data",
+                    Data = "<li>Unable to load two-factor authentication user</li>"
+                };
+            }
+
+            var authenticatorCode = code.Replace(" ", string.Empty).Replace("-", string.Empty);
+
+            if (!isRecoveryCode)
+            {
+                result = await _signInManager.TwoFactorAuthenticatorSignInAsync(authenticatorCode, true,
+                    rememberMachine);
+            }
+            else
+            {
+                result = await _signInManager.TwoFactorRecoveryCodeSignInAsync(authenticatorCode);
+            }
+
+            if (result.Succeeded)
+            {
+                return new ResultVM
+                {
+                    Status = Status.Success,
+                    Message = $"Welcome {user.UserName}"
+                };
+            }
+            else if (result.IsLockedOut)
+            {
+                return new ResultVM
+                {
+                    Status = Status.Error,
+                    Message = "Invalid data",
+                    Data = "<li>Account locked out</li>"
+                };
+            }
+            else
+            {
+                return new ResultVM
+                {
+                    Status = Status.Error,
+                    Message = "Invalid data",
+                    Data = "<li>Invalid authenticator code</li>"
+                };
+            }
         }
 
         private List<string> GetErrors(ModelStateDictionary modelState)
