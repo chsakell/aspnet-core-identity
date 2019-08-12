@@ -65,7 +65,9 @@ export class AccountComponent {
         if (event) {
             self.getValidVerificationCodes();
 
-            self.pollForValidVerificationCodes = setInterval(self.getValidVerificationCodes,
+            self.pollForValidVerificationCodes = setInterval(function () {
+                self.getValidVerificationCodes();
+            },
                 10000);
         } else {
             this.clearValidVerificationCodes();
@@ -147,6 +149,7 @@ export class AccountComponent {
             if (disable2FAResult.status === StatusEnum.Success) {
                 this.stateService.displayNotification({ message: disable2FAResult.message, type: "success" });
                 this.accountDetails.twoFactorEnabled = false;
+                this.recoveryCodes = [];
             } else {
                 this.stateService.displayNotification({ message: disable2FAResult.message, type: "danger" });
             }

@@ -95,12 +95,12 @@
                                 <h5>Valid 6-digit verification codes</h5>
                                 <span (click)="verificationCode = validVerificationCode" class="validVerificationCode" *ngFor="let validVerificationCode of validVerificationCodes">{{validVerificationCode}}</span>
                             </div>
-                            <div class="" *ngIf="recoveryCodes.length > 0">
-                                <h5>Copy and save your recovery codes</h5>
-                                <ul>
-                                    <li *ngFor="let recoveryCode of recoveryCodes">{{recoveryCode}}</li>
-                                </ul>
-                            </div>
+                        </div>
+                        <div class="col-sm-6 col-sm-offset-3" *ngIf="recoveryCodes.length > 0">
+                            <h5>Copy and save your recovery codes</h5>
+                            <ul>
+                                <li *ngFor="let recoveryCode of recoveryCodes">{{recoveryCode}}</li>
+                            </ul>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="resetAuthenticator">

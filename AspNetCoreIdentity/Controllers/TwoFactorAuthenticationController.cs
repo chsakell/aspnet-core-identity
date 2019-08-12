@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.VisualStudio.Web.CodeGeneration.Design;
+using NETCore.Encrypt;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace AspNetCoreIdentity.Controllers
@@ -236,6 +237,14 @@ namespace AspNetCoreIdentity.Controllers
             };
         }
 
+        [HttpGet]
+        public IActionResult AesKey()
+        {
+            return Ok(EncryptProvider.CreateAesKey().Key);
+        }
+
+        #region Private methods
+
         private async Task<ResultVM> TwoFaLogin(string code, bool isRecoveryCode, bool rememberMachine = false)
         {
             SignInResult result = null;
@@ -287,7 +296,7 @@ namespace AspNetCoreIdentity.Controllers
                 {
                     Status = Status.Error,
                     Message = "Invalid data",
-                    Data = "<li>Invalid authenticator code</li>"
+                    Data = $"<li>Invalid {(isRecoveryCode ? "recovery" : "authenticator")} code</li>"
                 };
             }
         }
@@ -351,5 +360,7 @@ namespace AspNetCoreIdentity.Controllers
                 _urlEncoder.Encode(email),
                 unformattedKey);
         }
+
+        #endregion
     }
 }

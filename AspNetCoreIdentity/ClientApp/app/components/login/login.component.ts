@@ -11,10 +11,11 @@ import { StateService } from '../../core/state.service';
 export class LoginComponent implements OnInit {
     public user: LoginVM = { username: '', password: '' }
     public errors: string = '';
-    public socialProviders: Array<string> = [];
+    public socialProviders: string[] = [];
     public requires2FA: boolean = false;
     public twoFaCode: string = '';
     public useRecoveryCode: boolean = false;
+    public rememberMachine: boolean = false;
 
     constructor(public http: Http, 
                 @Inject('BASE_URL') public baseUrl: string,
@@ -24,7 +25,7 @@ export class LoginComponent implements OnInit {
     ngOnInit() {
         this.http.get(this.baseUrl + 'socialaccount/providers')
             .subscribe(result => {
-                this.socialProviders = result.json() as Array<string>;
+                this.socialProviders = result.json() as string[];
                 console.log(this.socialProviders);
             });
     }
@@ -55,7 +56,8 @@ export class LoginComponent implements OnInit {
                 uri = 'api/twoFactorAuthentication/loginWithRecovery';
             } else {
                 data = {
-                    twoFactorCode: this.twoFaCode
+                    twoFactorCode: this.twoFaCode,
+                    rememberMachine: this.rememberMachine
                 };
                 uri = 'api/twoFactorAuthentication/login';
             }

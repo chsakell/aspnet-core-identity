@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using AspNetCoreIdentity.Infrastructure;
+using AspNetCoreIdentity.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -57,11 +58,9 @@ namespace AspNetCoreIdentity
             });
 
 
-            services.AddIdentity<IdentityUser, IdentityRole>(config =>
-                {
-                    config.SignIn.RequireConfirmedEmail = true;
-                })
+            services.AddIdentity<IdentityUser, IdentityRole>(config => { config.SignIn.RequireConfirmedEmail = true; })
                 .AddEntityFrameworkStores<IdentityDbContext>()
+                .AddUserManager<AppUserManager>()
                 .AddDefaultTokenProviders();
 
             // Configure External Providers authentication

@@ -93,3 +93,11 @@
     color: lightgreen;
     cursor: pointer;
 }
+
+.panel-primary > .panel-heading {
+    background-color: white;
+}
+
+.with-nav-tabs.panel-primary .nav-tabs > li > a {
+    color: #428bca;
+}
