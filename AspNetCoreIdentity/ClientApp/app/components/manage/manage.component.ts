@@ -20,6 +20,7 @@ export class ManageComponent {
 interface UserVM {
     id: string;
     email: string;
+    emailConfirmed: boolean;
     userName: string;
     lockoutEnabled: boolean;
     twoFactorEnabled: boolean;

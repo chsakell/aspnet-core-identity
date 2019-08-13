@@ -1,10 +1,15 @@
+
+.streaming-section {
+    padding-top: 50px;
+}
+
 .registered, .list-group-item .registered {
-    background: #dff0d8 !important;
+    background-color: #f5f5f5;
+    color: lightgreen;
 }
 
 button.save {
     text-align: center;
-    background: #3c763d !important;
 }
 
 button.add {
@@ -18,5 +23,5 @@ button.add {
 }
 
 .category-button {
-    margin-top:-5px;
+    margin-top: -5px;
 }

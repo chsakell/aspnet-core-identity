@@ -7,7 +7,6 @@ li.link-active a,
 li.link-active a:hover,
 li.link-active a:focus {
     background-color: #2b4162;
-    background-image: linear-gradient(315deg, #2b4162 0%, #12100e 74%);
     color: white;
 }
 

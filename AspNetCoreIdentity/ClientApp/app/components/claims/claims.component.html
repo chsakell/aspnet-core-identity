@@ -1,14 +1,11 @@
 <div class="claims">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-claims">
+            <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <div class="row">
-                        <div class="">
-                            <a href="#" class="active" id="login-form-link"><strong>{{userName}}</strong> claims:</a>
-                        </div>
+                    <div class="text-center">
+                        <strong>{{userName}}</strong> claims:
                     </div>
-                    <hr>
                 </div>
                 <div class="panel-body">
                     <div class="row">
@@ -16,9 +13,9 @@
                             <div *ngFor="let claim of claims">
                                 Type:
                                 <strong class="claimType">{{claim.type}}</strong>
-                                <br/> Value:
+                                <br /> Value:
                                 <span>{{claim.value}}</span>
-                                <hr/>
+                                <hr />
                             </div>
                         </div>
                     </div>

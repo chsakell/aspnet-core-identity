@@ -1,71 +1,68 @@
-<div class="">
-    <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-            <div class="panel panel-login">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div *ngIf="!externalRegistration.associate">
-                            <a href="#" class="active" id="register-form-link">Register</a>
-                        </div>
-                        <div *ngIf="externalRegistration.associate">
-                            <a href="#" class="active" id="associate-register-form-link">Register with </a>
-                            <img src="/images/{{externalRegistration.providerDisplayName}}.png" style="width: 25px; vertical-align: top" />
-                        </div>
+<div class="row registration-form">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="row text-center">
+                    <div *ngIf="!externalRegistration.associate">
+                        Register
                     </div>
-                    <hr>
+                    <div *ngIf="externalRegistration.associate">
+                        Register with
+                        <img src="/images/{{externalRegistration.providerDisplayName}}.png" style="width: 25px; vertical-align: top" />
+                    </div>
                 </div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <form id="register-form" method="post" role="form">
-                                <div *ngIf="!externalRegistration.associateExistingAccount">
-                                    <div class="form-group">
-                                        <input (keydown)="onKeydown($event)" type="text" name="username" id="username" [(ngModel)]="user.userName" tabindex="1" class="form-control" placeholder="Username" value="">
-                                    </div>
-                                    <div class="form-group">
-                                        <input (keydown)="onKeydown($event)" [disabled]="externalRegistration.associate" type="email" name="email" id="email" [(ngModel)]="user.email" tabindex="2" class="form-control" placeholder="Email Address" value="">
-                                    </div>
-                                </div>
-                                <div *ngIf="!externalRegistration.associate">
-                                    <div class="form-group">
-                                        <input type="password" (keydown)="onKeydown($event)" name="password" id="password" [(ngModel)]="user.password" tabindex="3" class="form-control" placeholder="Password">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="password" (keydown)="onKeydown($event)" name="confirm-password" id="confirm-password" [(ngModel)]="user.confirmPassword" tabindex="4" class="form-control" placeholder="Confirm Password">
-                                    </div>
-                                    <div class="form-group" *ngIf="errors.length > 0">
-                                        <ul [innerHTML]="errors" style="color: #E91E63"></ul>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="checkbox-inline trial"><input type="checkbox" name="simple-user" [(ngModel)]="simpleUser" (ngModelChange)="isSimpleUser($event)">Simple User</label>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="checkbox-inline trial" title="Streaming videos will be available for a few days.."><input type="checkbox" name="start-trial" [(ngModel)]="user.startFreeTrial" (ngModelChange)="makeTrial($event)">Start a free trial</label>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="checkbox-inline trial" title="Assign Admin role"><input type="checkbox" name="is-admin" [(ngModel)]="user.isAdmin" (ngModelChange)="makeAdmin($event)">Administrator</label>
-                                    </div>
-                                </div>
-                                <div *ngIf="externalRegistration.associate">
-                                    <div class="form-group">
-                                        <label class="checkbox-inline" title="Associate an existing account"><input type="checkbox" name="start-trial" [(ngModel)]="externalRegistration.associateExistingAccount" (ngModelChange)="setAssociateEmail($event)">Associate an existing account</label>
-                                    </div>
-                                    <div class="form-group" *ngIf="externalRegistration.associateExistingAccount">
-                                        <input type="email" (keydown)="onKeydown($event)" name="associateEmail" id="associateEmail" [(ngModel)]="externalRegistration.associateEmail" tabindex="2" class="form-control" placeholder="Existing Email Address" value="">
-                                    </div>
-                                    <div class="form-group" *ngIf="errors.length > 0">
-                                        <ul [innerHTML]="errors" style="color: #E91E63"></ul>
-                                    </div>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form id="register-form" method="post" role="form">
+                            <div *ngIf="!externalRegistration.associateExistingAccount">
+                                <div class="form-group">
+                                    <input (keydown)="onKeydown($event)" type="text" name="username" id="username" [(ngModel)]="user.userName" tabindex="1" class="form-control" placeholder="Username" value="">
                                 </div>
                                 <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-sm-6 col-sm-offset-3">
-                                            <button type="button" name="register-submit" id="register-submit" (click)="register()" class="form-control btn btn-register">{{!externalRegistration.associateExistingAccount ? "Register Now" : "Associate"}}</button>
-                                        </div>
+                                    <input (keydown)="onKeydown($event)" [disabled]="externalRegistration.associate" type="email" name="email" id="email" [(ngModel)]="user.email" tabindex="2" class="form-control" placeholder="Email Address" value="">
+                                </div>
+                            </div>
+                            <div *ngIf="!externalRegistration.associate">
+                                <div class="form-group">
+                                    <input type="password" (keydown)="onKeydown($event)" name="password" id="password" [(ngModel)]="user.password" tabindex="3" class="form-control" placeholder="Password">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" (keydown)="onKeydown($event)" name="confirm-password" id="confirm-password" [(ngModel)]="user.confirmPassword" tabindex="4" class="form-control" placeholder="Confirm Password">
+                                </div>
+                                <div class="form-group" *ngIf="errors.length > 0">
+                                    <ul [innerHTML]="errors" style="color: #E91E63"></ul>
+                                </div>
+                                <div class="form-group">
+                                    <label class="checkbox-inline trial"><input type="checkbox" name="simple-user" [(ngModel)]="simpleUser" (ngModelChange)="isSimpleUser($event)">Simple User</label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="checkbox-inline trial" title="Streaming videos will be available for a few days.."><input type="checkbox" name="start-trial" [(ngModel)]="user.startFreeTrial" (ngModelChange)="makeTrial($event)">Start a free trial</label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="checkbox-inline trial" title="Assign Admin role"><input type="checkbox" name="is-admin" [(ngModel)]="user.isAdmin" (ngModelChange)="makeAdmin($event)">Administrator</label>
+                                </div>
+                            </div>
+                            <div *ngIf="externalRegistration.associate">
+                                <div class="form-group">
+                                    <label class="checkbox-inline" title="Associate an existing account"><input type="checkbox" name="start-trial" [(ngModel)]="externalRegistration.associateExistingAccount" (ngModelChange)="setAssociateEmail($event)">Associate an existing account</label>
+                                </div>
+                                <div class="form-group" *ngIf="externalRegistration.associateExistingAccount">
+                                    <input type="email" (keydown)="onKeydown($event)" name="associateEmail" id="associateEmail" [(ngModel)]="externalRegistration.associateEmail" tabindex="2" class="form-control" placeholder="Existing Email Address" value="">
+                                </div>
+                                <div class="form-group" *ngIf="errors.length > 0">
+                                    <ul [innerHTML]="errors" style="color: #E91E63"></ul>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-6 col-sm-offset-3">
+                                        <button type="button" name="register-submit" id="register-submit" (click)="register()" class="form-control btn btn-register">{{!externalRegistration.associateExistingAccount ? "Register Now" : "Associate"}}</button>
                                     </div>
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

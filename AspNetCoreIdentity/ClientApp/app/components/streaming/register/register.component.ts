@@ -27,6 +27,8 @@ export class StreamingRegisterComponent {
         var check = $event.target.checked;
         
         this.categories.forEach(c => c.registered = check);
+
+        this.update();
     }
 
     toggleCategory(category: StreamingCategoryVM) {
@@ -35,6 +37,8 @@ export class StreamingRegisterComponent {
         if(!category.registered) {
             this.checkedAll = false;
         }
+
+        this.update();
     }
 
     update() {

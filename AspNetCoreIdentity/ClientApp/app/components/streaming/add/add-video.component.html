@@ -1,14 +1,10 @@
-<div class="">
-    <div class="row">
+    <div class="row add-video">
         <div class="col-md-6 col-md-offset-3">
-            <div class="panel panel-login">
+            <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <div class="row">
-                        <div class="">
-                            <a href="#" class="active" id="register-form-link">Add New Video</a>
-                        </div>
+                    <div class="row text-center">
+                        Add New Video
                     </div>
-                    <hr>
                 </div>
                 <div class="panel-body">
                     <div class="row">
@@ -16,15 +12,15 @@
                             <form id="register-form" method="post" role="form">
                                 <div class="form-group">
                                     <input type="text" name="title" id="title" [(ngModel)]="newVideo.title" tabindex="1" class="form-control" placeholder="Title"
-                                        value="">
+                                           value="">
                                 </div>
                                 <div class="form-group">
                                     <input type="text" name="description" id="description" [(ngModel)]="newVideo.description" tabindex="2" class="form-control"
-                                        placeholder="Description" value="">
+                                           placeholder="Description" value="">
                                 </div>
                                 <div class="form-group">
                                     <input type="text" name="url" id="url" [(ngModel)]="newVideo.url" tabindex="3" class="form-control" placeholder="Embed URL from YouTube"
-                                        value="">
+                                           value="">
                                 </div>
                                 <div class="form-group">
                                     <select class="selectpicker" name="category" [(ngModel)]="newVideo.category">
@@ -34,8 +30,8 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-6 col-sm-offset-3">
-                                            <input type="text" name="register-submit" id="register-submit" (click)="addVideo()" class="form-control btn btn-register"
-                                                value="Save">
+                                            <input type="text" name="register-submit" id="register-submit" (click)="addVideo()" class="form-control btn"
+                                                   value="Save">
                                         </div>
                                     </div>
                                 </div>
@@ -46,4 +42,3 @@
             </div>
         </div>
     </div>
-</div>
