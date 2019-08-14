@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { Http } from '@angular/http';
+import { ClaimsVM, UserClaims } from '../../core/domain';
 
 @Component({
     selector: 'claims',
@@ -18,14 +19,4 @@ export class ClaimsComponent {
             this.userName = claimsResult.userName;
         }, error => console.error(error));
     }
-}
-
-interface ClaimsVM {
-    type: string;
-    value: string;
-}
-
-interface UserClaims {
-    claims: ClaimsVM[];
-    userName: string;
 }

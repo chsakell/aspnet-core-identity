@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
 import { Router } from '@angular/router';
 import { StateService } from '../../core/state.service';
+import { LoginVM, ResultVM, StatusEnum } from '../../core/domain';
 
 @Component({
     selector: 'login',
@@ -102,19 +103,5 @@ export class LoginComponent implements OnInit {
     }
 }
 
-interface LoginVM {
-    username: string;
-    password: string;
-}
 
-interface ResultVM {
-    status: StatusEnum;
-    message: string;
-    data: any
-}
-
-enum StatusEnum {
-    Success = 1,
-    Error = 2
-}
 

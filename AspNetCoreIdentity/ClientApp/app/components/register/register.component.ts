@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { Http } from '@angular/http';
 import { Router, NavigationEnd } from '@angular/router';
+import { ResultVM, StatusEnum, RegisterVM } from '../../core/domain';
 import { StateService } from '../../core/state.service';
 
 @Component({
@@ -45,8 +46,7 @@ export class RegisterComponent {
     }
 
     checkExternalRegistration() {
-        var inAssociateMode = this.getUrlParameter("associate").length > 0;
-        console.log(inAssociateMode);
+        let inAssociateMode = (this.getUrlParameter("associate").length > 0);
 
         this.externalRegistration.associate = inAssociateMode;
         this.externalRegistration.originalEmail = inAssociateMode ? this.getUrlParameter("associate") : '';
@@ -141,24 +141,4 @@ export class RegisterComponent {
         const results = regex.exec(location.search);
         return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
     }
-}
-
-interface RegisterVM {
-    userName: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-    startFreeTrial: boolean;
-    isAdmin: boolean;
-}
-
-interface ResultVM {
-    status: StatusEnum;
-    message: string;
-    data: any;
-}
-
-enum StatusEnum {
-    Success = 1,
-    Error = 2
 }

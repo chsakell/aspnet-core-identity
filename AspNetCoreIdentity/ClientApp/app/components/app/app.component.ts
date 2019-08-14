@@ -1,7 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Http } from '@angular/http';
-import { StateService, UserState } from '../../core/state.service';
+import { StateService } from '../../core/state.service';
+import { Notification } from '../../core/domain';
 import { OpenIdConnectService } from '../../core/openid-connect.service';
 
 @Component({
@@ -10,6 +11,9 @@ import { OpenIdConnectService } from '../../core/openid-connect.service';
     styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
+    private notification: Notification = { message: '', type: '' };
+
     constructor(public http: Http, stateService: StateService, router: Router,
         @Inject('BASE_URL') public baseUrl: string, openConnectIdService: OpenIdConnectService) {
         this.http.get(this.baseUrl + 'api/account/authenticated').subscribe(result => {
@@ -34,7 +38,10 @@ export class AppComponent {
             if (!type) {
                 type = "success";
             }
-            stateService.displayNotification({ message, type: type });
+
+            this.notification.message = message;
+            this.notification.type = type;
+            stateService.displayNotification(this.notification);
             console.log(message, type);
             if (type === "success") {
                 router.navigate((['/']));

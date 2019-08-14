@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { UserState, Notification } from './domain';
 
 @Injectable()
 export class StateService {
@@ -48,15 +49,4 @@ export class StateService {
     public displayPassword() {
         return this.displaySetPassword;
     }
-}
-
-export interface UserState {
-    username: string;
-    isAuthenticated: boolean;
-    authenticationMethod: string;
-}
-
-export interface Notification {
-    message: string;
-    type: string;
 }

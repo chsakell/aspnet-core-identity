@@ -1,6 +1,7 @@
-﻿import { Component, Inject } from '@angular/core';
+﻿import { Component } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { Router } from '@angular/router';
+import { IContact } from '../../core/domain';
 import { StateService } from '../../core/state.service';
 import { OpenIdConnectService } from '../../core/openid-connect.service';
 
@@ -51,11 +52,4 @@ export class SocialApiShareComponent {
     logout() {
         this.openConnectIdService.logout();
     }
-}
-
-interface IContact {
-    id: string;
-    name: string;
-    username: string;
-    email: string;
 }

@@ -11,9 +11,7 @@ import { Http } from '@angular/http';
 export class NavMenuComponent {
     constructor(public stateService: StateService, public router: Router,
         public http: Http,
-        @Inject('BASE_URL') public baseUrl: string, ) {
-
-    }
+        @Inject('BASE_URL') public baseUrl: string) { }
 
     logout() {
         this.http.post(this.baseUrl + 'api/account/signout', {}).subscribe(result => {

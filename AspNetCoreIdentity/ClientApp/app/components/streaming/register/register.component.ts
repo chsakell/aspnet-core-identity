@@ -1,6 +1,7 @@
 import { Component, Inject, ViewContainerRef } from '@angular/core';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { Router } from '@angular/router';
+import { StreamingCategoryVM } from '../../../core/domain';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
@@ -56,10 +57,4 @@ export class StreamingRegisterComponent {
         event.stopPropagation();
         this.router.navigate(['/videos', category]);
     }
-}
-
-interface StreamingCategoryVM {
-    category: string;
-    value: number;
-    registered: boolean;
 }

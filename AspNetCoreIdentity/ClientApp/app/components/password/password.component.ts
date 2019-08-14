@@ -1,6 +1,7 @@
 ﻿import { Component, Inject, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
 import { Router } from '@angular/router';
+import { ResultVM, StatusEnum } from '../../core/domain';
 import { StateService } from '../../core/state.service';
 
 @Component({
@@ -30,7 +31,6 @@ export class PasswordComponent implements OnInit {
     }
 
     setPassword() {
-        console.log('ok');
         this.errors = '';
 
         let updatePassword = {
@@ -39,7 +39,7 @@ export class PasswordComponent implements OnInit {
         };
 
 
-        this.http.post(this.baseUrl + 'api/account/managepassword', updatePassword).subscribe(result => {
+        this.http.post(this.baseUrl + 'api/account/managePassword', updatePassword).subscribe(result => {
             let setPasswordResult = result.json() as ResultVM;
 
             if (setPasswordResult.status === StatusEnum.Success) {
@@ -52,15 +52,4 @@ export class PasswordComponent implements OnInit {
         },
             error => console.error(error));
     }
-}
-
-interface ResultVM {
-    status: StatusEnum;
-    message: string;
-    data: any;
-}
-
-enum StatusEnum {
-    Success = 1,
-    Error = 2
 }

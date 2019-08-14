@@ -1,7 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { Http } from '@angular/http';
-import { DomSanitizer, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
+import { VideoVM } from '../../core/domain';
 
 @Component({
     selector: 'streaming',
@@ -14,9 +15,7 @@ export class StreamingComponent {
     private sub: any;
 
     constructor(public http: Http, public sanitizer: DomSanitizer,
-        @Inject('BASE_URL') public baseUrl: string, private route: ActivatedRoute, ) {
-
-    }
+        @Inject('BASE_URL') public baseUrl: string, private route: ActivatedRoute) { }
 
     ngOnInit() {
         this.sub = this.route.params.subscribe(params => {
@@ -36,10 +35,4 @@ export class StreamingComponent {
     sanitizeUrl(url: string) {
         return this.sanitizer.bypassSecurityTrustResourceUrl(url);
     }
-}
-
-interface VideoVM {
-    url: string;
-    title: string;
-    description: string;
 }

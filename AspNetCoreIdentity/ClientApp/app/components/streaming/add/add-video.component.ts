@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { Http, RequestOptions, Headers } from '@angular/http';
+import { VideoVM, StreamingCategoryVM } from '../../../core/domain';
 import { Router } from '@angular/router';
 
 @Component({
@@ -29,17 +30,4 @@ export class AddVideoComponent {
                 this.router.navigate(['videos', this.newVideo.category]);
         }, error => console.error(error));
     }
-}
-
-interface StreamingCategoryVM {
-    category: string;
-    value: number;
-    registered: boolean;
-}
-
-interface VideoVM {
-    url: string;
-    title: string;
-    description: string;
-    category: string;
 }
