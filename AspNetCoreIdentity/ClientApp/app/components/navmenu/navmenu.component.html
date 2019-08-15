@@ -17,12 +17,12 @@
                         <span class='glyphicon glyphicon-home'></span> Home
                     </a>
                 </li>
-                <li [routerLinkActive]="['link-active']" *ngIf="!stateService.isAuthenticated()">
+                <li [routerLinkActive]="['link-active']" *ngIf="!stateService.userState.isAuthenticated">
                     <a [routerLink]="['/login']">
                         <span class='glyphicon glyphicon-user'></span> Login
                     </a>
                 </li>
-                <li [routerLinkActive]="['link-active']" *ngIf="!stateService.isAuthenticated()">
+                <li [routerLinkActive]="['link-active']" *ngIf="!stateService.userState.isAuthenticated">
                     <a [routerLink]="['/register']">
                         <span class='glyphicon glyphicon-pencil'></span> Register
                     </a>
@@ -42,12 +42,12 @@
                         <span class='glyphicon glyphicon-forward'></span> My Streaming
                     </a>
                 </li>
-                <li [routerLinkActive]="['link-active']" *ngIf="stateService.isAuthenticated()">
+                <li [routerLinkActive]="['link-active']" *ngIf="stateService.userState.isAuthenticated">
                     <a [routerLink]="['/streaming/videos/add']">
                         <span class='glyphicon glyphicon-plus'></span> Add Video
                     </a>
                 </li>
-                <li [routerLinkActive]="['link-active']" *ngIf="stateService.isAuthenticated()">
+                <li [routerLinkActive]="['link-active']" *ngIf="stateService.userState.isAuthenticated">
                     <a [routerLink]="['/manage/users']">
                         <span class='glyphicon glyphicon-cog'></span> Admin panel
                     </a>
@@ -57,26 +57,26 @@
                         <span class='glyphicon glyphicon-share'></span> Share
                     </a>
                 </li>
-                <li [routerLinkActive]="['link-active']" *ngIf="stateService.displayPassword()">
+                <li [routerLinkActive]="['link-active']" *ngIf="stateService.displaySetPassword">
                     <a [routerLink]="['/password']">
                         <span class='glyphicon glyphicon-lock'></span> Set password
                     </a>
                 </li>
-                <li [routerLinkActive]="['link-active']" *ngIf="stateService.isAuthenticated()">
+                <li [routerLinkActive]="['link-active']" *ngIf="stateService.userState.isAuthenticated">
                     <a [routerLink]="['/manage/account']">
                         <span class='glyphicon glyphicon-edit'></span> Manage Account
                     </a>
                 </li>
-                <li [routerLinkActive]="['link-active']" *ngIf="stateService.isAuthenticated()">
+                <li [routerLinkActive]="['link-active']" *ngIf="stateService.userState.isAuthenticated">
                     <a (click)="logout()" class="logout">
-                        <span class='glyphicon glyphicon-log-out'></span> Logout <i>({{stateService.username()}})</i>
-                        <span *ngIf="stateService.authenticationMethod() && stateService.authenticationMethod().length > 0">
-                            <img src="/images/{{stateService.authenticationMethod()}}.png" style="width: 20px; margin: 5px 5px 10px;" />
+                        <span class='glyphicon glyphicon-log-out'></span> Logout <i>({{stateService.userState.username}})</i>
+                        <span *ngIf="stateService.userState.authenticationMethod && stateService.userState.authenticationMethod.length > 0">
+                            <img src="/images/{{stateService.userState.authenticationMethod}}.png" style="width: 20px; margin: 5px 5px 10px;" />
                         </span>
                     </a>
                 </li>
-                <li *ngIf="stateService.getNotification().message !== ''">
-                    <div class="alert" [ngClass]="{'alert-success': stateService.getNotification().type === 'success', 'alert-danger': stateService.getNotification().type === 'danger'}">
+                <li *ngIf="stateService.notification.message !== ''">
+                    <div class="alert" [ngClass]="{'alert-success': stateService.notification.type === 'success', 'alert-danger': stateService.getNotification().type === 'danger'}">
                         <strong>{{stateService.getNotification().message}}</strong>
                     </div>
                 </li>

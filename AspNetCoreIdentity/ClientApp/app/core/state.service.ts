@@ -3,29 +3,16 @@ import { UserState, Notification } from './domain';
 
 @Injectable()
 export class StateService {
-    userState: UserState = { username: '', isAuthenticated: false, authenticationMethod: '' };
-    notification: Notification = { message: '', type: '' };
-    displaySetPassword: boolean = false;
 
-    constructor() { }
+     public userState: UserState = { username: '', isAuthenticated: false, authenticationMethod: '' };
+     public notification: Notification = { message: '', type: '' };
+     public displaySetPassword: boolean = false;
 
     /**
      * setAuthentication
      */
     public setAuthentication(state: UserState) {
         this.userState = state;
-    }
-
-    public isAuthenticated() {
-        return this.userState.isAuthenticated;
-    }
-
-    public username() {
-        return this.userState.username;
-    }
-
-    public authenticationMethod() {
-        return this.userState.authenticationMethod;
     }
 
     public displayNotification(notify: Notification) {
@@ -37,16 +24,8 @@ export class StateService {
             this.notification.type = '';
         }, 8000);
     }
-
-    public getNotification() {
-        return this.notification;
-    }
-
+    
     public setDisplayPassword(display: boolean) {
         this.displaySetPassword = display;
-    }
-
-    public displayPassword() {
-        return this.displaySetPassword;
     }
 }
