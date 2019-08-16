@@ -1,0 +1,25 @@
+﻿<div class="col-sm-6 col-sm-offset-3" *ngIf="!authenticatorNeedsSetup">
+    <div class="alert alert-warning" role="alert">
+        <p>
+            <span class="glyphicon glyphicon-warning-sign"></span>
+            <strong>If you reset your authenticator key your authenticator app will not work until you reconfigure it.</strong>
+        </p>
+        <p>
+            This process disables 2FA until you verify your authenticator app.
+            If you do not complete your authenticator app configuration you may lose access to your account.
+        </p>
+    </div>
+    <button type="button" (click)="resetAuthenticator()" class="form-control btn btn-danger">Reset authenticator</button>
+</div>
+<div class="col-sm-6 col-sm-offset-3" *ngIf="authenticatorNeedsSetup">
+    <div class="alert alert-info" role="alert">
+        <p>
+            <span class="glyphicon glyphicon-info-sign"></span>
+            <strong>Your authenticator app key has been reset successfully</strong>
+        </p>
+        <p>
+            2FA has been disabled until you verify your authenticator app.
+            If you do not complete your authenticator app configuration you may lose access to your account.
+        </p>
+    </div>
+</div>

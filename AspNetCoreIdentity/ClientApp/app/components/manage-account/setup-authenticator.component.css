@@ -1,15 +1,14 @@
-﻿.table > thead > tr > th {
-    vertical-align: bottom;
-    border-bottom: 2px solid #ddd;
-    white-space: nowrap;
-    width: 1%;
-}
-
-#genQrCode {
+﻿#genQrCode {
     margin: 20px auto;
     padding: 20px;
     text-align: center;
     background: #ffffff;
+}
+
+.authenticatorKey {
+    text-align: center;
+    font-size: 20px;
+    color: #8a6d3b;
 }
 
 .validVerificationCode {
@@ -17,4 +16,3 @@
     color: lightgreen;
     cursor: pointer;
 }
-

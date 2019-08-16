@@ -1,0 +1,34 @@
+﻿<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="page-header">
+            <h3>Account management</h3>
+        </div>
+        <div class="panel with-nav-tabs panel-primary">
+            <div class="panel-heading">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#profile" data-toggle="tab">Profile</a></li>
+                    <li class="dropdown">
+                        <a href="#" data-toggle="dropdown">Security <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#2fa" data-toggle="tab">2 Factor Authentication</a></li>
+                            <li *ngIf="accountDetails.hasAuthenticator"><a href="#resetAuthenticator" data-toggle="tab">Reset authenticator</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="panel-body">
+                <div class="tab-content">
+                    <div class="tab-pane fade in active" id="profile">
+                        <account-profile [accountDetails]="accountDetails"></account-profile>
+                    </div>
+                    <div class="row tab-pane fade" id="2fa">
+                        <setup-authenticator [accountDetails]="accountDetails"></setup-authenticator>
+                    </div>
+                    <div class="tab-pane fade" id="resetAuthenticator">
+                        <reset-authenticator [accountDetails]="accountDetails"></reset-authenticator>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

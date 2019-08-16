@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToastModule} from 'ng2-toastr/ng2-toastr';
 
+// App components
 import { AppComponent } from './components/app/app.component';
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { HomeComponent } from './components/home/home.component';
@@ -16,13 +17,16 @@ import { StreamingComponent } from './components/streaming/streaming.component';
 import { HttpInterceptor } from './core/http.interceptor';
 import { StateService } from './core/state.service';
 import { AccessForbiddenComponent } from './components/claims/access-forbidden/access-forbidden.component';
-import { ManageComponent } from './components/manage/manage.component';
+import { AdminComponent } from './components/admin/admin.component';
 import { StreamingRegisterComponent } from './components/streaming/register/register.component';
 import { AddVideoComponent } from './components/streaming/add/add-video.component';
 import { SocialApiShareComponent } from './components/socialapi/share.component';
 import { OpenIdConnectService } from './core/openid-connect.service';
 import { PasswordComponent } from './components/password/password.component';
-import { AccountComponent } from './components/account/account.component';
+import { ManageAccountComponent } from './components/manage-account/manage-account.component';
+import { AccountProfileComponent } from './components/manage-account/account-profile.component';
+import { SetupAuthenticatorComponent } from './components/manage-account/setup-authenticator.component';
+import { ResetAuthenticatorComponent } from './components/manage-account/reset-authenticator.component';
 
 @NgModule({
     declarations: [
@@ -36,10 +40,13 @@ import { AccountComponent } from './components/account/account.component';
         StreamingRegisterComponent,
         AddVideoComponent,
         AccessForbiddenComponent,
-        ManageComponent,
+        AdminComponent,
         SocialApiShareComponent,
         PasswordComponent,
-        AccountComponent
+        ManageAccountComponent,
+        AccountProfileComponent,
+        SetupAuthenticatorComponent,
+        ResetAuthenticatorComponent
     ],
     imports: [
         CommonModule,
@@ -58,10 +65,10 @@ import { AccountComponent } from './components/account/account.component';
             { path: 'streaming/register', component: StreamingRegisterComponent },
             { path: 'streaming/videos/add', component: AddVideoComponent },
             { path: 'access-forbidden', component: AccessForbiddenComponent },
-            { path: 'manage/users', component: ManageComponent },
+            { path: 'manage/users', component: AdminComponent },
             { path: 'password', component: PasswordComponent },
             { path: 'share', component: SocialApiShareComponent },
-            { path: 'manage/account', component: AccountComponent },
+            { path: 'manage/account', component: ManageAccountComponent },
             { path: '**', redirectTo: 'home' }
         ])
     ],

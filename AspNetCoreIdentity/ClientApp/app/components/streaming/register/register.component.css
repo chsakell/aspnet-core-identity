@@ -1,11 +1,16 @@
 
+.list-group-item.active {
+    background-color: #a94442 !important;
+    border-color: #a94442 !important;
+}
+
 .streaming-section {
     padding-top: 50px;
 }
 
 .registered, .list-group-item .registered {
     background-color: #f5f5f5;
-    color: lightgreen;
+    color: green;
 }
 
 button.save {

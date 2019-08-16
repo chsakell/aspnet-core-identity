@@ -1,17 +1,19 @@
-﻿import { Component, Inject } from '@angular/core';
+﻿import { Component, Inject, Input } from '@angular/core';
 import { Http } from '@angular/http';
 import { StateService } from '../../core/state.service';
+import { AccountDetailsVM, AuthenticatorDetailsVM, ResultVM, StatusEnum } from '../../core/domain';
 
 declare var QRCode: any;
 
 @Component({
-    selector: 'account',
-    templateUrl: './account.component.html',
-    styleUrls: ['./account.component.css']
+    selector: 'setup-authenticator',
+    templateUrl: './setup-authenticator.component.html',
+    styleUrls: ['./setup-authenticator.component.css']
 })
-export class AccountComponent {
+export class SetupAuthenticatorComponent {
 
-    public accountDetails: AccountDetailsVM = <AccountDetailsVM>{};
+    @Input() accountDetails: AccountDetailsVM;
+
     public authenticatorDetails: AuthenticatorDetailsVM = <AuthenticatorDetailsVM>{};
     public displayAuthenticator: boolean = false;
     public generatingQrCode: boolean = false;
@@ -27,14 +29,13 @@ export class AccountComponent {
 
     constructor(public http: Http, @Inject('BASE_URL') public baseUrl: string,
         public stateService: StateService) {
-        this.http.get(this.baseUrl + 'api/twoFactorAuthentication/details').subscribe(result => {
-            this.accountDetails = result.json() as AccountDetailsVM;
-            console.log(this.accountDetails);
-        }, error => console.error(error));
     }
 
     setupAuthenticator() {
         let self = this;
+
+        self.recoveryCodes = [];
+
         this.http.get(this.baseUrl + 'api/twoFactorAuthentication/setupAuthenticator').subscribe(result => {
             this.authenticatorDetails = result.json() as AuthenticatorDetailsVM;
             console.log(this.authenticatorDetails);
@@ -127,20 +128,6 @@ export class AccountComponent {
         }
     }
 
-    resetAuthenticator() {
-        this.http.post(this.baseUrl + 'api/twoFactorAuthentication/resetAuthenticator', {}).subscribe(result => {
-
-            let resetAuthenticatorResult = result.json() as ResultVM;
-
-            if (resetAuthenticatorResult.status === StatusEnum.Success) {
-                this.stateService.displayNotification({ message: resetAuthenticatorResult.message, type: "success" });
-                this.accountDetails.twoFactorEnabled = false;
-                this.authenticatorNeedsSetup = true;
-            }
-        },
-            error => console.error(error));
-    }
-
     disable2FA() {
         this.http.post(this.baseUrl + 'api/twoFactorAuthentication/disable2FA', {}).subscribe(result => {
 
@@ -175,32 +162,4 @@ export class AccountComponent {
         },
             error => console.error(error));
     }
-}
-
-interface AccountDetailsVM {
-    username: string;
-    email: string;
-    emailConfirmed: boolean;
-    phoneNumber: string;
-    externalLogins: string[];
-    twoFactorEnabled: boolean;
-    hasAuthenticator: boolean;
-    twoFactorClientRemembered: boolean;
-    recoveryCodesLeft: number[];
-}
-
-interface AuthenticatorDetailsVM {
-    sharedKey: string;
-    authenticatorUri: string;
-}
-
-interface ResultVM {
-    status: StatusEnum;
-    message: string;
-    data: any;
-}
-
-enum StatusEnum {
-    Success = 1,
-    Error = 2
 }

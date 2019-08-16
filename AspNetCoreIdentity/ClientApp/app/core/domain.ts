@@ -62,6 +62,23 @@ export interface Notification {
     type: string;
 }
 
+export interface AccountDetailsVM {
+    username: string;
+    email: string;
+    emailConfirmed: boolean;
+    phoneNumber: string;
+    externalLogins: string[];
+    twoFactorEnabled: boolean;
+    hasAuthenticator: boolean;
+    twoFactorClientRemembered: boolean;
+    recoveryCodesLeft: number[];
+}
+
+export interface AuthenticatorDetailsVM {
+    sharedKey: string;
+    authenticatorUri: string;
+}
+
 export interface ResultVM {
     status: StatusEnum;
     message: string;

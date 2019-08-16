@@ -3,11 +3,11 @@ import { Http } from '@angular/http';
 import { UserVM } from '../../core/domain';
 
 @Component({
-    selector: 'manage',
-    templateUrl: './manage.component.html',
-    styleUrls: ['./manage.component.css']
+    selector: 'admin',
+    templateUrl: './admin.component.html',
+    styleUrls: ['./admin.component.css']
 })
-export class ManageComponent {
+export class AdminComponent {
     public users: UserVM[] = [];
     
     constructor(public http: Http, @Inject('BASE_URL') public baseUrl: string) {

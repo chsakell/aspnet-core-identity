@@ -76,8 +76,8 @@
                     </a>
                 </li>
                 <li *ngIf="stateService.notification.message !== ''">
-                    <div class="alert" [ngClass]="{'alert-success': stateService.notification.type === 'success', 'alert-danger': stateService.getNotification().type === 'danger'}">
-                        <strong>{{stateService.getNotification().message}}</strong>
+                    <div class="alert" [ngClass]="{'alert-success': stateService.notification.type === 'success', 'alert-danger': stateService.notification.type === 'danger'}">
+                        <strong>{{stateService.notification.message}}</strong>
                     </div>
                 </li>
             </ul>

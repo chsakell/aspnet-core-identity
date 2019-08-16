@@ -32,7 +32,7 @@
                                     <input type="password" (keydown)="onKeydown($event)" name="confirm-password" id="confirm-password" [(ngModel)]="user.confirmPassword" tabindex="4" class="form-control" placeholder="Confirm Password">
                                 </div>
                                 <div class="form-group" *ngIf="errors.length > 0">
-                                    <ul [innerHTML]="errors" style="color: #E91E63"></ul>
+                                    <ul [innerHTML]="errors" class="error"></ul>
                                 </div>
                                 <div class="form-group">
                                     <label class="checkbox-inline trial"><input type="checkbox" name="simple-user" [(ngModel)]="simpleUser" (ngModelChange)="isSimpleUser($event)">Simple User</label>
@@ -52,7 +52,7 @@
                                     <input type="email" (keydown)="onKeydown($event)" name="associateEmail" id="associateEmail" [(ngModel)]="externalRegistration.associateEmail" tabindex="2" class="form-control" placeholder="Existing Email Address" value="">
                                 </div>
                                 <div class="form-group" *ngIf="errors.length > 0">
-                                    <ul [innerHTML]="errors" style="color: #E91E63"></ul>
+                                    <ul [innerHTML]="errors" class="error"></ul>
                                 </div>
                             </div>
                             <div class="form-group">

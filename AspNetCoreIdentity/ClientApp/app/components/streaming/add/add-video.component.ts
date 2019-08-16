@@ -13,7 +13,7 @@ export class AddVideoComponent {
     public newVideo: VideoVM = { title : '', category : '', description: '', url : '' };
     
     constructor(public http: Http, @Inject('BASE_URL') public baseUrl: string,
-    private router: Router,) {
+    private router: Router) {
         this.http.get(this.baseUrl + 'api/streaming/videos/register').subscribe(result => {
             this.categories = result.json() as StreamingCategoryVM[];
             this.newVideo.category = this.categories[0].category;

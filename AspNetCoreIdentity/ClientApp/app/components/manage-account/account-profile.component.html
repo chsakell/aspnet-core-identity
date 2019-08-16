@@ -1,0 +1,43 @@
+﻿<div class="table-responsive">
+                            <table class="table">
+                                <caption>Basic info</caption>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Username</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">2FA Enabled</th>
+                                        <th scope="col">Has Authenticator</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{accountDetails.username}}</td>
+                                        <td>{{accountDetails.email}}</td>
+                                        <td>{{accountDetails.twoFactorEnabled}}</td>
+                                        <td>{{accountDetails.hasAuthenticator}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <hr />
+                        <div class="table-responsive">
+                            <table class="table">
+                                <caption>External providers</caption>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Provider</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let provider of accountDetails.externalLogins; let i = index">
+                                        <th scope="row">{{i+1}}</th>
+                                        <td>{{provider}}</td>
+                                        <td>
+                                            <img src="/images/{{provider}}.png" style="width: 20px; margin: 5px 5px 10px;" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>

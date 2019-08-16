@@ -1,0 +1,12 @@
+﻿#genQrCode {
+    margin: 20px auto;
+    padding: 20px;
+    text-align: center;
+    background: #ffffff;
+}
+
+.validVerificationCode {
+    margin-right: 5px;
+    color: lightgreen;
+    cursor: pointer;
+}

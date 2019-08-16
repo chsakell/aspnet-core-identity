@@ -1,16 +1,24 @@
-﻿
-.tab-content {
-    color: #fff;
+﻿html {
+    height: 100vh;
+}
+
+html, body {
+    background-color: #333333;
+    background-image: linear-gradient(315deg, #2d3436 0%, #000000 74%);
+    min-height: 100vh;
+    color: whitesmoke !important;
 }
 
 .panel-primary {
-    background-color: #000000;
-    background-image: linear-gradient(147deg, #000000 0%, #2c3e50 74%);
+    background-color: #333333;
+    background-image: linear-gradient(315deg, #2d3436 0%, #000000 74%);
+    border-color: #8a6d3b !important;
 }
 
     .panel-primary > .panel-heading {
         color: #fff;
-        border-color: #337ab7;
+        background-color: #a94442 !important;
+        border-color: #a94442 !important;
     }
 
 
@@ -39,22 +47,22 @@
     .with-nav-tabs.panel-primary .nav-tabs > .open > a:focus,
     .with-nav-tabs.panel-primary .nav-tabs > li > a:hover,
     .with-nav-tabs.panel-primary .nav-tabs > li > a:focus {
-        color: #fff;
-        background-color: #3071a9;
+        color: #000;
+        background-color: #a94442 !important;
         border-color: transparent;
     }
 
 .with-nav-tabs.panel-primary .nav-tabs > li.active > a,
 .with-nav-tabs.panel-primary .nav-tabs > li.active > a:hover,
 .with-nav-tabs.panel-primary .nav-tabs > li.active > a:focus {
-    color: #428bca;
-    background-color: #fff;
-    border-color: #428bca;
+    color: #a94442 !important;
+    background-color: #fff !important;
+    border-color: #a94442 !important;
     border-bottom-color: transparent;
 }
 
 .with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu {
-    background-color: #428bca;
+    background-color: #a94442 !important;
     border-color: #3071a9;
 }
 
@@ -64,11 +72,26 @@
 
         .with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu > li > a:hover,
         .with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu > li > a:focus {
-            background-color: #3071a9;
+            background-color: transparent;
+            color: #000;
         }
 
     .with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu > .active > a,
     .with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu > .active > a:hover,
     .with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu > .active > a:focus {
-        background-color: #4a9fe9;
+        background-color: #a94442;
     }
+
+.btn-danger {
+    background-color: #a94442 !important;
+    border-color: #a94442 !important;
+}
+.alert-danger {
+    color: whitesmoke !important;
+    background-color: #a94442 !important;
+    border-color: #a94442 !important;
+}
+
+ul.error > li {
+    color: #a94442;
+}
