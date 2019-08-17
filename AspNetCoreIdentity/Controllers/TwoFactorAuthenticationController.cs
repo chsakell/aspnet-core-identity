@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.VisualStudio.Web.CodeGeneration.Design;
 using NETCore.Encrypt;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
@@ -22,7 +21,6 @@ namespace AspNetCoreIdentity.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UrlEncoder _urlEncoder;
-        private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
 
         public TwoFactorAuthenticationController(UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager, UrlEncoder urlEncoder)
@@ -58,7 +56,7 @@ namespace AspNetCoreIdentity.Controllers
         public async Task<AuthenticatorDetailsVM> SetupAuthenticator()
         {
             var user = await _userManager.GetUserAsync(User);
-            var authenticatorDetails = await LoadSharedKeyAndQrCodeUriAsync(user);
+            var authenticatorDetails = await GetAuthenticatorDetailsAsync(user);
 
             return authenticatorDetails;
         }
@@ -208,7 +206,7 @@ namespace AspNetCoreIdentity.Controllers
         {
             if (ModelState.IsValid)
             {
-                return await TwoFaLogin(model.TwoFactorCode, isRecoveryCode:false,  model.RememberMachine);
+                return await TwoFaLogin(model.TwoFactorCode, isRecoveryCode: false, model.RememberMachine);
             }
 
             var errors = GetErrors(ModelState).Select(e => "<li>" + e + "</li>");
@@ -316,7 +314,7 @@ namespace AspNetCoreIdentity.Controllers
             return errors;
         }
 
-        private async Task<AuthenticatorDetailsVM> LoadSharedKeyAndQrCodeUriAsync(IdentityUser user)
+        private async Task<AuthenticatorDetailsVM> GetAuthenticatorDetailsAsync(IdentityUser user)
         {
             // Load the authenticator key & QR code URI to display on the form
             var unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
@@ -354,6 +352,8 @@ namespace AspNetCoreIdentity.Controllers
 
         private string GenerateQrCodeUri(string email, string unformattedKey)
         {
+            const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
+
             return string.Format(
                 AuthenticatorUriFormat,
                 _urlEncoder.Encode("ASP.NET Core Identity"),

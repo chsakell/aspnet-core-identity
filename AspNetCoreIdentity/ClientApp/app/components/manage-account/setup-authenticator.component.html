@@ -1,10 +1,12 @@
 ﻿<div class="col-sm-6 col-sm-offset-3" style="margin-bottom:20px" *ngIf="!displayAuthenticator">
-    <button type="button" (click)="setupAuthenticator()" class="form-control btn">Setup authenticator</button>
+    <button type="button" (click)="setupAuthenticator()" class="form-control btn">
+        <span>{{(accountDetails.hasAuthenticator && !accountDetails.twoFactorEnabled) === true ? "Re-enable 2FA" : "Setup authenticator"}}</span>
+    </button>
 </div>
-<div class="col-sm-3 col-sm-offset-3" style="margin-bottom: 20px" *ngIf="!displayAuthenticator && accountDetails.twoFactorEnabled">
+<div class="col-sm-6 col-sm-offset-3" style="margin-bottom: 20px" *ngIf="!displayAuthenticator && accountDetails.twoFactorEnabled">
     <button [disabled]="!accountDetails.twoFactorEnabled" type="button" (click)="resetRecoverCodes()" class="form-control btn">Reset recovery codes</button>
 </div>
-<div class="col-sm-3" style="margin-bottom: 20px" *ngIf="!displayAuthenticator && accountDetails.twoFactorEnabled">
+<div class="col-sm-6 col-sm-offset-3" style="margin-bottom: 20px" *ngIf="!displayAuthenticator && accountDetails.twoFactorEnabled">
     <button type="button" (click)="disable2FA()" class="form-control btn btn-danger">Disable 2FA</button>
 </div>
 <div class="col-sm-6 col-sm-offset-3" style="margin-bottom:20px" *ngIf="displayAuthenticator">

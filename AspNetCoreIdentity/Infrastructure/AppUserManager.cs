@@ -31,7 +31,6 @@ namespace AspNetCoreIdentity.Infrastructure
         {
             var originalAuthenticatorKey = base.GenerateNewAuthenticatorKey();
 
-            // Encryption: https://www.digitalsanctuary.com/aes-key-generator-free
             // var aesKey = EncryptProvider.CreateAesKey();
 
             bool.TryParse(_configuration["TwoFactorAuthentication:EncryptionEnabled"], out bool encryptionEnabled);

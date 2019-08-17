@@ -29,11 +29,12 @@ export class SetupAuthenticatorComponent {
 
     constructor(public http: Http, @Inject('BASE_URL') public baseUrl: string,
         public stateService: StateService) {
+        
     }
 
     setupAuthenticator() {
         let self = this;
-
+        
         self.recoveryCodes = [];
 
         this.http.get(this.baseUrl + 'api/twoFactorAuthentication/setupAuthenticator').subscribe(result => {
