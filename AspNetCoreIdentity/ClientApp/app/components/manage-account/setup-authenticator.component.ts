@@ -1,4 +1,5 @@
 ﻿import { Component, Inject, Input } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
 import { Http } from '@angular/http';
 import { StateService } from '../../core/state.service';
 import { AccountDetailsVM, AuthenticatorDetailsVM, ResultVM, StatusEnum } from '../../core/domain';
@@ -28,8 +29,18 @@ export class SetupAuthenticatorComponent {
     public generatedQRCode: any;
 
     constructor(public http: Http, @Inject('BASE_URL') public baseUrl: string,
-        public stateService: StateService) {
-        
+        public stateService: StateService, private router: Router) {
+        router.events.subscribe((val) => {
+            // see also 
+            if (val instanceof NavigationEnd) {
+                if (val.url !== "/manage/account") {
+                    if (this.pollForValidVerificationCodes != null) {
+                        clearInterval(this.pollForValidVerificationCodes);
+                        this.pollForValidVerificationCodes = null;
+                    }
+                }
+            }
+        });
     }
 
     setupAuthenticator() {
