@@ -84,7 +84,7 @@ export class LoginComponent implements OnInit {
                     if (loginResult.status === StatusEnum.Success) {
                         if (loginResult.data.requires2FA) {
                             this.requires2FA = true;
-                            this.stateService.displayNotification({ message: loginResult.message, type: "danger" });
+                            this.stateService.displayNotification({ message: loginResult.message, type: "success" });
                             return;
                         }
                         this.stateService.setAuthentication({
