@@ -55,12 +55,16 @@
 * Implement an external provider [registration strategy](https://wp.me/p3mRWu-1Kq#registration-strategy)
 * Associated repository branch: [external-authentication](https://github.com/chsakell/aspnet-core-identity/tree/external-authentication)
 
-## Part 6 - [Two Factor Authentication]()
+## Part 6 - [Two Factor Authentication](https://wp.me/p3mRWu-1Pe)
 
-* Explain how `2FA` works 
-* Explain what `QRCode` is and how it works
-* Implement all 2FA flows *(enable, disable, reset authenticator, re-generate tokens)*
-* Secure Authenticator Key and Generated tokens
+* Implement all Two Factor Authentication related tasks:
+  *  Enable/Disable 2FA
+  *  Generate/Reset recovery tokens
+  *  Reset authenticator app
+* Explore the 2FA code and database schema
+* Enhance the security level of 2FA by overriding the default implementation
+  *  Encrypt authenticator key
+  *  Encrypt recovery tokens
 
 > To be continued..
 

@@ -1,6 +1,12 @@
 <h1 id="aspnetcoreidentityseries">ASP.NET Core Identity Series</h1>
 
-<p><img src="https://chsakell.files.wordpress.com/2018/04/aspnet-core-identity-13.png" alt="ASP.NET Core Identity Series" /></p>
+<h2 id="themostcompleteguideforaspnetcoreidentity">The most complete guide for ASP.NET Core Identity</h2>
+
+<p><img class="img-responsive" src="https://chsakell.files.wordpress.com/2018/04/aspnet-core-identity-13.png" alt="ASP.NET Core Identity Series" /></p>
+
+<p>
+    
+</p>
 
 <h2 id="part1gettingstartedhttpchsakellcom20180428aspnetcoreidentityseriesgettingstarted">Part 1 - <a href="http://chsakell.com/2018/04/28/asp-net-core-identity-series-getting-started">Getting Started</a></h2>
 
@@ -50,16 +56,75 @@
     <li>Associated repository branch: <a href="https://github.com/chsakell/aspnet-core-identity/tree/authorization">authorization</a></li>
 </ul>
 
-<h2 id="part4oauth20openidconnectidentityserverhttpswpmep3mrwu1ik">Part 4 - <a href="https://wp.me/p3mRWu-1ik">OAuth 2.0, OpenID Connect &amp; IdentityServer</a></h2>
+<h2 id="part4oauth20openidconnectidentityserverhttpswpmep3mrwu1ag">Part 4 - <a href="https://wp.me/p3mRWu-1Ag">OAuth 2.0, OpenID Connect &amp; IdentityServer</a></h2>
 
 <ul>
-    <li>Explain how <code>OAuth 2.0</code> works <em>(terminology, grant types, tokens, flows)</em></li>
+    <li>Explain how <code>OAuth 2.0</code> works <em>(terminology, grant types, tokens)</em></li>
 
-    <li>Explain how <code>OpenID Connect</code> works <em>(terminology, grant types, tokens, flows)</em></li>
+    <li>Explain how <code>OpenID Connect</code> works <em>(terminology, tokens, flows)</em></li>
 
     <li>Learn how to use <code>IdentityServer</code> for integrating  <code>OAuth 2.0</code> and <code>OpenID Connect</code></li>
 
     <li>Associated repository branch: <a href="https://github.com/chsakell/aspnet-core-identity/tree/identity-server">identity-server</a></li>
+</ul>
+
+<h2 id="part5externalproviderauthenticationregistrationstrategyhttpswpmep3mrwu1kq">Part 5 - <a href="https://wp.me/p3mRWu-1Kq">External provider authentication &amp; registration strategy</a></h2>
+
+<ul>
+    <li>
+        Step by step guides for enabling external provider authentication
+
+
+        <ul>
+            <li><a href="https://wp.me/p3mRWu-1Kq#google">Google authentication</a></li>
+
+            <li><a href="https://wp.me/p3mRWu-1Kq#facebook">Facebook authentication</a></li>
+
+            <li><a href="https://wp.me/p3mRWu-1Kq#twitter">Twitter authentication</a></li>
+
+            <li><a href="https://wp.me/p3mRWu-1Kq#microsoft">Microsoft authentication</a></li>
+
+            <li><a href="https://wp.me/p3mRWu-1Kq#github">GitHub authentication</a></li>
+
+            <li><a href="https://wp.me/p3mRWu-1Kq#linkedin">LinkedIn authentication</a></li>
+
+            <li><a href="https://wp.me/p3mRWu-1Kq#dropbox">DropBox authentication</a></li>
+        </ul>
+    </li>
+
+    <li>Implement an external provider <a href="https://wp.me/p3mRWu-1Kq#registration-strategy">registration strategy</a></li>
+
+    <li>Associated repository branch: <a href="https://github.com/chsakell/aspnet-core-identity/tree/external-authentication">external-authentication</a></li>
+</ul>
+
+<h2 id="part6twofactorauthenticationhttpswpmep3mrwu1pe">Part 6 - <a href="https://wp.me/p3mRWu-1Pe">Two Factor Authentication</a></h2>
+
+<ul>
+    <li>
+        Implement all Two Factor Authentication related tasks:
+
+
+        <ul>
+            <li>Enable/Disable 2FA</li>
+
+            <li>Generate/Reset recovery tokens</li>
+
+            <li>Reset authenticator app</li>
+        </ul>
+    </li>
+
+    <li>Explore the 2FA code and database schema</li>
+
+    <li>
+        Enhance the security level of 2FA by overriding the default implementation
+
+
+        <ul>
+            <li>Encrypt authenticator key</li>
+
+            <li>Encrypt recovery tokens</li>
+        </ul>
+    </li>
 </ul>
 
 <blockquote>
@@ -89,44 +154,32 @@
     </li>
 
     <li>
-        <strong>Create the <em>AspNetCoreIdentityDb</em> database</strong>
+        <strong>Create the <em>AspNetCoreIdentityDb</em> database</strong> <em>(skip if you want to run with In memory DB)</em>
 
 
         <ul>
             <li><code>cd ./AspNetCoreIdentity</code> where the AspNetCoreIdentity.csproj exist</li>
 
-            <li><code>Add-Migration initial_migration</code> <em>(optional if already exists)</em></li>
+            <li><code>Add-Migration initial_migration</code> or <code>dotnet ef migrations add initial_migration</code></li>
 
-            <li><code>Update-Database</code></li>
+            <li><code>Update-Database</code> or <code>dotnet ef database update</code></li>
         </ul>
     </li>
 
     <li>
-        <strong>Create the <em>IdentityServerDb</em> database</strong>
+        <strong>Create the <em>IdentityServerDb</em> database</strong> <em>(skip if you want to run with In memory DB)</em>
 
 
         <ul>
-            <li><code>cd ./IdentityServer</code> where the IdentityServer.csproj exist</li>
-
-            <li><code>Add-Migration InitialIdentityServerPersistedGrantDbMigration -c PersistedGrantDbContext -o Data/Migrations/IdentityServer/PersistedGrantDb</code> <em>(optional if already exists)</em></li>
-
-            <li><code>Add-Migration InitialIdentityServerConfigurationDbMigration -c ConfigurationDbContext -o Data/Migrations/IdentityServer/ConfigurationDb</code> <em>(optional if already exists)</em></li>
-
-            <li><code>Add-Migration InitialIdentityServerConfigurationDbMigration -c ApplicationDbContext -o Data/Migrations</code> <em>(optional if already exists)</em></li>
-
-            <li><code>Update-Database -Context ApplicationDbContext</code></li>
-
-            <li><code>Update-Database -Context PersistedGrantDbContext</code></li>
-
-            <li><code>Update-Database -Context ConfigurationDbContext</code></li>
+            <li>Follow the <a href="https://github.com/chsakell/aspnet-core-identity/blob/master/IdentityServer/Data/Migrations/instructions.md">instructions</a></li>
         </ul>
     </li>
 </ol>
 
 <blockquote>
-    <p>In case you don't want to use a real SQL Server Database when running the <code>AspNetCoreIdentity</code> project, simply set <strong>InMemoryProvider: true</strong> in the <em>appsettings.json</em></p>
+    <p>In case you don't want to use a real SQL Server Database when running the <code>AspNetCoreIdentity</code> project, simply set <strong>InMemoryProvider: true</strong> in the <em>appsettings.json</em>. This option will use in memory database</p>
 
-    <p>In case you don't want to use a real SQL Server Database when running the <code>IdentityServer</code> project simply set <strong>UseInMemoryStores: true</strong> in the relative <em>appsettings.json</em></p>
+    <p>In case you don't want to use a real SQL Server Database when running the <code>IdentityServer</code> project simply set <strong>UseInMemoryStores: true</strong> in the relative <em>appsettings.json</em> This option will use in memory database</p>
 </blockquote>
 
 <h3 style="font-weight:normal;">Follow chsakell's Blog</h3>
