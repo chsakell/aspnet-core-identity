@@ -55,7 +55,7 @@
 * Implement an external provider [registration strategy](https://wp.me/p3mRWu-1Kq#registration-strategy)
 * Associated repository branch: [external-authentication](https://github.com/chsakell/aspnet-core-identity/tree/external-authentication)
 
-## Part 6 - [Two Factor Authentication](https://wp.me/p3mRWu-1Pe)
+## Part 6 - [Two-Factor Authentication](https://wp.me/p3mRWu-1Pe)
 
 * Implement all Two Factor Authentication related tasks:
   *  Enable/Disable 2FA
@@ -65,6 +65,7 @@
 * Enhance the security level of 2FA by overriding the default implementation
   *  Encrypt authenticator key
   *  Encrypt recovery tokens
+* Associated repository branch: [two-factor-authentication](https://github.com/chsakell/aspnet-core-identity/tree/two-factor-authentication)
 
 > To be continued..
 
