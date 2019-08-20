@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reflection;
 using IdentityServer.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,7 +26,6 @@ namespace IdentityServer
         {
             bool useInMemoryStores = bool.Parse(Configuration["UseInMemoryStores"]);
             var connectionString = Configuration.GetConnectionString("IdentityServerConnection");
-            var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
             services.AddDbContext<ApplicationDbContext>(options =>
             {

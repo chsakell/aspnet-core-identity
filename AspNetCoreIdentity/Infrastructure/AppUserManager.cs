@@ -10,6 +10,9 @@ using NETCore.Encrypt;
 
 namespace AspNetCoreIdentity.Infrastructure
 {
+    /// <summary>
+    /// Custom UserManager to override Authenticator Token generation behavior (encrypt/decrypt)
+    /// </summary>
     public class AppUserManager : UserManager<IdentityUser>
     {
         private readonly IConfiguration _configuration;

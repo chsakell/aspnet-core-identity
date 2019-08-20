@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using AspNetCoreIdentity.Infrastructure;
-using AspNetCoreIdentity.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
