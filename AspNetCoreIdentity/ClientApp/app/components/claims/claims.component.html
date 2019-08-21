@@ -1,10 +1,13 @@
 <div class="claims">
     <div class="row">
+        <div class="col-md-12 text-center">
+            <h3>User account claims</h3>
+        </div>
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <div class="text-center">
-                        <strong>{{userName}}</strong> claims:
+                        <strong>{{userName}}</strong>
                     </div>
                 </div>
                 <div class="panel-body">
@@ -13,9 +16,9 @@
                             <div *ngFor="let claim of claims">
                                 Type:
                                 <strong class="claimType">{{claim.type}}</strong>
-                                <br /> Value:
+                                <br/> Value:
                                 <span>{{claim.value}}</span>
-                                <hr />
+                                <hr/>
                             </div>
                         </div>
                     </div>

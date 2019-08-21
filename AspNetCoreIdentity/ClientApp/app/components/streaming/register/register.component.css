@@ -1,11 +1,7 @@
 
 .list-group-item.active {
-    background-color: #a94442 !important;
-    border-color: #a94442 !important;
-}
-
-.streaming-section {
-    padding-top: 50px;
+    background-color: #3884FE !important;
+    border-color: #3884FE !important;
 }
 
 .registered, .list-group-item .registered {

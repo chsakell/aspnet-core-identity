@@ -2,12 +2,16 @@ li .glyphicon {
     margin-right: 10px;
 }
 
+.navbar-inverse .navbar-nav > li > a {
+    color: #5C6975;
+}
+
 /* Highlighting rules for nav menu items */
+.navbar-inverse .navbar-nav > li > a:hover,
 li.link-active a,
 li.link-active a:hover,
 li.link-active a:focus {
-    background-color: #a94442;
-    color: white;
+    background: rgb(230, 236, 241);
 }
 
 /* Keep the nav menu independent of scrolling and on top of other items */
@@ -24,9 +28,8 @@ li.link-active a:focus {
 }
 
 .navbar-inverse {
-    background-color: #333333;
-    background-image: linear-gradient(315deg, #2d3436 0%, #000000 74%);
-    ;
+    background: #F5F7F9;
+    border-right: 1px solid #E6ECF1;
 }
 
 @media (min-width: 768px) {
@@ -35,30 +38,37 @@ li.link-active a:focus {
         height: 100%;
         width: calc(25% - 20px);
     }
+
     .navbar {
         border-radius: 0px;
         border-width: 0px;
         height: 100%;
     }
+
     .navbar-header {
         float: none;
     }
+
     .navbar-collapse {
         border-top: 1px solid #444;
         padding: 0px;
     }
+
     .navbar ul {
         float: none;
     }
+
     .navbar li {
         float: none;
         font-size: 15px;
         margin: 6px;
     }
-    .navbar li a {
-        padding: 10px 16px;
-        border-radius: 4px;
-    }
+
+        .navbar li a {
+            padding: 10px 16px;
+            border-radius: 4px;
+        }
+
     .navbar a {
         /* If a menu item's text is too long, truncate it */
         width: 100%;

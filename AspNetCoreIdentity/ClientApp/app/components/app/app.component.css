@@ -4,3 +4,17 @@
         padding-top: 50px;
     }
 }
+
+.navbar-default {
+    box-shadow: 0 3px 8px 0 rgba(116, 129, 141, 0.1);
+    border-bottom: 1px solid #d4dadf;
+    background-color: #FFFFFF;
+}
+
+    .navbar-default .navbar-nav > li > a {
+        color: #3884FE !important;
+    }
+
+.container-fluid.content {
+    margin-top: 50px;
+}
