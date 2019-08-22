@@ -12,10 +12,9 @@
 }
 
 .grant-error {
-    color: #a94442;
+    color: #d9534f;
 }
 
 .grant-success {
-    color: #029f5b;
     text-align: center;
 }

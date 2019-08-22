@@ -4,7 +4,7 @@
 
 html, body {
     background-color: #fff;
-    min-height: 100vh;
+    /*min-height: 100vh;*/
     color: #242A31 !important;
 }
 
@@ -61,21 +61,21 @@ html, body {
     .with-nav-tabs.panel-primary .nav-tabs > li > a:hover,
     .with-nav-tabs.panel-primary .nav-tabs > li > a:focus {
         color: #000;
-        background-color: #a94442 !important;
+        background-color: #3884FE !important;
         border-color: transparent;
     }
 
 .with-nav-tabs.panel-primary .nav-tabs > li.active > a,
 .with-nav-tabs.panel-primary .nav-tabs > li.active > a:hover,
 .with-nav-tabs.panel-primary .nav-tabs > li.active > a:focus {
-    color: #a94442 !important;
+    color: #3884FE !important;
     background-color: #fff !important;
-    border-color: #a94442 !important;
+    border-color: #3884FE !important;
     border-bottom-color: transparent;
 }
 
 .with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu {
-    background-color: #a94442 !important;
+    background-color: #3884FE !important;
     border-color: #3071a9;
 }
 
@@ -92,7 +92,7 @@ html, body {
     .with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu > .active > a,
     .with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu > .active > a:hover,
     .with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu > .active > a:focus {
-        background-color: #a94442;
+        background-color: #3884FE;
     }
 
 .btn {
@@ -124,16 +124,21 @@ html, body {
     }
 
 .btn-danger {
-    background-color: #a94442 !important;
-    border-color: #a94442 !important;
+    background-color: #d9534f !important;
+    border-color: #d43f3a !important;
 }
+
+    .btn-danger:hover {
+        color: whitesmoke !important;
+        border-color: whitesmoke !important;
+    }
 
 .alert-danger {
     color: whitesmoke !important;
-    background-color: #a94442 !important;
-    border-color: #a94442 !important;
+    background-color: #d9534f !important;
+    border-color: #d9534f !important;
 }
 
 ul.error > li {
-    color: #a94442;
+    color: #d9534f;
 }

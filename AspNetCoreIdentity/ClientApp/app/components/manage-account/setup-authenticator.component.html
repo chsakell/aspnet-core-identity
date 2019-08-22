@@ -1,6 +1,6 @@
 ﻿<div class="col-sm-6 col-sm-offset-3" style="margin-bottom:20px" *ngIf="!displayAuthenticator">
     <button type="button" (click)="setupAuthenticator()" class="form-control btn">
-        <span>{{(accountDetails.hasAuthenticator && !accountDetails.twoFactorEnabled) === true ? "Re-enable 2FA" : "Setup authenticator"}}</span>
+        <span>{{(accountDetails.hasAuthenticator && !accountDetails.twoFactorEnabled) === true ? "Enable 2FA" : "Setup authenticator"}}</span>
     </button>
 </div>
 <div class="col-sm-6 col-sm-offset-3" style="margin-bottom: 20px" *ngIf="!displayAuthenticator && accountDetails.twoFactorEnabled">

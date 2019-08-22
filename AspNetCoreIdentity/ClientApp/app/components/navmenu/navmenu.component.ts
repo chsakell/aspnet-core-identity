@@ -20,4 +20,13 @@ export class NavMenuComponent {
         }, error => console.error(error));
 
     }
+
+    closeMenu() {
+        if (window.innerWidth < 768) {
+            let navButton = document.getElementById('navButton');
+            if (navButton) {
+                navButton.click();
+            }
+        }
+    }
 }

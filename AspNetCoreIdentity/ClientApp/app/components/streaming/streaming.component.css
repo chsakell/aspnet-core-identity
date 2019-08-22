@@ -1,7 +1,4 @@
 .video {
-    background-color: #333333;
-    background-image: linear-gradient(315deg, #2d3436 0%, #000000 74%);
-    ;
     padding-bottom: 20px;
     padding-top: 10px;
 }
@@ -11,7 +8,7 @@
 }
 
 .video-description {
-    color:red;
+    color: #3884FE;
 }
 
 .video-category {

@@ -13,8 +13,17 @@
 
     .navbar-default .navbar-nav > li > a {
         color: #3884FE !important;
+        font-size: 16px;
+        font-family: Content-font, Roboto, sans-serif;
+        font-weight: 600;
     }
 
 .container-fluid.content {
     margin-top: 50px;
+}
+
+@media (max-width: 768px) {
+    .navbar-default {
+        display: none;
+    }
 }

@@ -13,6 +13,7 @@
 
 .validVerificationCode {
     margin-right: 5px;
-    color: lightgreen;
+    color: #3884FE;
     cursor: pointer;
+    font-weight: 600;
 }

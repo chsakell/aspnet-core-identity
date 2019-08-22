@@ -1,7 +1,7 @@
 <div class='main-nav'>
     <div class='navbar navbar-inverse'>
         <div class='navbar-header'>
-            <button type='button' class='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse'>
+            <button id ="navButton" type='button' class='navbar-toggle' data-toggle='collapse' data-target='#menuCollapse'>
                 <span class='sr-only'>Toggle navigation</span>
                 <span class='icon-bar'></span>
                 <span class='icon-bar'></span>
@@ -10,60 +10,60 @@
             <a class='navbar-brand' [routerLink]="['/home']">ASP.NET Core Identity</a>
         </div>
         <div class='clearfix'></div>
-        <div class='navbar-collapse collapse'>
+        <div id="menuCollapse" class='navbar-collapse collapse'  data-target='#menuCollapse'>
             <ul class='nav navbar-nav'>
                 <li [routerLinkActive]="['link-active']">
-                    <a [routerLink]="['/home']">
+                    <a [routerLink]="['/home']" (click) = "closeMenu()">
                         <span class='glyphicon glyphicon-home'></span> Home
                     </a>
                 </li>
                 <li [routerLinkActive]="['link-active']" *ngIf="!stateService.userState.isAuthenticated">
-                    <a [routerLink]="['/login']">
+                    <a [routerLink]="['/login']" (click) = "closeMenu()">
                         <span class='glyphicon glyphicon-user'></span> Login
                     </a>
                 </li>
                 <li [routerLinkActive]="['link-active']" *ngIf="!stateService.userState.isAuthenticated">
-                    <a [routerLink]="['/register']">
+                    <a [routerLink]="['/register']" (click) = "closeMenu()">
                         <span class='glyphicon glyphicon-pencil'></span> Register
                     </a>
                 </li>
                 <li [routerLinkActive]="['link-active']">
-                    <a [routerLink]="['/claims']">
+                    <a [routerLink]="['/claims']" (click) = "closeMenu()">
                         <span class='glyphicon glyphicon-lock'></span> Claims
                     </a>
                 </li>
                 <li [routerLinkActive]="['link-active']" [routerLinkActiveOptions]="{exact: true}">
-                    <a [routerLink]="['/videos']">
+                    <a [routerLink]="['/videos']" (click) = "closeMenu()">
                         <span class='glyphicon glyphicon-facetime-video'></span> Videos (Trial)
                     </a>
                 </li>
                 <li [routerLinkActive]="['link-active']" [routerLinkActiveOptions]="{exact: true}">
-                    <a [routerLink]="['/streaming/register']">
+                    <a [routerLink]="['/streaming/register']" (click) = "closeMenu()">
                         <span class='glyphicon glyphicon-forward'></span> My Streaming
                     </a>
                 </li>
                 <li [routerLinkActive]="['link-active']" *ngIf="stateService.userState.isAuthenticated">
-                    <a [routerLink]="['/streaming/videos/add']">
+                    <a [routerLink]="['/streaming/videos/add']" (click) = "closeMenu()">
                         <span class='glyphicon glyphicon-plus'></span> Add Video
                     </a>
                 </li>
                 <li [routerLinkActive]="['link-active']" *ngIf="stateService.userState.isAuthenticated">
-                    <a [routerLink]="['/manage/users']">
+                    <a [routerLink]="['/manage/users']" (click) = "closeMenu()">
                         <span class='glyphicon glyphicon-cog'></span> Admin panel
                     </a>
                 </li>
                 <li [routerLinkActive]="['link-active']">
-                    <a [routerLink]="['/share']">
+                    <a [routerLink]="['/share']" (click) = "closeMenu()">
                         <span class='glyphicon glyphicon-share'></span> Share
                     </a>
                 </li>
                 <li [routerLinkActive]="['link-active']" *ngIf="stateService.displaySetPassword">
-                    <a [routerLink]="['/password']">
+                    <a [routerLink]="['/password']" (click) = "closeMenu()">
                         <span class='glyphicon glyphicon-lock'></span> Set password
                     </a>
                 </li>
                 <li [routerLinkActive]="['link-active']" *ngIf="stateService.userState.isAuthenticated">
-                    <a [routerLink]="['/manage/account']">
+                    <a [routerLink]="['/manage/account']" (click) = "closeMenu()">
                         <span class='glyphicon glyphicon-edit'></span> Manage Account
                     </a>
                 </li>
