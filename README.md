@@ -58,7 +58,8 @@
 ## Part 6 - [Two-Factor Authentication](https://wp.me/p3mRWu-1Pe)
 
 * Implement all Two Factor Authentication related tasks:
-  *  Enable/Disable 2FA *(QR Code included)*
+  *  Enable/Disable 2FA
+  *  Configure authenticator app *(QR Code included)*
   *  Generate/Reset recovery tokens
   *  Reset authenticator app
 * Explore the 2FA code and database schema
