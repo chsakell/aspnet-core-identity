@@ -55,5 +55,7 @@ namespace AspNetCoreIdentity.Infrastructure {
 
         public Task<AuthorizationPolicy> GetDefaultPolicyAsync () => FallbackPolicyProvider.GetDefaultPolicyAsync ();
 
+        public Task<AuthorizationPolicy> GetFallbackPolicyAsync() => FallbackPolicyProvider.GetDefaultPolicyAsync();
+
     }
 }

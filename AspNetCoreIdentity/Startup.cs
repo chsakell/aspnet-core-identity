@@ -5,10 +5,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace AspNetCoreIdentity
 {
@@ -39,7 +41,7 @@ namespace AspNetCoreIdentity
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
 
-            services.AddMvc();
+            services.AddMvc(options => options.EnableEndpointRouting = false);
 
             bool useInMemoryProvider = bool.Parse(Configuration["InMemoryProvider"]);
             services.AddDbContext<IdentityDbContext>(options =>
@@ -67,6 +69,7 @@ namespace AspNetCoreIdentity
 
             services.ConfigureApplicationCookie(options =>
             {
+                options.Cookie.Name = ".AspNetCoreIdentityCookie";
                 options.Events.OnRedirectToLogin = context =>
                 {
                     context.Response.Headers["Location"] = context.RedirectUri;
@@ -85,21 +88,18 @@ namespace AspNetCoreIdentity
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
-                {
-                    HotModuleReplacement = true
-                });
             }
             else
             {
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            //app.UseHttpsRedirection();
             app.UseAuthentication();
 
             app.UseStaticFiles();
@@ -109,10 +109,23 @@ namespace AspNetCoreIdentity
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
-                
+
                 routes.MapSpaFallbackRoute(
                     name: "spa-fallback",
                     defaults: new { controller = "Home", action = "Index" });
+            });
+
+            app.UseSpa(spa =>
+            {
+                // To learn more about options for serving an Angular SPA from ASP.NET Core,
+                // see https://go.microsoft.com/fwlink/?linkid=864501
+
+                spa.Options.SourcePath = "ClientApp";
+
+                if (env.IsDevelopment())
+                {
+                    spa.UseAngularCliServer(npmScript: "start");
+                }
             });
         }
     }

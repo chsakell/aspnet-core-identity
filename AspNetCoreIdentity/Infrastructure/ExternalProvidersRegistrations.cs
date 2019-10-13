@@ -83,15 +83,15 @@ namespace AspNetCoreIdentity.Infrastructure
             // dotnet user-secrets set Authentication:LinkedIn:ClientId ""
             // dotnet user-secrets set Authentication:LinkedIn:ClientSecret ""
 
-            if (configuration["Authentication:LinkedIn:ClientId"] != null)
-            {
-                services.AddAuthentication().AddLinkedIn(linkedInOptions =>
-                {
-                    linkedInOptions.ClientId = configuration["Authentication:LinkedIn:ClientId"];
-                    linkedInOptions.ClientSecret = configuration["Authentication:LinkedIn:ClientSecret"];
-                    //linkedInOptions.CallbackPath = "/signin-linkedin";
-                });
-            }
+            //if (configuration["Authentication:LinkedIn:ClientId"] != null)
+            //{
+            //    services.AddAuthentication().AddLinkedIn(linkedInOptions =>
+            //    {
+            //        linkedInOptions.ClientId = configuration["Authentication:LinkedIn:ClientId"];
+            //        linkedInOptions.ClientSecret = configuration["Authentication:LinkedIn:ClientSecret"];
+            //        //linkedInOptions.CallbackPath = "/signin-linkedin";
+            //    });
+            //}
 
             // DropBox
 

@@ -261,3 +261,5 @@ __pycache__/
 *.pyc
 
 .vscode/
+
+IdentityServer/Data/Migrations
