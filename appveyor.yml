@@ -15,7 +15,7 @@ install:
   # install npm modules
   - ps: Install-Product node $env:nodejs_version
   - npm install
-  - node node_modules/webpack/bin/webpack.js --config webpack.config.vendor.js --env.prod
+  # - node node_modules/webpack/bin/webpack.js --config webpack.config.vendor.js --env.prod
 before_build:
   # Display minimal restore text
   - cmd: dotnet restore --verbosity m
