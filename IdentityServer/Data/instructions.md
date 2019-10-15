@@ -1,6 +1,7 @@
 ﻿# Migration instructions for IdentityServer project
 
-`cd path-to\IdentityServer`
+* `cd path-to\IdentityServer`
+* change `UseInMemoryStores` to `false` in **appsettings.json**
 
 ## Migrations using terminal
 
