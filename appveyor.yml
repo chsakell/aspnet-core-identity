@@ -11,11 +11,10 @@ init:
 # Install scripts. (runs after repo cloning)
 install:
   # Get the latest stable version of Node.js or io.js
-  - cd AspNetCoreIdentity
+  - cd AspNetCoreIdentity/ClientApp
   # install npm modules
   - ps: Install-Product node $env:nodejs_version
   - npm install
-  # - node node_modules/webpack/bin/webpack.js --config webpack.config.vendor.js --env.prod
 before_build:
   # Display minimal restore text
   - cmd: dotnet restore --verbosity m
