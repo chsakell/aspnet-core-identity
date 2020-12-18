@@ -114,5 +114,11 @@ The project is built with ASP.NET Core with Angular on the client side.
 </tr>
 </tbody>
 </table>
+
+## Donation ##
+You can show your support to this project by making a donation via PayPal
+
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=SQK68T4HX9H56&currency_code=EUR&source=url)
+
 <h3>License</h3>
 Code released under the <a href="https://github.com/chsakell/aspnet-core-identity/blob/master/LICENSE" target="_blank"> MIT license</a>.
