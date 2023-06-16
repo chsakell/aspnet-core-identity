@@ -115,10 +115,9 @@ The project is built with ASP.NET Core with Angular on the client side.
 </tbody>
 </table>
 
-## Donation ##
-You can show your support to this project by making a donation via PayPal
+## Show me your support! :heart: :clap:
 
-[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=SQK68T4HX9H56&currency_code=EUR&source=url)
+<a href="https://www.buymeacoffee.com/chsakell"><img src="https://github.com/chsakell/maui-trackizer/blob/main/docs/yellow-button.png" align="left"  width="280"></a>
 
-<h3>License</h3>
+## License
 Code released under the <a href="https://github.com/chsakell/aspnet-core-identity/blob/master/LICENSE" target="_blank"> MIT license</a>.
